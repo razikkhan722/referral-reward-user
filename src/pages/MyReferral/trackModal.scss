@@ -1,0 +1,163 @@
+.referral-modal-close-btn {
+    background-color: #FFFFFF33;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: -50px;
+    right: 0;
+    border: none;
+    font-size: 20px;
+    color: #1A2A6C;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.btn-close {
+    font-size: 16px;
+}
+
+.track-btn {
+    background-color: white !important;
+    color: #1A2A6C !important;
+}
+
+.text-gray {
+    color: #D9D9D9;
+}
+.track-tick{
+    width: 50%;
+}
+
+.custom-modal-content {
+    width: 603px !important;
+    border-radius: 24px !important;
+    border: none !important;
+    // background: linear-gradient(to bottom, #421ca6, #a8e8f1);
+    background: linear-gradient(0deg, #EFF3F7 0%, #D2F1F9 24.69%, #8FD3EA 56%, #493495 99.39%);
+
+    color: #000;
+    position: relative;
+
+    .modal-body-custom {
+        padding: 2rem;
+
+        .astronaut-img {
+            width: 232px;
+            height: 254px;
+            margin-top: -150px;
+        }
+
+        .progress-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+
+            .step {
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+
+                .circle-wrapper {
+                    position: relative;
+
+                    // .circle {
+                    //     width: 32px;
+                    //     height: 32px;
+                    //     border-radius: 50%;
+                    //     display: flex;
+                    //     align-items: center;
+                    //     justify-content: center;
+                    //     z-index: 1;
+                    //     font-size: 14px;
+                    // }
+
+                    // .filled-circle {
+                    //     background-color: #1e3a8a;
+                    //     color: white;
+                    // }
+
+                    // .empty-circle {
+                    //     background-color: #d1d5db;
+                    // }
+
+                    // .vertical-line {
+                    //     position: absolute;
+                    //     top: 100%;
+                    //     left: 50%;
+                    //     transform: translateX(-50%);
+                    //     width: 3px;
+                    //     height: 48px;
+                    //     z-index: 0;
+                    // }
+
+                    // .active-line {
+                    //     background: #1e3a8a;
+                    // }
+
+                    // .inactive-line {
+                    //     background: linear-gradient(to bottom, #1e3a8a, #ffffff00);
+                    // }
+
+                    .circle {
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 50%;
+                        background-color: white;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: background-color 0.3s;
+                    }
+
+                    .filled-circle {
+                        background-color: #1e3a8a;;
+                        color: white;
+                    }
+
+                    .tick-pop {
+                        animation: popIn 0.3s ease forwards;
+                    }
+
+                    @keyframes popIn {
+                        from {
+                            transform: scale(0.2);
+                            opacity: 0;
+                        }
+
+                        to {
+                            transform: scale(1);
+                            opacity: 1;
+                        }
+                    }
+
+                    .vertical-line {
+                        width: 6px;
+                        height: 0;
+                        background-color: #1e3a8a;;
+                        position: absolute;
+                        top: 100%;
+                        left: 50%;
+                        transform: translateX(-50%);
+                    }
+
+                    .line-fill {
+                        animation: growLine 0.4s ease forwards;
+                    }
+
+                    @keyframes growLine {
+                        from {
+                            height: 0;
+                        }
+
+                        to {
+                            height: 60px;
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+}

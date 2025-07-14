@@ -1,0 +1,83 @@
+.referral-user-card {
+    border-radius: 12px;
+    // width: 408px !important;
+    // max-width: 100%;
+}
+
+.slider-container .slick-slide>div {
+    padding: 0 10px !important; // Gap between each card
+}
+
+.slider-container .slick-list {
+    margin: 0 -10px !important; // Prevent overflow due to padding
+}
+
+.referral-toggle-btn {
+    background-color: rgba(26, 42, 108, 0.05);
+    border-radius: 3px;
+    width: 32px;
+    height: 32px;
+}
+
+.user-green-card {
+    background: linear-gradient(180deg, #14213D 0%, #005F73 51.92%, #00A896 100%);
+}
+
+.user-blue-card {
+    background: linear-gradient(180deg, #0A1931 0%, #185ADB 49.52%, #6DD5FA 100%);
+}
+
+.user-purple-card {
+    background: linear-gradient(180deg, #240046 0%, #5A189A 51.92%, #9D4EDD 100%);
+
+}
+
+.user-icon {
+    width: 54px;
+    height: 54px;
+    background-color: rgba(217, 217, 217, 1);
+}
+
+.small-white-circle {
+    width: 6px;
+    height: 6px;
+}
+
+.status {
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.user-card-bottom {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+// Referral table css
+.referral-table{
+    border-radius: 12px !important;
+}
+.td{
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+}
+th, .referral-table-header {
+    background: rgb(203, 196, 228)!important;
+       color: #1A2A6C !important;
+}
+
+td, .referral-table-body {
+     background: rgb(220, 216, 234) !important;
+     color: #1A2A6C !important;
+}
+.referral-table-user{
+    width: 48px;
+    height: 48px;
+    background: rgba(242, 194, 109, 0.6);
+}

@@ -1,0 +1,19 @@
+$mobile-breakpoint: 768px;
+$tablet-breakpoint: 1024px;
+
+
+
+// Usage
+.example {
+  background-color: $light-blue-opacity-30;
+}
+
+
+// Define the color groups for background and text colors
+$background-colors: (
+  
+);
+
+$font-colors: (
+  
+);

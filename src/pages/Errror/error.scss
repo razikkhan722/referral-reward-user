@@ -1,0 +1,48 @@
+//  .error-bg {
+//      background: url(../../assets/images/home/Error-img/error-bg.svg) center no-repeat;
+//      min-height: 100vh;
+//      background-size: cover;
+
+//      .error-img {
+//          width: 100%;
+//          max-width: 852px;
+//          height: auto;
+//      }
+//  }
+
+.error-bg {
+  background: url(../../assets/images/home/Error-img/error-bg.svg) center no-repeat;
+  min-height: 100vh;
+  background-size: cover;
+
+  .error-img {
+    width: 100%;
+    max-width: 852px;
+    height: auto;
+    max-height: 409px;
+  }
+}
+
+// Responsive for Tablets
+@media (max-width: 768px) {
+  .error-bg {
+    padding: 1.5rem;
+
+    .error-img {
+      max-width: 600px;
+    }
+  }
+}
+
+// Responsive for Mobiles
+@media (max-width: 480px) {
+  .error-bg {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+
+    .error-img {
+      max-width: 320px;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+// Import Google Fonts in your main index.html or layout file, not here!
+
+// Font Mixins
+@mixin font-be-vietnam($weight, $style: normal) {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: $weight;
+  font-style: $style;
+}
+
+@mixin font-montserrat($weight, $style: normal) {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: $weight;
+  font-style: $style;
+}
+
+@mixin font-poppins($weight, $style: normal) {
+  font-family: 'Poppins', sans-serif;
+  font-weight: $weight;
+  font-style: $style;
+}
+
+@mixin font-space-grotesk($weight, $style: normal) {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: $weight;
+  font-style: $style;
+}
+@mixin font-montserrat-alternates($weight, $style: normal) {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: $weight;
+  font-style: $style;
+}
+
+// Alias mixin (optional, for Be Vietnam only)
+@mixin font-variation($weight, $style: normal) {
+  @include font-be-vietnam($weight, $style);
+}
+

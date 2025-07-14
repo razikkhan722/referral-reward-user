@@ -1,0 +1,209 @@
+@import './mixins';
+
+body {
+  margin: 0;
+  background-color: #f9f9f9; // Replace $white-secondry with a real value or define the variable
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+// Be Vietnam Pro font utilities
+.be-vietnam-pro-thin        { @include font-be-vietnam(100); }
+.be-vietnam-pro-extralight  { @include font-be-vietnam(200); }
+.be-vietnam-pro-light       { @include font-be-vietnam(300); }
+.be-vietnam-pro-regular     { @include font-be-vietnam(400); }
+.be-vietnam-pro-medium      { @include font-be-vietnam(500); }
+.be-vietnam-pro-semibold    { @include font-be-vietnam(600); }
+.be-vietnam-pro-bold        { @include font-be-vietnam(700); }
+.be-vietnam-pro-extrabold   { @include font-be-vietnam(800); }
+.be-vietnam-pro-black       { @include font-be-vietnam(900); }
+
+// Montserrat font utilities
+.montserrat-thin       { @include font-montserrat(100); }
+.montserrat-extralight { @include font-montserrat(200); }
+.montserrat-light      { @include font-montserrat(300); }
+.montserrat-regular    { @include font-montserrat(400); }
+.montserrat-medium     { @include font-montserrat(500); }
+.montserrat-semibold   { @include font-montserrat(600); }
+.montserrat-bold       { @include font-montserrat(700); }
+.montserrat-extrabold  { @include font-montserrat(800); }
+.montserrat-black      { @include font-montserrat(900); }
+
+// Poppins font utilities
+.poppins-thin       { @include font-poppins(100); }
+.poppins-extralight { @include font-poppins(200); }
+.poppins-light      { @include font-poppins(300); }
+.poppins-regular    { @include font-poppins(400); }
+.poppins-medium     { @include font-poppins(500); }
+.poppins-semibold   { @include font-poppins(600); }
+.poppins-bold       { @include font-poppins(700); }
+.poppins-extrabold  { @include font-poppins(800); }
+.poppins-black      { @include font-poppins(900); }
+
+// Space Grotesk font utilities
+.space-grotesk-light    { @include font-space-grotesk(300); }
+.space-grotesk-regular  { @include font-space-grotesk(400); }
+.space-grotesk-medium   { @include font-space-grotesk(500); }
+.space-grotesk-semibold { @include font-space-grotesk(600); }
+.space-grotesk-bold     { @include font-space-grotesk(700); }
+.montserrat-alternates-thin {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.montserrat-alternates-extralight {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.montserrat-alternates-light {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.montserrat-alternates-regular {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.montserrat-alternates-medium {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.montserrat-alternates-semibold {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.montserrat-alternates-bold {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.montserrat-alternates-extrabold {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.montserrat-alternates-black {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.montserrat-alternates-thin-italic {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.montserrat-alternates-extralight-italic {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.montserrat-alternates-light-italic {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.montserrat-alternates-regular-italic {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.montserrat-alternates-medium-italic {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.montserrat-alternates-semibold-italic {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.montserrat-alternates-bold-italic {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.montserrat-alternates-extrabold-italic {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.montserrat-alternates-black-italic {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+// Headings
+.heading-h1 {
+  font-size: pxToRem(72);
+  line-height: 150%;
+  @include font-be-vietnam(600);
+}
+.heading-h2 {
+  font-size: pxToRem(60);
+}
+.heading-h3 {
+  font-size: pxToRem(52);
+}
+.heading-h4 {
+  font-size: pxToRem(48);
+}
+
+// Section padding
+.section-larg-padding-T-B {
+  padding-top: pxToRem(80);
+  padding-bottom: pxToRem(80);
+}
+.section-medium-padding-T-B {
+  padding-top: pxToRem(40);
+  padding-bottom: pxToRem(40);
+}
+.section-small-padding-T-B {
+  padding-top: pxToRem(24);
+  padding-bottom: pxToRem(24);
+}
+
+// Margin utility
+.margin-larg-T-B {
+  margin-top: pxToRem(80);
+  margin-bottom: pxToRem(80);
+}
+.margin-medium-T-B {
+  margin-top: pxToRem(48);
+  margin-bottom: pxToRem(48);
+}
+.margin-small-T-B {
+  margin-top: pxToRem(24);
+  margin-bottom: pxToRem(24);
+}
+
+.w-80 {
+  width: 80%;
+}

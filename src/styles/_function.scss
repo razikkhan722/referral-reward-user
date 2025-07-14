@@ -1,0 +1,194 @@
+@use "sass:math";
+
+// =========================
+// CONFIGURATION
+// =========================
+
+// Functions
+@function pxToRem($px, $base: 16) {
+  @return math.div($px, $base) * 1rem;
+}
+
+@function lineHeight($font-size, $multiplier: 1.5) {
+  $scaled: math.div($font-size * $multiplier, 1);
+  @return pxToRem($scaled);
+}
+
+@function responsive-scale($value, $ratio) {
+  @return $value * $ratio;
+}
+
+// Breakpoints
+$breakpoint-sm: 768px;      // Mobile
+$breakpoint-md: 1200px;     // Tablet
+$breakpoint-lg: 1536px;     // Desktop
+$breakpoint-xl: 1920px;     // Large Desktop
+$breakpoint-2xl: 2560px;    // Ultra-Wide
+$breakpoint-4k: 3840px;     // 4K Display
+
+// Font and spacing values
+$font-sizes: 8, 12, 14, 16, 18, 20, 24,28, 32, 36, 40, 44,46, 48, 52, 56, 60, 64, 68, 72;
+$spacing-values: 0, 4, 8, 10, 12, 14, 16, 20, 24, 32,34, 36, 40, 44, 46, 48, 52, 56, 58, 62, 68, 72, 78,120;
+
+// =========================
+// FONT SIZE CLASSES
+// =========================
+
+// @each $size in $font-sizes {
+//   .font-#{$size} {
+//     font-size: pxToRem($size);
+//     line-height: lineHeight($size);
+
+//     @media (max-width: $breakpoint-md) {
+//       font-size: pxToRem(responsive-scale($size, 0.66));
+//       line-height: lineHeight(responsive-scale($size, 0.66));
+//     }
+
+//     @media (min-width: $breakpoint-lg) {
+//       font-size: pxToRem(responsive-scale($size, 1.25));
+//       line-height: lineHeight(responsive-scale($size, 1.25));
+//     }
+
+//     @media (min-width: $breakpoint-xl) {
+//       font-size: pxToRem(responsive-scale($size, 1.5));
+//       line-height: lineHeight(responsive-scale($size, 1.5));
+//     }
+
+//     @media (min-width: $breakpoint-2xl) {
+//       font-size: pxToRem(responsive-scale($size, 1.75));
+//       line-height: lineHeight(responsive-scale($size, 1.75));
+//     }
+
+//     @media (min-width: $breakpoint-4k) {
+//       font-size: pxToRem(responsive-scale($size, 2));
+//       line-height: lineHeight(responsive-scale($size, 2));
+//     }
+//   }
+// }
+
+@each $size in $font-sizes {
+  .font-#{$size} {
+    font-size: pxToRem($size);
+    line-height: lineHeight($size);
+ 
+    @media (max-width: $breakpoint-md) {
+      font-size: pxToRem($size);
+      line-height: lineHeight($size);
+      // font-size: pxToRem(responsive-scale($size, 0.66));
+      // line-height: lineHeight(responsive-scale($size, 0.66));
+      font-size: pxToRem($size);
+      line-height: lineHeight($size);
+      // font-size: pxToRem(responsive-scale($size, 0.66));
+      // line-height: lineHeight(responsive-scale($size, 0.66));
+    }
+ 
+    @media (min-width: $breakpoint-lg) {
+      font-size: pxToRem($size);
+      line-height: lineHeight($size);
+      // font-size: pxToRem(responsive-scale($size, 1.125));
+      // line-height: lineHeight(responsive-scale($size, 1.125));
+    }
+ 
+    @media (min-width: $breakpoint-xl) {
+      font-size: pxToRem(responsive-scale($size, 1.25));
+      line-height: lineHeight(responsive-scale($size, 1.25));
+    }
+ 
+    @media (min-width: $breakpoint-2xl) {
+      font-size: pxToRem(responsive-scale($size, 1.5));
+      line-height: lineHeight(responsive-scale($size, 1.5));
+    }
+ 
+    @media (min-width: $breakpoint-4k) {
+      font-size: pxToRem(responsive-scale($size, 1.875));
+      line-height: lineHeight(responsive-scale($size, 1.875));
+    }
+  }
+}
+
+
+// =========================
+// SPACING CLASSES
+// =========================
+
+@each $value in $spacing-values {
+  @each $prefix, $property in (m: margin, mt: margin-top, mr: margin-right, mb: margin-bottom, ml: margin-left, p: padding, pt: padding-top, pr: padding-right, pb: padding-bottom, pl: padding-left) {
+    .#{$prefix}-#{$value} {
+      #{$property}: pxToRem($value);
+
+      @media (max-width: $breakpoint-md) {
+        #{$property}: pxToRem(responsive-scale($value, 0.66));
+      }
+
+      @media (min-width: $breakpoint-lg) {
+        #{$property}: pxToRem(responsive-scale($value, 1.25));
+      }
+
+      @media (min-width: $breakpoint-xl) {
+        #{$property}: pxToRem(responsive-scale($value, 1.5));
+      }
+
+      @media (min-width: $breakpoint-2xl) {
+        #{$property}: pxToRem(responsive-scale($value, 1.75));
+      }
+
+      @media (min-width: $breakpoint-4k) {
+        #{$property}: pxToRem(responsive-scale($value, 2));
+      }
+    }
+  }
+}
+
+// =========================
+// WIDTH CLASSES (1% to 100%) with BREAKPOINT SUFFIXES
+// =========================
+
+@for $i from 1 through 100 {
+  .width-#{$i} {
+    width: ($i * 1%);
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    .width-sm-#{$i} {
+      width: ($i * 1%);
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    .width-md-#{$i} {
+      width: ($i * 1%);
+    }
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    .width-lg-#{$i} {
+      width: ($i * 1%);
+    }
+  }
+
+  @media (min-width: $breakpoint-xl) {
+    .width-xl-#{$i} {
+      width: ($i * 1%);
+    }
+  }
+
+  @media (min-width: $breakpoint-2xl) {
+    .width-2xl-#{$i} {
+      width: ($i * 1%);
+    }
+  }
+
+  @media (min-width: $breakpoint-4k) {
+    .width-4k-#{$i} {
+      width: ($i * 1%);
+    }
+  }
+}
+
+
+// Generate border-radius classes from 4px to 100px in steps of 4px
+@each $value in $spacing-values {
+  .border-radius-#{$value} {
+    border-radius: pxToRem($value);
+  }
+}
