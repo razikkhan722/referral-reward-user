@@ -4069,6 +4069,28 @@ body::-webkit-scrollbar {
 
 /* Small Tablet View */
 @media only screen and (min-width: 700px) and (max-width: 1023px) {
+  .referral-slider {
+    .referral-card {
+      height: 350px;
+      padding: 2rem !important;
+    }
+
+    .slick-track {
+      display: flex !important;
+      gap: 20px; // Adjust the gap as needed
+    }
+
+    .me-3 {
+      margin-top: 20%;
+
+      margin-right: 0 !important;
+    }
+
+    .slick-next {
+      display: block !important;
+    }
+
+  }
   .bg-planet-ring {
     top: 42%;
     width: 85%;
