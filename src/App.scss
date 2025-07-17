@@ -151,7 +151,7 @@ $breakpoint-4k: 3840px; // 4K Display
 // Font and spacing values
 $font-sizes: 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 34, 36, 40, 44, 46, 48, 52, 56, 60, 64, 68, 72;
 $spacing-values: 0, 4, 8, 10, 12, 14, 16, 20, 24, 32, 34, 36, 40, 44, 46, 48, 52, 56, 58, 60, 62,
-  68, 72, 78, 80, 88, 90, 92, 120;
+  68, 72, 78, 80, 88, 90, 92,100, 120,150;
 
 // =========================
 // FONT SIZE CLASSES
@@ -3313,7 +3313,7 @@ body::-webkit-scrollbar {
   transform-origin: bottom;
   cursor: pointer;
   z-index: 1;
-  height: 450px;
+  height: 400px;
   padding: 2.5rem 0;
 }
 
@@ -3336,7 +3336,7 @@ body::-webkit-scrollbar {
   }
 
   100% {
-    transform: translateY(-50px);
+    transform: translateY(-120px);
   }
 }
 
@@ -3356,19 +3356,30 @@ body::-webkit-scrollbar {
   height: auto;
   z-index: 1;
 }
-
 .cloud-img {
-  position: absolute;
-  top: 45%;
-  left: 0;
+  position: relative;
+  // height: 75%;
   width: 100%;
-  height: 75%;
   background-image: url('../src/assets/icons/home/MyReferral/clouds-2.svg');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: bottom;
-  z-index: 2;
+  background-position: center;
+  z-index: 3;
   pointer-events: none;
+  margin-top: -50%; 
+  margin-bottom: -25%;
+}
+.cloud-img {
+  animation: floatClouds 10s ease-in-out infinite;
+}
+
+@keyframes floatClouds {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 .howit-card {
@@ -4069,6 +4080,28 @@ body::-webkit-scrollbar {
 
 /* Small Tablet View */
 @media only screen and (min-width: 700px) and (max-width: 1023px) {
+  .referral-slider {
+    .referral-card {
+      height: 350px;
+      padding: 2rem !important;
+    }
+
+    .slick-track {
+      display: flex !important;
+      gap: 20px; // Adjust the gap as needed
+    }
+
+    .me-3 {
+      margin-top: 20%;
+
+      margin-right: 0 !important;
+    }
+
+    .slick-next {
+      display: block !important;
+    }
+
+  }
   .bg-planet-ring {
     top: 42%;
     width: 85%;
@@ -4227,12 +4260,12 @@ body::-webkit-scrollbar {
 }
 @media (max-height: 900px) {
   .cloud-img {
-    top: 60%!important;
+    margin-top: -40%;
   }
 }
 @media (max-height: 768px) {
   .cloud-img {
-    top: 65%!important;
+    margin-top: -30%;
   }
 }
 
@@ -4244,7 +4277,7 @@ body::-webkit-scrollbar {
   }
 
   .cloud-img {
-    width: 60%!important;
+    // width: 60%!important;
   }
 
   .invitefriend-wrapper {

@@ -43,10 +43,10 @@ import PlayAndEarnCard from '../../components/playAndEarnCard';
 import RewardHistory from './rewardHistory';
 import { postData } from '../../services/api';
 import { DecryptFunction } from '../../utils/decryptFunction';
-import { UserContext } from '../../utils/UseContext/useContext';
 import { GiBackwardTime } from 'react-icons/gi';
 import { NavLink } from 'react-router-dom';
 import { toastInfo } from '../../utils/toster';
+import { UserContext } from '../../UseContext/useContext';
 
 // Discont card Json
 const discountData = [

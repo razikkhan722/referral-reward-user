@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../../utils/UseContext/useContext';
+import { UserContext } from '../../UseContext/useContext';
 
 const Herosection = ({ currentPlnt, HomeDataAPI }) => {
   const { ContextFaqsDataAPI,ContextHomeDataAPI,MeterUpdateData } = useContext(UserContext);
@@ -41,7 +41,7 @@ const Herosection = ({ currentPlnt, HomeDataAPI }) => {
           </li>
           <li className="list-unstyled text-dark-blue  montserrat-semibold font-24">
             <span className="d-block font-16 space-grotesk-regular text-white mb-1">
-              Total Meteors
+              Meteors to Unlock
             </span>
             {
               ContextFaqsDataAPI?.galaxy_data?.milestones[LtrToNum - 1]

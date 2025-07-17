@@ -8,7 +8,7 @@ import TwitterIcon from '../../assets/icons/home/Invitefriend/twitter-invite.svg
 import Linkedin from '../../assets/icons/home/Invitefriend/linkedin.svg';
 import telegram from '../../assets/icons/home/Invitefriend/telegram.svg';
 import { postData } from '../../services/api';
-import { UserContext } from '../../utils/UseContext/useContext';
+import { UserContext } from '../../UseContext/useContext';
 
 // const Invitefriend = ({ isActive, onAnimationComplete , isExiting }) => {
 const Invitefriend = ({ isActive , isExiting }) => {
