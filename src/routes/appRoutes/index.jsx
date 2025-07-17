@@ -60,12 +60,6 @@ const AppRoutes = () => {
     HandleAPI();
   }, []);
 
-  // check if login or not functionality
-  // useEffect(() => {
-  //   let getvalue = JSON.parse(sessionStorage.getItem('Auth') ?? '[]');
-  //   setAuthLocal(getvalue?.mode);
-  // }, [AuthLocal]);
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
