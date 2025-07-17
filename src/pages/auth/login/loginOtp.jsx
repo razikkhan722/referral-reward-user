@@ -1,18 +1,26 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
-
-// Assets icons
-import Loginimg from '../../assets/icons/auth/login-side.svg';
-import Logo from '../../assets/icons/logo/logo.svg';
-
-// Assuming you're using Lucide icons
-import { Clock, AlertCircle } from 'lucide-react';
-import { postData } from '../../services/api';
-import checkCircle from '../../assets/icons/auth/CheckCircle.svg';
 import { useNavigate } from 'react-router-dom';
-import { toastError, toastInfo, toastSuccess } from '../../utils/toster';
-import { UserContext } from '../../utils/UseContext/useContext';
-import { DecryptFunction } from '../../utils/decryptFunction';
+
+// Assets
+import Loginimg from '../../../assets/icons/auth/login-side.svg';
+import Logo from '../../../assets/icons/logo/logo.svg';
+import checkCircle from '../../../assets/icons/auth/CheckCircle.svg';
+
+// React icon
+import { FiClock, FiAlertCircle } from 'react-icons/fi';
+
+// API call service
+import { postData } from '../../../services/api';
+
+// Toast messages
+import { toastError, toastInfo, toastSuccess } from '../../../utils/toster';
+
+// Usercontext
+import { UserContext } from '../../../utils/UseContext/useContext';
+
+// Utilities
+import { DecryptFunction } from '../../../utils/decryptFunction';
 
 const LoginOtp = () => {
   const {
@@ -21,19 +29,25 @@ const LoginOtp = () => {
     watch,
     formState: { errors },
   } = useForm();
+
+  const navigate = useNavigate();
   const { setAuthLocal, setContextHomeDataAPI, setContextFaqsDataAPI } =
     useContext(UserContext);
 
+  // Form data & OTP
   const mobileNumber = watch('mobile');
   const [otp, setOtp] = useState(new Array(6).fill(''));
   const [activeIndex, setActiveIndex] = useState(0);
-  const [getNumber, setgetNumber] = useState();
   const inputRefs = useRef([]);
+
+  // UI states
+  const [getNumber, setgetNumber] = useState();
   const [otpStatus, setOtpStatus] = useState('sent'); // 'sent', 'verifying', 'error'
   const [error, setError] = useState('');
   const [timer, setTimer] = useState(60);
-  const navigate = useNavigate();
-  // Timer countdown
+  const [mobileValid, setMobileValid] = useState(false);
+
+  // Timer Countdown
   useEffect(() => {
     let interval;
     if (timer > 0) {
@@ -42,6 +56,7 @@ const LoginOtp = () => {
     return () => clearInterval(interval);
   }, [timer]);
 
+  // Handle OTP input box change
   const handleOtpChange = (index, value) => {
     if (/^[0-9]$/.test(value)) {
       const newOtp = [...otp];
@@ -55,6 +70,7 @@ const LoginOtp = () => {
     }
   };
 
+  // Backspace handling in OTP inputs
   const handleKeyDown = (index, e) => {
     if (e.key === 'Backspace') {
       if (otp[index] === '') {
@@ -67,6 +83,7 @@ const LoginOtp = () => {
     }
   };
 
+  // Paste OTP from clipboard
   const handlePaste = (e) => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text').slice(0, 6).split('');
@@ -79,6 +96,7 @@ const LoginOtp = () => {
     inputRefs.current[nextIndex === -1 ? 5 : nextIndex].focus();
   };
 
+  // OTP verification
   const handleVerify = async () => {
     setOtpStatus('verifying');
     try {
@@ -89,34 +107,36 @@ const LoginOtp = () => {
 
       setTimeout(async () => {
         setOtpStatus('sent');
-        // toastInfo(response?.message);
         if (response?.mode) {
           toastSuccess(response?.message);
-          // Save AUTHENTICATOION in localstorage
-          sessionStorage.setItem('Auth', JSON?.stringify(response));
+
+          // Store auth in session
+          sessionStorage.setItem('Auth', JSON.stringify(response));
           setAuthLocal(response);
-          const enyptData = await postData('/home', {
+
+          // Fetch home data
+          const encryptedData = await postData('/home', {
             user_id: response?.user_id,
             log_alt: response?.log_alt,
             mode: response?.mode,
           });
 
-          // fetch-custom-data API for ALL FAQs
           const FaqsData = await postData('/admin/fetch-custom-data', {
             user_id: response?.user_id,
             log_alt: response?.log_alt,
             mode: response?.mode,
           });
+
           setContextFaqsDataAPI(FaqsData);
 
-          let Decrpty = await DecryptFunction(enyptData);
-          setContextHomeDataAPI(Decrpty);
+          // Decrypt & set homepage data
+          const DecryptedData = await DecryptFunction(encryptedData);
+          setContextHomeDataAPI(DecryptedData);
+
           navigate('/');
-          setOtpStatus('sent');
           setError('');
         } else {
           setOtpStatus('error');
-          setOtpStatus('sent');
           setError('Invalid OTP');
         }
       }, 1000);
@@ -126,45 +146,51 @@ const LoginOtp = () => {
     }
   };
 
+  // Resend OTP
   const handleResend = async () => {
     setOtp(new Array(6).fill(''));
     setOtpStatus('sent');
     setError('');
     setTimer(60);
     inputRefs.current[0].focus();
+
     const response = await postData('/login/mobile-send-otp', {
       mobile_number: getNumber,
     });
+
     if (response?.success) {
       toastInfo('OTP Resent');
     }
   };
 
+  // Convert seconds into mm:ss format
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
-  const [mobileValid, setMobileValid] = useState(false);
+
+  // Mobile number input & validation
   const HandleNumber = async (e) => {
     try {
       const value = e.target.value;
       setgetNumber(value);
-      if (!/^\d*$/.test(value)) {
-        return;
-      }
+
+      if (!/^\d*$/.test(value)) return;
+
       const number = value.slice(0, 10);
       e.target.value = number;
+
       if (value.length === 10) {
         const response = await postData('/login/mobile-send-otp', {
           mobile_number: value,
         });
+
         if (response?.success) {
           toastSuccess(response?.message);
           setMobileValid(true);
         } else {
-          // alert(response?.message);
-          toastError(error?.message);
+          toastError(response?.message);
         }
       } else {
         setMobileValid(false);
@@ -174,13 +200,16 @@ const LoginOtp = () => {
     }
   };
 
+  // Required for react-hook-form
   const onSubmit = (data) => {};
 
   return (
-    <div className="login-bg-img vh-100 overflow-hidden">
+    <div className="login-bg-img vh-100 overflow-hidden" id='login-otp-id'>
+      {/* Logo */}
       <div className="nav-logo text-center">
         <img className="header-center-img width-13" src={Logo} alt="logo" />
       </div>
+
       <div className="row p-4 d-flex justify-content-center">
         <div className="col-lg-7 mt-5">
           <div className="text-center mt-3">
@@ -190,14 +219,19 @@ const LoginOtp = () => {
               exciting <br /> reward and referral program!
             </p>
           </div>
+
           <div className="login-form-section row py-2 px-3 d-flex align-items-center justify-content-between">
+            {/* Left Side Image */}
             <div className="col-lg-6 col-12">
               <div className="login-img text-center">
                 <img src={Loginimg} alt="Login Visual" />
               </div>
             </div>
+
+            {/* Right Side Form */}
             <div className="col-lg-6 col-12">
               <form onSubmit={handleSubmit(onSubmit)}>
+                {/* Mobile Input */}
                 <div className="my-3 position-relative">
                   <input
                     type="text"
@@ -216,10 +250,12 @@ const LoginOtp = () => {
                     <img
                       className="login-check position-absolute"
                       src={checkCircle}
-                      alt=""
+                      alt="valid"
                     />
                   )}
                 </div>
+
+                {/* Mobile Validation Errors */}
                 {errors.mobile?.type === 'required' && (
                   <span className="text-danger">Mobile number is required</span>
                 )}
@@ -228,8 +264,8 @@ const LoginOtp = () => {
                     Please enter a valid 10-digit mobile number
                   </span>
                 )}
-                {/* OTP Section */}
 
+                {/* OTP Input Boxes */}
                 {(otpStatus === 'sent' ||
                   otpStatus === 'verifying' ||
                   otpStatus === 'error') && (
@@ -261,12 +297,15 @@ const LoginOtp = () => {
                       ))}
                     </div>
 
+                    {/* OTP Error */}
                     {error && (
                       <div className="text-danger d-flex justify-content-center align-items-center mb-2">
-                        <AlertCircle size={16} className="me-1" />
+                        <FiAlertCircle size={16} className="me-1" />
                         {error}
                       </div>
                     )}
+
+                    {/* OTP Sent Message */}
                     {mobileValid && (
                       <div
                         className="small mb-2 montserrat-medium font-size-14"
@@ -276,42 +315,45 @@ const LoginOtp = () => {
                       </div>
                     )}
 
+                    {/* Resend Countdown or Button */}
                     {mobileValid && (
                       <>
                         {timer > 0 ? (
                           <div className="text-muted small d-flex justify-content-center align-items-center">
-                            <Clock size={16} className="me-1" />
+                            <FiClock size={16} className="me-1" />
                             Resend in {formatTime(timer)}
                           </div>
                         ) : (
                           <button
                             onClick={handleResend}
-                            className=" p-0 border-0 text-blue text-decoration-underline font-16 montserrat-medium"
+                            className="p-0 border-0 text-blue text-decoration-underline font-16 montserrat-medium"
                           >
                             Resend OTP
                           </button>
                         )}
                       </>
                     )}
+
+                    {/* Verify Button */}
                     <button
                       onClick={handleVerify}
                       disabled={
                         otp.some((digit) => digit === '') ||
                         otpStatus === 'verifying'
                       }
-                      className={`montserrat-semibold w-100 mx-1 mt-3 font-16 py-2 rounded-3 border-0 text-white
-              ${
-                otp.some((digit) => digit === '') || otpStatus === 'verifying'
-                  ? 'bg-secondary'
-                  : 'background-text-blue'
-              }
-                      `}
+                      className={`montserrat-semibold w-100 mx-1 mt-3 font-16 py-2 rounded-3 border-0 text-white ${
+                        otp.some((digit) => digit === '') ||
+                        otpStatus === 'verifying'
+                          ? 'bg-secondary'
+                          : 'background-text-blue'
+                      }`}
                     >
                       Verify OTP
                     </button>
                   </div>
                 )}
 
+                {/* Footer */}
                 <p className="font-size-14 montserrat-medium text-center mt-3 text-light-gray">
                   Powered by Red Vision Technologies
                 </p>

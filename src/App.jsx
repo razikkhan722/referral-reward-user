@@ -10,7 +10,7 @@ import AppRoutes from './routes/appRoutes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserProvider } from './utils/UseContext/useContext';
-import Product from './pages/auth/product';
+import Product from './pages/auth/subscription/product';
 import UserFaqs from './pages/auth/userFaqs';
 
 function App() {

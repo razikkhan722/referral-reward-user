@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+
+// Assets
 import ProfileIcon from '../../assets/icons/auth/add-profile.svg';
 import AddIcon from '../../assets/icons/auth/profile-pluse-icon.svg';
 import Balance from '../../assets/icons/auth/profile-balance.svg';
@@ -10,17 +13,25 @@ import Edit from '../../assets/icons/auth/profile-edit.svg';
 import Close from '../../assets/icons/auth/modal-close.svg';
 import UploadIcon from '../../assets/icons/auth/upload-icon.svg';
 import UploadFile from '../../assets/icons/auth/uploaded-file.svg';
-import { postData, ProfileContactAPI } from '../../services/api';
-import { UserContext } from '../../utils/UseContext/useContext';
-import { DecryptFunction } from '../../utils/decryptFunction';
-
-// import images
 import star from '../../assets/icons/home/profile/starGroup.svg';
 import coin from '../../assets/icons/home/profile/coinGroup.svg';
 import meteor from '../../assets/icons/home/profile/meteorGroup.svg';
+
+// API call service
+import { postData } from '../../services/api';
+
+// UserContext
+import { UserContext } from '../../utils/UseContext/useContext';
+
+// Utilities
+import { DecryptFunction } from '../../utils/decryptFunction';
+
+// Toast messages
 import { toastError, toastSuccess } from '../../utils/toster';
-import { Link, useNavigate } from 'react-router-dom';
+
+// Components
 import Navbar from '../../components/navbar';
+import { rest } from 'lodash';
 
 const Profile = () => {
   // Profile form
@@ -36,6 +47,7 @@ const Profile = () => {
     handleSubmit: handleSubmitMeteor,
     formState: { errors: errorsMeteor },
     watch: watchMeteor,
+    rest,
   } = useForm();
   // Stars conversion form
   const {
@@ -61,9 +73,9 @@ const Profile = () => {
   const [isStarModalOpen, setIsStarModalOpen] = useState(false);
   const [contratsModal, setcontratsModal] = useState(false);
   const [UserDataAPI, setUserDataAPI] = useState();
-  
 
-  const { ContextFaqsDataAPI, ContextHomeDataAPI,setAuthLocal } = useContext(UserContext);
+  const { ContextFaqsDataAPI, ContextHomeDataAPI, setAuthLocal } =
+    useContext(UserContext);
 
   const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
   // Add state to track the calculated value
@@ -93,28 +105,15 @@ const Profile = () => {
   // Profile image state
   const [profileImage, setProfileImage] = useState(null);
 
-  // Invite links
-  // const [inviteLink] = useState('Invite Link');
-  // const [inviteCode] = useState('Invite Code');
-
   // Accordion toggle
   const toggleSection = (section) => {
     setActiveSection(activeSection === section ? '' : section);
   };
 
-  // Copy to clipboard
-  // const copyToClipboard = (text) => {
-  //   navigator.clipboard
-  //     .writeText(text)
-  //     .then(() => alert('Copied to clipboard!'))
-  //     .catch((err) =>
-  // };
-
   const codeRef = useRef();
   const linkRef = useRef();
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
-
 
   const handleCopy = (ref, type) => {
     if (ref.current) {
@@ -145,34 +144,34 @@ const Profile = () => {
     }
   };
   // Handle profile image change
-  const handleSendImage = (e) => {
-    const file = e.target.files;
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result;
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleSendImage = (e) => {
+  //   const file = e.target.files;
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const base64String = reader.result;
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   // Handle form input change
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProfileData({ ...profileData, [name]: value });
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setProfileData({ ...profileData, [name]: value });
+  // };
 
   // Handle form submit
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    // Mobile number validation
-    if (!/^\d{10}$/.test(profileData.mobile)) {
-      alert('Mobile number must be exactly 10 digits.');
-      return;
-    }
-    alert('Profile updated successfully!');
-    setIsEditModalOpen(false);
-  };
+  // const handleFormSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Mobile number validation
+  //   if (!/^\d{10}$/.test(profileData.mobile)) {
+  //     alert('Mobile number must be exactly 10 digits.');
+  //     return;
+  //   }
+  //   alert('Profile updated successfully!');
+  //   setIsEditModalOpen(false);
+  // };
 
   // Handle message form submit
   const handleMessageSubmit = async (e) => {
@@ -248,7 +247,7 @@ const Profile = () => {
         password: data?.currentPassword,
         new_password: data?.newPassword,
       });
-
+      setIsEditModalOpen(false);
       toastSuccess(enyptData?.message);
       if (enyptData?.success) {
         const response = await postData('/profile', {
@@ -323,8 +322,8 @@ const Profile = () => {
 
   // ------Logout Functionailty
   const HandleLogout = () => {
-    sessionStorage.removeItem("Auth")
-    setAuthLocal('')
+    sessionStorage.removeItem('Auth');
+    setAuthLocal('');
     console.log('check auth');
     navigate('/login');
   };
@@ -355,19 +354,6 @@ const Profile = () => {
                     </span>
                   )}
                 </div>
-                {/* <label className="add-photo-icon d-flex align-items-center justify-content-center">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    hidden
-                  />
-                  <img
-                    className="addprofile-plus-icon"
-                    src={AddIcon}
-                    alt="Add"
-                  />
-                </label> */}
               </div>
               <div className="user-details">
                 <h4 className="mb-3 user-name montserrat-semibold font-24 text-uppercase text-primary-color">
@@ -379,14 +365,19 @@ const Profile = () => {
               </div>
             </div>
             <div className="d-flex h-max-content">
-              <span className="ref-code-div font-14 montserrat-medium me-4 px-3 rounded-2 d-flex align-items-center justify-content-center">
-                <span className="text-ref-code montserrat-medium">
-                  Ref Code
-                </span>{' '}
-                <span className="digit-ref-code montserrat-semibold">
-                  {UserDataAPI?.part8}
+              {UserDataAPI?.part10 ? (
+                <span className="ref-code-div font-14 montserrat-medium me-4 px-3 rounded-2 d-flex align-items-center justify-content-center">
+                  <span className="text-ref-code montserrat-medium">
+                    Ref by
+                  </span>
+                  <span className="digit-ref-code montserrat-semibold px-2">
+                    {UserDataAPI?.part10}
+                  </span>
                 </span>
-              </span>
+              ) : (
+                ' '
+              )}
+
               <button
                 className="btn background-text-blue  btn-sm btn-edit-profile position-relative pe-3"
                 onClick={() => setIsEditModalOpen(true)}
@@ -732,9 +723,6 @@ const Profile = () => {
               </div>
             </div>
           </div>
-
-          {/* Other Accordion Sections - (Use your previous code, unchanged) */}
-          {/* Notification Settings, Account Settings, Help & Support (already provided by you) */}
         </div>
 
         {/* Edit Profile Modal */}
@@ -827,11 +815,6 @@ const Profile = () => {
                     }}
                     defaultValue={UserDataAPI?.part3}
                   />
-                  {/* {errorsProfile.mobile && (
-                    <p className="text-danger">
-                      {errorsProfile.mobile.message}
-                    </p>
-                  )} */}
                 </div>
 
                 {/* Email Input */}
@@ -1043,24 +1026,6 @@ const Profile = () => {
                         }}
                       />
                     </label>
-                    {/* // onChange={(e) => {
-                        //   const selectedFiles = Array.from(e.target.files);
-                        //   const totalFiles =
-                        //     messageForm.files.length + selectedFiles.length;
-
-                        //   if (totalFiles > 5) {
-                        //     alert(
-                        //       `You can only upload up to 5 files. You already selected ${messageForm.files.length} file(s).`,
-                        //     );
-                        //     return;
-                        //   }
-
-                        //   setMessageForm({
-                          //     files: [...messageForm.files, ...selectedFiles],
-                          //     ...messageForm,
-                        //   });
-                        // }
-                        // } */}
 
                     {/* Show File Names with Remove Option */}
                     {messageForm.files.length > 0 && (
@@ -1075,13 +1040,6 @@ const Profile = () => {
                           let fileIcon;
                           if (['jpg', 'jpeg', 'png', 'gif']?.includes(ext)) {
                             fileIcon = URL?.createObjectURL(file); // for previewing the image itself
-
-                            //   } else if (ext === 'pdf') {
-                            //     fileIcon = require('../../assets/icons/file/pdf-icon.svg'); // replace with your path
-                            //   } else if (['doc', 'docx'].includes(ext)) {
-                            //     fileIcon = require('../../assets/icons/file/word-icon.svg');
-                            //   } else if (['xls', 'xlsx'].includes(ext)) {
-                            //     fileIcon = require('../../assets/icons/file/excel-icon.svg');
                           } else {
                             fileIcon = UploadFile;
                           }
@@ -1267,28 +1225,7 @@ const Profile = () => {
                     <label className="form-label mb-8 font-14 text-light-color montserrat-regular">
                       Your available Stars
                     </label>
-                    {/* <input
-                      type="text"
-                      {...registerStar('stars', {
-                        required: 'This field is required',
-                        valueAsNumber: true,
-                        validate: (value) =>
-                          (value >= 0 && value <= ContextHomeDataAPI?.part1) ||
-                          'Must be a non-negative number',
-                      })}
-                      onChange={(e) => {
-                        const value = parseInt(e.target.value) || 0;
-                        setCalculatedCash(
-                          Math.floor(
-                            value /
-                              ContextFaqsDataAPI?.conversion_data[0]
-                                ?.conversion_rates?.reward_to_currency,
-                          ),
-                        );
-                      }}
-                      className="form-control font-12 text-primary-color montserrat-medium mb-20"
-                      placeholder="Enter number of stars"
-                    /> */}
+
                     <input
                       type="number" // Changed to number for better number handling
                       {...registerMeteor('stars', {
