@@ -175,7 +175,7 @@ import Planet3 from '../../assets/icons/home/HowItWorks/HIW-planet-3.svg';
 import Rocketgif from '../../assets/icons/home/HowItWorks/racketgif.gif';
 import { postData } from '../../services/api';
 import { DecryptFunction } from '../../utils/decryptFunction';
-import { UserContext } from '../../utils/UseContext/useContext';
+import { UserContext } from '../../UseContext/useContext';
 
 const Howitworks = ({ isActive, isExiting }) => {
   const sectionRef = useRef(null);

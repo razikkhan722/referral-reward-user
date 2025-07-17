@@ -20,9 +20,9 @@ import Navbar from '../../components/navbar';
 import ReferralCards from '../MyReferral/referralCards';
 import { postData } from '../../services/api';
 import { DecryptFunction } from '../../utils/decryptFunction';
-import { UserContext } from '../../utils/UseContext/useContext';
 import { NavLink } from 'react-router-dom';
 import { toastInfo } from '../../utils/toster';
+import { UserContext } from '../../UseContext/useContext';
 
 // Import Json
 // const faqData = [

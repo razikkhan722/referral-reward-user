@@ -27,7 +27,7 @@ import planetRing from '../../assets/icons/planets/rings.svg';
 import { postData } from '../../services/api';
 
 // Usercontext
-import { UserContext } from '../../utils/UseContext/useContext';
+import { UserContext } from '../../UseContext/useContext';
 
 // Utilities
 import { DecryptFunction } from '../../utils/decryptFunction';
@@ -493,10 +493,11 @@ const Index = ({ isExiting, isActive }) => {
                       />
                       <div className="col-lg-3 text-center text-dark-blue mt-4 pt-4 px-0">
                         <h4 className="mb-2 space-grotesk-medium font-24">
-                          {
+                          {/* {
                             ContextFaqsDataAPI?.galaxy_data?.milestones[0]
                               ?.milestone_name
-                          }
+                          } */}
+                          Planet {['A', 'B', 'C', 'D'][currentIndex]}
                         </h4>
 
                         {ContextFaqsDataAPI?.galaxy_data?.milestones[0]?.milestone_description

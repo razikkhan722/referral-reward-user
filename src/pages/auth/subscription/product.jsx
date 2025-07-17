@@ -23,7 +23,7 @@ import { postData } from '../../../services/api';
 import { toastError, toastSuccess } from '../../../utils/toster';
 
 // Context
-import { UserContext } from '../../../utils/UseContext/useContext';
+import {UserContext} from "../../../UseContext/useContext"
 
 const Product = () => {
   const navigate = useNavigate();

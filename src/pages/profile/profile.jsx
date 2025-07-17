@@ -21,7 +21,6 @@ import meteor from '../../assets/icons/home/profile/meteorGroup.svg';
 import { postData } from '../../services/api';
 
 // UserContext
-import { UserContext } from '../../utils/UseContext/useContext';
 
 // Utilities
 import { DecryptFunction } from '../../utils/decryptFunction';
@@ -31,7 +30,7 @@ import { toastError, toastSuccess } from '../../utils/toster';
 
 // Components
 import Navbar from '../../components/navbar';
-import { rest } from 'lodash';
+import { UserContext } from '../../UseContext/useContext';
 
 const Profile = () => {
   // Profile form

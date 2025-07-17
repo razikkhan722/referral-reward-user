@@ -12,7 +12,7 @@ import { postData } from '../../../services/api';
 import { toastError, toastSuccess } from '../../../utils/toster';
 
 // UserContext
-import { UserContext } from '../../../utils/UseContext/useContext';
+import { UserContext } from '../../../UseContext/useContext';
 
 // React icon
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -28,11 +28,25 @@ const Registration = () => {
 
   const navigate = useNavigate();
   const { setContextInviteRefferAPI } = useContext(UserContext);
+
   // UseState
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const GetParams = useParams();
+  // const GetParams = useParams();
+  // console.log(GetParams , "GetParams")
+
+  // Get referral ID and source from URL
+  const { id, source } = useParams();
+  console.log('Referral Tag ID:', id, 'Accepted Via:', source);
+
+  const platformMap = {
+    wa: 'whatsapp',
+    tele: 'telegram',
+    tw: 'twitter',
+    fb: 'facebook',
+    in: 'linkedin',
+  };
 
   // Watch password to match confirm password
   const password = watch('password');
@@ -49,7 +63,9 @@ const Registration = () => {
         username: data?.name,
         password: data?.password,
         referral_code: data?.referralCode,
-        tag_id: GetParams?.id,
+        tag_id: id,
+        // accepted_via: source, // wa / tele / tw / fb / in
+        accepted_via: platformMap[source] || source,
       });
 
       // Save user ID to session
@@ -160,18 +176,7 @@ const Registration = () => {
               </div>
 
               {/* Referral Code (Optional) */}
-              {/* <div className="col-lg-5 col-md-6 col-12">
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    className="form-control py-2"
-                    placeholder="Your Referral Code"
-                    {...register('referralCode')}
-                  />
-                </div>
-              </div> */}
-
-              {!GetParams?.id && (
+              {!id && (
                 <div className="col-lg-5 col-md-6 col-12">
                   <div className="mb-4">
                     <input

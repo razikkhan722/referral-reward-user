@@ -11,8 +11,6 @@ import { NavLink, useNavigate } from 'react-router-dom';
 // API Service
 import { postData } from '../../../services/api';
 
-// Context for global user state
-import { UserContext } from '../../../utils/UseContext/useContext';
 
 // Toaster 
 import { toastError, toastSuccess } from '../../../utils/toster';

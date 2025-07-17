@@ -11,9 +11,9 @@ import Login from '../../pages/auth/login/login';
 import LoginOtp from '../../pages/auth/login/loginOtp';
 import Registration from '../../pages/auth/registration/registration';
 import SendOtpForgotPassword from '../../pages/auth/forgotPassword/forgotPassword';
-import ConfirmForgotPasswordOtp from "../../pages/auth/forgotPassword/confirmForgotPWOtp";
+import ConfirmForgotPasswordOtp from '../../pages/auth/forgotPassword/confirmForgotPWOtp';
 import ResetPassword from '../../pages/auth/forgotPassword/resetPassword';
-import Profile from '../../pages/auth/profile';
+import Profile from '../../pages/profile/profile';
 import UserFaqs from '../../pages/auth/userFaqs';
 import Product from '../../pages/auth/subscription/product';
 
@@ -25,9 +25,10 @@ import Invitefriend from '../../pages/InviteFriend/inviteFriend';
 import Error from '../../pages/Errror/error';
 
 // Contexts and Utils
-import { UserContext } from '../../utils/UseContext/useContext';
+import {UserContext} from "../../UseContext/useContext"
 import { postData } from '../../services/api';
-import { DecryptFunction } from '../../utils/decryptFunction';
+// import {DecryptFunction} from "../../UseContext/useContext"
+import {DecryptFunction} from "../../utils/decryptFunction"
 
 const AppRoutes = () => {
   const {
@@ -81,9 +82,10 @@ const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-
         {/* Root route - redirects based on auth */}
-        {!AuthLocal && <Route path="/" element={<Navigate to="/login" replace />} />}
+        {!AuthLocal && (
+          <Route path="/" element={<Navigate to="/login" replace />} />
+        )}
         {AuthLocal && <Route path="/" element={<Home />} />}
 
         {/* Public Auth Routes (Redirect if already authenticated) */}
@@ -93,11 +95,19 @@ const AppRoutes = () => {
         />
         <Route
           path="/forgotpassword"
-          element={AuthLocal ? <Navigate to="/" replace /> : <SendOtpForgotPassword />}
+          element={
+            AuthLocal ? <Navigate to="/" replace /> : <SendOtpForgotPassword />
+          }
         />
         <Route
           path="/confirmforgotPasswordotp"
-          element={AuthLocal ? <Navigate to="/" replace /> : <ConfirmForgotPasswordOtp />}
+          element={
+            AuthLocal ? (
+              <Navigate to="/" replace />
+            ) : (
+              <ConfirmForgotPasswordOtp />
+            )
+          }
         />
         <Route
           path="/resetpassword"
@@ -109,6 +119,11 @@ const AppRoutes = () => {
         />
         <Route
           path="/registration"
+          element={AuthLocal ? <Navigate to="/" replace /> : <Registration />}
+        />
+
+        <Route
+          path="/invite-link/:id/:source"
           element={AuthLocal ? <Navigate to="/" replace /> : <Registration />}
         />
         <Route
@@ -123,11 +138,19 @@ const AppRoutes = () => {
         {/* Protected Routes (Require authentication) */}
         <Route
           path="/reward"
-          element={AuthLocal ? <MyRewardFirstScreen /> : <Navigate to="/login" replace />}
+          element={
+            AuthLocal ? (
+              <MyRewardFirstScreen />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
         />
         <Route
           path="/referral"
-          element={AuthLocal ? <MyReferralScreen /> : <Navigate to="/login" replace />}
+          element={
+            AuthLocal ? <MyReferralScreen /> : <Navigate to="/login" replace />
+          }
         />
         <Route
           path="/profile"
@@ -139,7 +162,9 @@ const AppRoutes = () => {
         />
         <Route
           path="/invitefriend"
-          element={AuthLocal ? <Invitefriend /> : <Navigate to="/login" replace />}
+          element={
+            AuthLocal ? <Invitefriend /> : <Navigate to="/login" replace />
+          }
         />
 
         {/* Catch-all route - shows Error component */}

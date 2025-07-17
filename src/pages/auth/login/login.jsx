@@ -9,8 +9,10 @@ import Logo from '../../../assets/icons/logo/logo.svg';
 import { postData } from '../../../services/api';
 
 // Global Context
-import { UserContext } from '../../../utils/UseContext/useContext';
 import { DecryptFunction } from '../../../utils/decryptFunction';
+
+// UseContext
+import { UserContext } from '../../../UseContext/useContext';
 
 // Toast Messages
 import { toastError, toastSuccess } from '../../../utils/toster';

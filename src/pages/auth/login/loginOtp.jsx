@@ -17,7 +17,8 @@ import { postData } from '../../../services/api';
 import { toastError, toastInfo, toastSuccess } from '../../../utils/toster';
 
 // Usercontext
-import { UserContext } from '../../../utils/UseContext/useContext';
+import { UserContext } from '../../../UseContext/useContext';
+
 
 // Utilities
 import { DecryptFunction } from '../../../utils/decryptFunction';
