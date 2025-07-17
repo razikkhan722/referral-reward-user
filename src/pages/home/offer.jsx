@@ -25,7 +25,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { DecryptFunction } from '../../utils/decryptFunction';
 import { postData } from '../../services/api';
-import { UserContext } from '../../utils/UseContext/useContext';
+import { UserContext } from '../../UseContext/useContext';
 
 const Offer = ({ isActive }) => {
   const cards = [

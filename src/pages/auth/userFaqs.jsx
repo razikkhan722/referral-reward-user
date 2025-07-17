@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import FAQ from '../../components/faq';
-import { UserContext } from '../../utils/UseContext/useContext';
 import { IoIosArrowBack } from 'react-icons/io';
 import { NavLink } from 'react-router-dom';
+import { UserContext } from '../../UseContext/useContext';
 
 // Import Json
 const faqData = [

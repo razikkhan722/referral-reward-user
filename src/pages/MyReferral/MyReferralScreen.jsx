@@ -11,6 +11,7 @@ import twitImg from '../../assets/icons/home/MyReferral/twit.svg';
 import ytImg from '../../assets/icons/home/MyReferral/yt.svg';
 import linkedinImg from '../../assets/icons/home/MyReferral/linkedin.svg';
 import whtpImg from '../../assets/icons/home/MyReferral/whatsapp.svg';
+import cloudImg from '../../assets/icons/home/MyReferral/clouds-2.svg';
 
 // Common Components
 import SliderCard from '../MyReferral/SliderCard';
@@ -19,9 +20,9 @@ import Navbar from '../../components/navbar';
 import ReferralCards from '../MyReferral/referralCards';
 import { postData } from '../../services/api';
 import { DecryptFunction } from '../../utils/decryptFunction';
-import { UserContext } from '../../utils/UseContext/useContext';
 import { NavLink } from 'react-router-dom';
 import { toastInfo } from '../../utils/toster';
+import { UserContext } from '../../UseContext/useContext';
 
 // Import Json
 // const faqData = [
@@ -161,10 +162,18 @@ const MyReferralScreen = () => {
         </div> */}
         <div className="overflow-scroll h-100 z-3">
         <Navbar />
-          <div className="container pt-36">
-            <div className="mb-5">
+          <div className="container pt-100">
+            <div className="mb-5 positin-relative">
               <ReferralCards RefralDataAPI={RefralDataAPI} />
+              {/* <div className="cloud-img w-100 z-2"></div> */}
+            </div>  
             </div>
+            <div className='container-fluid p-0'>
+              <div className='position-relative'>
+                <img src={cloudImg} alt="Cloud Image" className='cloud-img w-100' />
+              </div>
+            </div>
+            <div className='container'>        
             <div className="invite-card my-refral-inner-content overflow-hidden">
               <div className="row pt-36 px-5 align-items-center">
                 <div className='col-lg-1'></div>
@@ -297,7 +306,6 @@ const MyReferralScreen = () => {
             ></div>
           </div>
         </div>
-        <div className="cloud-img position-absolute w-100 z-2"></div>
       </section>
     </>
   );
