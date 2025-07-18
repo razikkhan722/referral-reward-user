@@ -9,6 +9,7 @@ export const UserProvider = ({ children }) => {
   const [ContextInviteRefferAPI, setContextInviteRefferAPI] = useState();
   const [AuthLocal, setAuthLocal] = useState();
   const [MeterUpdateData, setMeterUpdateData] = useState();
+  const [ContextCheckSpecialOffer, ContextsetCheckSpecialOffer] = useState();
   return (
     <UserContext.Provider
       value={{
@@ -22,6 +23,7 @@ export const UserProvider = ({ children }) => {
         setAuthLocal,
         ContextInviteRefferAPI,
         setContextInviteRefferAPI,MeterUpdateData, setMeterUpdateData,
+        ContextCheckSpecialOffer, ContextsetCheckSpecialOffer,
       }}
     >
       {children}

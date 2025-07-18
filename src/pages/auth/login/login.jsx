@@ -28,7 +28,7 @@ const Login = () => {
   } = useForm();
 
   // Global context setters
-  const { setAuthLocal, setContextHomeDataAPI, setContextFaqsDataAPI } =
+  const { setAuthLocal, setContextHomeDataAPI, setContextFaqsDataAPI,ContextsetCheckSpecialOffer } =
     useContext(UserContext);
 
   const navigate = useNavigate();
@@ -65,6 +65,9 @@ const Login = () => {
           log_alt: response?.log_alt,
           mode: response?.mode,
         });
+        if(faqsData?.special_offer?.offer_code){
+          ContextsetCheckSpecialOffer(true)
+        }
         setContextFaqsDataAPI(faqsData);
         // Decrypt home data
         const decryptedHome = await DecryptFunction(homeEncrypted);
