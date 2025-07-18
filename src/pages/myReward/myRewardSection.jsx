@@ -54,50 +54,6 @@ import Button from '../../components/button';
 import Popup from 'reactjs-popup';
 
 // Discont card Json
-const discountData = [
-  {
-    mainText: 'Flat ',
-    highlight: '10% Off',
-    subText: 'on Sales Ninja',
-    badgeText: '7 d',
-    badgeClass: 'background-light-cream',
-  },
-  {
-    mainText: '',
-    highlight: '₹ 2000 Off',
-    subText: 'on Business Booster',
-    badgeText: 'Expire Soon',
-    badgeClass: 'background-light-pink',
-  },
-  {
-    mainText: '',
-    highlight: '₹ 2000 Off',
-    subText: 'on Robo Advisory',
-    badgeText: '7 d',
-    badgeClass: 'background-light-cream',
-  },
-  {
-    mainText: 'Flat ',
-    highlight: '10% Off',
-    subText: 'on Sales Ninja',
-    badgeText: '7 d',
-    badgeClass: 'background-light-cream',
-  },
-  {
-    mainText: 'Flat ',
-    highlight: '10% Off',
-    subText: 'on Sales Ninja',
-    badgeText: '7 d',
-    badgeClass: 'background-light-cream',
-  },
-  {
-    mainText: 'Flat ',
-    highlight: '10% Off',
-    subText: 'on Sales Ninja',
-    badgeText: '7 d',
-    badgeClass: 'background-light-cream',
-  },
-];
 
 // Exclusive card JSon
 const ExclusiveCardData = [
@@ -219,31 +175,23 @@ const MyRewardFirstScreen = () => {
     initialSlide: 0,
     centerPadding: '0px',
     responsive: [
-      // {
-      //   breakpoint: 1400,
-      //   settings: {
-      //     slidesToShow: 3,
-      //   },
-      // },
+
       {
         breakpoint: 1200, // screens ≤ 1200px
         settings: {
           slidesToShow: 3,
-          // centerPadding: '20px',
         },
       },
       {
         breakpoint: 992, // screens ≤ 992px
         settings: {
           slidesToShow: 2,
-          // centerPadding: '0px',
         },
       },
       {
         breakpoint: 768, // screens ≤ 768px (tablet)
         settings: {
           slidesToShow: 2,
-          // centerPadding: '20px',
         },
       },
       {
@@ -255,7 +203,45 @@ const MyRewardFirstScreen = () => {
       },
     ],
   };
-  const settings = {
+
+  
+  const Discoutsettings = {
+    arrow: false,
+    // className: 'center',
+    infinite: true,
+    centerMode: true,
+    centerPadding: '40px',
+    slidesToShow: 1,
+    swipeToSlide: true,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 500,
+    afterChange: function (index) {},
+    // responsive: [
+    //   {
+    //     breakpoint: 1200, // screens ≤ 1200px
+    //     settings: {
+    //       slidesToShow: 3,
+    //       centerPadding: '0px',
+    //     },
+    //   },
+    //   {
+    //     breakpoint: 992, // screens ≤ 992px
+    //     settings: {
+    //       slidesToShow: 2,
+    //       centerPadding: '0px',
+    //     },
+    //   },
+    //   {
+    //     breakpoint: 768, // screens ≤ 768px (tablet)
+    //     settings: {
+    //       slidesToShow: 2,
+    //       centerPadding: '0px',
+    //     },
+    //   },
+    // ],
+  };
+    const settings = {
     arrow: false,
     // className: 'center',
     infinite: true,
@@ -328,9 +314,7 @@ const MyRewardFirstScreen = () => {
   const [MyRewardDataAPI, setMyRewardDataAPI] = useState();
   const [showGameCard, setShowGameCard] = useState('invite');
 
-  console.log(MyRewardDataAPI?.part8)
-
- 
+  console.log(MyRewardDataAPI?.part8);
 
   // =============
   // Functions
@@ -355,7 +339,7 @@ const MyRewardFirstScreen = () => {
         mode: Auth?.mode,
       });
       const Decrpty = await DecryptFunction(enyptData);
-      console.log(Decrpty)
+      console.log(Decrpty);
       setMyRewardDataAPI(Decrpty);
     } catch (error) {
       console.log('error: ', error);
@@ -429,25 +413,20 @@ const MyRewardFirstScreen = () => {
     }
   };
 
+  const discountData = (() => {
+    try {
+      const fixedString = MyRewardDataAPI.part8
+        ?.replace(/'/g, '"') // Replace single quotes with double quotes
+        ?.replace(/\bNone\b/g, 'null') // Replace Python None with JSON null
+        ?.replace(/\bTrue\b/g, 'true') // If needed, convert booleans
+        ?.replace(/\bFalse\b/g, 'false');
 
-
-const ChanlData = (() => {
-  try {
-    const fixedString = MyRewardDataAPI.part8
-      ?.replace(/'/g, '"')                     // Replace single quotes with double quotes
-      ?.replace(/\bNone\b/g, 'null')           // Replace Python None with JSON null
-      ?.replace(/\bTrue\b/g, 'true')           // If needed, convert booleans
-      ?.replace(/\bFalse\b/g, 'false');
-
-    return JSON.parse(fixedString) || [];
-  } catch (error) {
-    console.error("JSON parse error:", error);
-    return [];
-  }
-})();
-
-
-
+      return JSON.parse(fixedString) || [];
+    } catch (error) {
+      console.error('JSON parse error:', error);
+      return [];
+    }
+  })();
 
   return (
     <>
@@ -782,140 +761,144 @@ const ChanlData = (() => {
                       </Slider>
                     </div>
                   </div>
-                  {/* Discount Cards start here */}
-                  <div className="discount-code-section my-5 px-4">
-                    <div className="discount-bg-img pt-4">
-                      <p className="font-size-18 space-grotesk-bold text-blue">
-                        Discount Codes
+                  {discountData[0]?.voucher_code ? (
+                    <div className="discount-code-section my-5 px-4">
+                      <div className="discount-bg-img pt-4">
+                        <p className="font-size-18 space-grotesk-bold text-blue">
+                          Discount Codes
+                        </p>
+                      </div>
+                      <p className="text-blue font-size-14 montserrat-medium mb-1">
+                        Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
                       </p>
-                    </div>
-                    <p className="text-blue font-size-14 montserrat-medium mb-1">
-                      Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
-                    </p>
-                    <div className="slider-container discount-slider pb-4">
-                      <Slider className="" {...settings}>
-                        {discountData.map((item, index) => (
-                          <div key={index} className="px-2">
-                            <div className="discount-card background-text-blue p-2 position-relative cursor-pointer">
-                              <PopupWrapper
-                                trigger={
-                                  <div
-                                    className=""
-                                    onClick={() =>
-                                      handleCopy(couponRef, 'coupon')
-                                    } // optional: trigger copy on click
-                                  >
-                                    <div className="row gx-0">
-                                      <div className="col-9 text-white d-flex my-2 justify-content-center">
-                                        <div className="discount-white-box me-2"></div>
-                                        <p className="font-14 montserrat-medium mt-2 lh-sm">
-                                          {item.mainText}
+                      <div className="slider-container discount-slider pb-4">
+                        <Slider className="" {...Discoutsettings}>
+                          {discountData.map((item, index) => (
+                            <div key={index} className="px-2">
+                              <div className="discount-card background-text-blue p-2 position-relative cursor-pointer">
+                                <PopupWrapper
+                                  trigger={
+                                    <div
+                                      className=""
+                                      onClick={() =>
+                                        handleCopy(couponRef, 'coupon')
+                                      } // optional: trigger copy on click
+                                    >
+                                      <div className="row gx-0">
+                                        <div className="col-9 text-white d-flex my-2 justify-content-center">
+                                          <div className="discount-white-box me-2"></div>
+                                          <p className="font-14 montserrat-medium mt-2 lh-sm">
+                                            {/* {item.mainText}
                                           <span className="font-16 montserrat-bold">
                                             {item.highlight}
                                           </span>
-                                          {item.subText}
-                                        </p>
+                                          {item.subText} */}
+                                            {item?.decs}
+                                          </p>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                }
-                              >
-                                {(close) => (
-                                  <div className="text-center">
-                                    <AiOutlineInfoCircle
-                                      size={50}
-                                      color="#1A2A6C"
-                                      style={{ marginBottom: '15px' }}
-                                    />
-                                    <h5 className="mb-3">
-                                      Are you sure you want to unlock this
-                                      offer?
-                                    </h5>
-                                    <div className="d-flex justify-content-center gap-3 py-2">
-                                      <Button
-                                        label="Yes"
-                                        onClick={() => handleYes(close)}
-                                        className="montserrat-semibold w-50 text-center mx-1 text-decoration-none font-16 py-2 rounded-3 bg-transparent border-blue text-blue"
-                                        hoverClass=""
-                                      />
-                                      <Button
-                                        label="No"
-                                        onClick={close}
-                                        className="montserrat-semibold w-50 mx-1 font-16 py-2 rounded-3 border-0 background-text-blue text-white"
-                                        hoverClass=""
-                                      />
-                                    </div>
-                                  </div>
-                                )}
-                              </PopupWrapper>
-
-                              <div className="col-3">
-                                <div
-                                  className={`discount-deals montserrat-semibold font-12 ${item.badgeClass} px-3 py-1 text-blue me-0 position-absolute top-0 end-0`}
-                                >
-                                  {item.badgeText}
-                                </div>
-                              </div>
-                              <div className="discount-card-footer p-2 d-flex justify-content-between">
-                                <p className="text-white mb-0 font-12 montserrat-regular">
-                                  Coupon code:
-                                  <span className="text-uppercase font-14 montserrat-medium px-2">
-                                    {item.code || 'CB1234'}
-                                  </span>
-                                </p>
-                                <button
-                                  className="border-0 bg-white text-blue font-10 montserrat-regular copy-btn px-2"
-                                  onClick={() =>
-                                    discounthandleCopy(
-                                      item.code || 'CB1234',
-                                      index,
-                                    )
                                   }
                                 >
-                                  <span className='montserrat-medium font-12'>
-                                  
-                                    {copiedIndex === index
-                                      ? 'Copied!'
-                                      : 'Copy Link'}
-                                  </span>
-                                </button>
-                              </div>
-                            </div>
+                                  {(close) => (
+                                    <div className="text-center">
+                                      <AiOutlineInfoCircle
+                                        size={50}
+                                        color="#1A2A6C"
+                                        style={{ marginBottom: '15px' }}
+                                      />
+                                      <h5 className="mb-3">
+                                        Are you sure you want to unlock this
+                                        offer?
+                                      </h5>
+                                      <div className="d-flex justify-content-center gap-3 py-2">
+                                        <Button
+                                          label="Yes"
+                                          onClick={() => handleYes(close)}
+                                          className="montserrat-semibold w-50 text-center mx-1 text-decoration-none font-16 py-2 rounded-3 bg-transparent border-blue text-blue"
+                                          hoverClass=""
+                                        />
+                                        <Button
+                                          label="No"
+                                          onClick={close}
+                                          className="montserrat-semibold w-50 mx-1 font-16 py-2 rounded-3 border-0 background-text-blue text-white"
+                                          hoverClass=""
+                                        />
+                                      </div>
+                                    </div>
+                                  )}
+                                </PopupWrapper>
 
-                            {/* Second Popup (Congratulations) */}
-                            <Popup
-                              open={showCongrats}
-                              onClose={() => setShowCongrats(false)}
-                              modal
-                              position="center center"
-                            >
-                              {(close) => (
-                                <div className="text-center p-4">
-                                  <AiOutlineInfoCircle
-                                    size={50}
-                                    color="#28a745"
-                                    style={{ marginBottom: '15px' }}
-                                  />
-                                  <h4>🎉 Congratulations!</h4>
-                                  <p>
-                                    You have successfully unlocked the offer.
-                                  </p>
-                                  <Button
-                                    label="Close"
-                                    onClick={() => {
-                                      close();
-                                      setShowCongrats(false);
-                                    }}
-                                    className="bg-success text-white mt-3"
-                                  />
+                                <div className="col-3">
+                                  <div
+                                    className={`discount-deals montserrat-semibold font-12 ${item.badgeClass} px-3 py-1 text-blue me-0 position-absolute top-0 end-0`}
+                                  >
+                                    {item.badgeText}
+                                  </div>
                                 </div>
-                              )}
-                            </Popup>
-                          </div>
-                        ))}
-                      </Slider>
+                                <div className="discount-card-footer p-2 d-flex justify-content-between">
+                                  <p className="text-white mb-0 font-12 montserrat-regular">
+                                    Coupon code:
+                                    <span className="text-uppercase font-14 montserrat-medium px-2">
+                                      {item?.voucher_code || 'CB1234'}
+                                    </span>
+                                  </p>
+                                  <button
+                                    className="border-0 bg-white text-blue font-10 montserrat-regular copy-btn px-2"
+                                    onClick={() =>
+                                      discounthandleCopy(
+                                        item.code || 'CB1234',
+                                        index,
+                                      )
+                                    }
+                                  >
+                                    <span className="montserrat-medium font-12">
+                                      {copiedIndex === index
+                                        ? 'Copied!'
+                                        : 'Copy Link'}
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+
+                              {/* Second Popup (Congratulations) */}
+                              <Popup
+                                open={showCongrats}
+                                onClose={() => setShowCongrats(false)}
+                                modal
+                                position="center center"
+                              >
+                                {(close) => (
+                                  <div className="text-center p-4">
+                                    <AiOutlineInfoCircle
+                                      size={50}
+                                      color="#28a745"
+                                      style={{ marginBottom: '15px' }}
+                                    />
+                                    <h4>🎉 Congratulations!</h4>
+                                    <p>
+                                      You have successfully unlocked the offer.
+                                    </p>
+                                    <Button
+                                      label="Close"
+                                      onClick={() => {
+                                        close();
+                                        setShowCongrats(false);
+                                      }}
+                                      className="bg-success text-white mt-3"
+                                    />
+                                  </div>
+                                )}
+                              </Popup>
+                            </div>
+                          ))}
+                        </Slider>
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    ''
+                  )}
+                  {/* Discount Cards start here */}
 
                   {/* Exclusive Perks */}
                   {/* Exclusive Perks Section */}
