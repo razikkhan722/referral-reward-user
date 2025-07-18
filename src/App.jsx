@@ -4,9 +4,10 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import AppRoutes from './routes/appRoutes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {UserProvider} from "./UseContext/useContext"
+import { UserProvider } from './UseContext/useContext';
 import Product from './pages/auth/subscription/product';
 import UserFaqs from './pages/auth/userFaqs';
+import FloatingFAB from './utils/FloatingFAB';
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
       <UserProvider>
         <AppRoutes />
       </UserProvider>
+      <FloatingFAB />
+
       {/* <UserFaqs/> */}
     </>
   );
