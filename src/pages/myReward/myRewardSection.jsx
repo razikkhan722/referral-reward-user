@@ -126,37 +126,33 @@ const MyRewardFirstScreen = () => {
   const RewardSliderJson = [
     {
       num: `${ContextFaqsDataAPI?.galaxy_data?.milestones[0]?.milestone_name}`,
-      point: `${
-        ContextFaqsDataAPI?.galaxy_data?.milestones[0]
-          ?.meteors_required_to_unlock
-      }`,
+      point: `${ContextFaqsDataAPI?.galaxy_data?.milestones[0]
+        ?.meteors_required_to_unlock
+        }`,
       img: gifplnt1,
       lock: false,
     },
     {
       num: `${ContextFaqsDataAPI?.galaxy_data?.milestones[1]?.milestone_name}`,
-      point: `${
-        ContextFaqsDataAPI?.galaxy_data?.milestones[1]
-          ?.meteors_required_to_unlock
-      }`,
+      point: `${ContextFaqsDataAPI?.galaxy_data?.milestones[1]
+        ?.meteors_required_to_unlock
+        }`,
       img: gifplnt2,
       lock: false,
     },
     {
       num: `${ContextFaqsDataAPI?.galaxy_data?.milestones[2]?.milestone_name}`,
-      point: `${
-        ContextFaqsDataAPI?.galaxy_data?.milestones[2]
-          ?.meteors_required_to_unlock
-      }`,
+      point: `${ContextFaqsDataAPI?.galaxy_data?.milestones[2]
+        ?.meteors_required_to_unlock
+        }`,
       img: gifplnt3,
       lock: true,
     },
     {
       num: `${ContextFaqsDataAPI?.galaxy_data?.milestones[3]?.milestone_name}`,
-      point: `${
-        ContextFaqsDataAPI?.galaxy_data?.milestones[3]
-          ?.meteors_required_to_unlock
-      }`,
+      point: `${ContextFaqsDataAPI?.galaxy_data?.milestones[3]
+        ?.meteors_required_to_unlock
+        }`,
       img: gifplnt4,
       lock: true,
     },
@@ -204,56 +200,27 @@ const MyRewardFirstScreen = () => {
     ],
   };
 
-  
-  const Discoutsettings = {
+
+  const settings = {
     arrow: false,
     // className: 'center',
     infinite: true,
     centerMode: true,
-    centerPadding: '40px',
-    slidesToShow: 1,
+    centerPadding: '0px',
+    slidesToShow: 3,
     swipeToSlide: true,
     autoplay: true,
     autoplaySpeed: 2000,
     speed: 500,
-    afterChange: function (index) {},
-    // responsive: [
-    //   {
-    //     breakpoint: 1200, // screens ≤ 1200px
-    //     settings: {
-    //       slidesToShow: 3,
-    //       centerPadding: '0px',
-    //     },
-    //   },
-    //   {
-    //     breakpoint: 992, // screens ≤ 992px
-    //     settings: {
-    //       slidesToShow: 2,
-    //       centerPadding: '0px',
-    //     },
-    //   },
-    //   {
-    //     breakpoint: 768, // screens ≤ 768px (tablet)
-    //     settings: {
-    //       slidesToShow: 2,
-    //       centerPadding: '0px',
-    //     },
-    //   },
-    // ],
-  };
-    const settings = {
-    arrow: false,
-    // className: 'center',
-    infinite: true,
-    centerMode: true,
-    centerPadding: '40px',
-    slidesToShow: 3.1,
-    swipeToSlide: true,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    speed: 500,
-    afterChange: function (index) {},
+    afterChange: function (index) { },
     responsive: [
+      // {
+      //   breakpoint: 1366,
+      //   settings: {
+      //     slidesToShow: 3,
+      //     centerPadding: '0px',
+      //   },
+      // },
       {
         breakpoint: 1200, // screens ≤ 1200px
         settings: {
@@ -314,7 +281,7 @@ const MyRewardFirstScreen = () => {
   const [MyRewardDataAPI, setMyRewardDataAPI] = useState();
   const [showGameCard, setShowGameCard] = useState('invite');
 
-  console.log(MyRewardDataAPI?.part8);
+  console.log("fghjkl", MyRewardDataAPI);
 
   // =============
   // Functions
@@ -427,6 +394,45 @@ const MyRewardFirstScreen = () => {
       return [];
     }
   })();
+  console.log('discountData: ', discountData);
+
+  const slidesToShow = discountData.length >= 3 ? 3 : discountData.length || 1;
+  const Discoutsettings = {
+    arrow: false,
+    // className: 'center',
+    infinite: discountData.length > 3,
+    // centerMode: discountData.length > 3,
+    // centerPadding: discountData.length > 3 ? '0px' : '0px',
+    slidesToShow: slidesToShow > 0 ? slidesToShow : 1,
+    swipeToSlide: true,
+    autoplay: discountData.length > 3,
+    autoplaySpeed: 2000,
+    speed: 500,
+    afterChange: function (index) { },
+    responsive: [
+      {
+        breakpoint: 1200, // screens ≤ 1200px
+        settings: {
+          slidesToShow: 3,
+          centerPadding: '0px',
+        },
+      },
+      {
+        breakpoint: 992, // screens ≤ 992px
+        settings: {
+          slidesToShow: 2,
+          centerPadding: '0px',
+        },
+      },
+      {
+        breakpoint: 768, // screens ≤ 768px (tablet)
+        settings: {
+          slidesToShow: 2,
+          centerPadding: '0px',
+        },
+      },
+    ],
+  };
 
   return (
     <>
@@ -628,7 +634,7 @@ const MyRewardFirstScreen = () => {
                                   // value={inviteLink}
                                   defaultValue={MyRewardDataAPI?.part6}
                                   id="inviteLink"
-                                  // readOnly
+                                // readOnly
                                 />
                                 <button
                                   type="button"
@@ -643,21 +649,19 @@ const MyRewardFirstScreen = () => {
                         )}
                         <div className="d-flex justify-content-between mt-4">
                           <button
-                            className={`px-4 font-16 montserrat-semibold width-48 py-2 rounded-3 ${
-                              showGameCard === 'cards'
-                                ? 'text-white background-text-blue' // Active style
-                                : 'bg-white text-blue border-blue' // Inactive style
-                            }`}
+                            className={`px-4 font-16 montserrat-semibold width-48 py-2 rounded-3 ${showGameCard === 'cards'
+                              ? 'text-white background-text-blue' // Active style
+                              : 'bg-white text-blue border-blue' // Inactive style
+                              }`}
                             onClick={() => setShowGameCard('cards')}
                           >
                             Play & Earn
                           </button>
                           <button
-                            className={`px-4 font-16 montserrat-semibold width-48 py-2 rounded-3 ${
-                              showGameCard === 'invite'
-                                ? 'text-white background-text-blue'
-                                : 'bg-white text-blue border-blue'
-                            }`}
+                            className={`px-4 font-16 montserrat-semibold width-48 py-2 rounded-3 ${showGameCard === 'invite'
+                              ? 'text-white background-text-blue'
+                              : 'bg-white text-blue border-blue'
+                              }`}
                             onClick={() => setShowGameCard('invite')}
                           >
                             Invite a Friend
@@ -739,7 +743,7 @@ const MyRewardFirstScreen = () => {
 
                             {/* <h4 className="font-14 montserrat-regular">1000 Meteors</h4> */}
                             {Number(slide?.point) >=
-                            Number(ContextHomeDataAPI?.part2) ? (
+                              Number(ContextHomeDataAPI?.part2) ? (
                               <button className="background-text-blue w-100 mt-4 mx-auto border-0 border-radius-8 font-size-12 d-flex justify-content-center align-items-center py-2 mx-3 opacity-25 montserrat-semibold text-white">
                                 {slide?.point} Meteors{' '}
                                 <img
@@ -769,13 +773,13 @@ const MyRewardFirstScreen = () => {
                         </p>
                       </div>
                       <p className="text-blue font-size-14 montserrat-medium mb-1">
-                        Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+                       You earned these discount coupons, use these codes to get off on products.
                       </p>
                       <div className="slider-container discount-slider pb-4">
                         <Slider className="" {...Discoutsettings}>
                           {discountData.map((item, index) => (
                             <div key={index} className="px-2">
-                              <div className="discount-card background-text-blue p-2 position-relative cursor-pointer">
+                              <div className="discount-card dis-card background-text-blue p-2 position-relative cursor-pointer">
                                 <PopupWrapper
                                   trigger={
                                     <div
@@ -784,6 +788,7 @@ const MyRewardFirstScreen = () => {
                                         handleCopy(couponRef, 'coupon')
                                       } // optional: trigger copy on click
                                     >
+                                      <div className='disc-status px-3 py-1 font-12 montserrat-semibold text-blue position-absolute top-0 end-0 bg-light-pink'>{item?.redeemed === true ? "Used" : item?.status}</div>
                                       <div className="row gx-0">
                                         <div className="col-9 text-white d-flex my-2 justify-content-center">
                                           <div className="discount-white-box me-2"></div>
@@ -793,7 +798,7 @@ const MyRewardFirstScreen = () => {
                                             {item.highlight}
                                           </span>
                                           {item.subText} */}
-                                            {item?.decs}
+                                            {item?.offer_desc}
                                           </p>
                                         </div>
                                       </div>
@@ -862,7 +867,7 @@ const MyRewardFirstScreen = () => {
                               </div>
 
                               {/* Second Popup (Congratulations) */}
-                              <Popup
+                              {/* <Popup
                                 open={showCongrats}
                                 onClose={() => setShowCongrats(false)}
                                 modal
@@ -889,7 +894,7 @@ const MyRewardFirstScreen = () => {
                                     />
                                   </div>
                                 )}
-                              </Popup>
+                              </Popup> */}
                             </div>
                           ))}
                         </Slider>
@@ -983,6 +988,9 @@ const MyRewardFirstScreen = () => {
                               </PopupWrapper>
                             </div>
 
+                          </div>
+                        ))}
+                      </Slider>
                             {/* 🎉 Congratulations Popup for Exclusive Perks */}
                             <Popup
                               open={showCongrats}
@@ -1012,9 +1020,6 @@ const MyRewardFirstScreen = () => {
                                 </div>
                               )}
                             </Popup>
-                          </div>
-                        ))}
-                      </Slider>
                     </div>
                   </div>
                 </div>

@@ -36,7 +36,7 @@ input[type='number'] {
 .popup-content .close {
   position: absolute;
   top: 0px;
-  right: -31px;
+  right: -0.8%;
   background: none;
   border: none;
   font-size: 20px;

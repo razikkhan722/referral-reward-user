@@ -49,6 +49,7 @@ const MyReferralScreen = () => {
   // const inputRef = useRef(null);
   // const [copied, setCopied] = useState(false);
   const [RefralDataAPI, setRefralDataAPI] = useState();
+  console.log('RefralDataAPI: ', RefralDataAPI);
 
   const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
   const { ContextHomeDataAPI, ContextFaqsDataAPI } =
