@@ -6,6 +6,7 @@ import Navbar from '../../components/navbar';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { AiOutlineInfoCircle } from 'react-icons/ai'; // ✅ Import info icon
 
 // import images
 import metero from '../../assets/icons/home/secondScreen/metero.svg';
@@ -47,6 +48,10 @@ import { GiBackwardTime } from 'react-icons/gi';
 import { NavLink } from 'react-router-dom';
 import { toastInfo } from '../../utils/toster';
 import { UserContext } from '../../UseContext/useContext';
+import PopupWrapper from '../../utils/PopupWrapper';
+
+import Button from '../../components/button';
+import Popup from 'reactjs-popup';
 
 // Discont card Json
 const discountData = [
@@ -159,7 +164,8 @@ const FaqData = [
 
 const MyRewardFirstScreen = () => {
   const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
-  const { ContextHomeDataAPI, ContextFaqsDataAPI ,MeterUpdateData} = useContext(UserContext);
+  const { ContextHomeDataAPI, ContextFaqsDataAPI, MeterUpdateData } =
+    useContext(UserContext);
 
   const RewardSliderJson = [
     {
@@ -322,6 +328,10 @@ const MyRewardFirstScreen = () => {
   const [MyRewardDataAPI, setMyRewardDataAPI] = useState();
   const [showGameCard, setShowGameCard] = useState('invite');
 
+  console.log(MyRewardDataAPI?.part8)
+
+ 
+
   // =============
   // Functions
   // ==============
@@ -345,6 +355,7 @@ const MyRewardFirstScreen = () => {
         mode: Auth?.mode,
       });
       const Decrpty = await DecryptFunction(enyptData);
+      console.log(Decrpty)
       setMyRewardDataAPI(Decrpty);
     } catch (error) {
       console.log('error: ', error);
@@ -378,8 +389,7 @@ const MyRewardFirstScreen = () => {
   const couponRef = useRef();
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
-  const inviteCode = 'ABC123XYZ';
-  const inviteLink = 'https://yourapp.com/invite/ABC123XYZ';
+  const [discount, setDiscount] = useState(false);
 
   const handleCopy = (ref, type) => {
     if (ref.current) {
@@ -396,8 +406,49 @@ const MyRewardFirstScreen = () => {
     }
   };
 
- 
-  console.log('ContextHomeDataAPI?.part2: ', ContextHomeDataAPI?.part2);
+  const [showCongrats, setShowCongrats] = useState(false);
+
+  const handleYes = (closeFirstPopup) => {
+    closeFirstPopup(); // Close the first popup
+    setShowCongrats(true); // Open second popup
+  };
+
+  const handleCloseCongrats = () => {
+    setShowCongrats(false);
+  };
+
+  const [copiedIndex, setCopiedIndex] = useState(null);
+
+  const discounthandleCopy = (code, index) => {
+    if (code) {
+      navigator.clipboard.writeText(code).then(() => {
+        setDiscount(code);
+        setCopiedIndex(index);
+        setTimeout(() => setCopiedIndex(null), 2000); // reset after 2s
+      });
+    }
+  };
+
+
+
+const ChanlData = (() => {
+  try {
+    const fixedString = MyRewardDataAPI.part8
+      ?.replace(/'/g, '"')                     // Replace single quotes with double quotes
+      ?.replace(/\bNone\b/g, 'null')           // Replace Python None with JSON null
+      ?.replace(/\bTrue\b/g, 'true')           // If needed, convert booleans
+      ?.replace(/\bFalse\b/g, 'false');
+
+    return JSON.parse(fixedString) || [];
+  } catch (error) {
+    console.error("JSON parse error:", error);
+    return [];
+  }
+})();
+
+
+
+
   return (
     <>
       <section
@@ -423,7 +474,6 @@ const MyRewardFirstScreen = () => {
             <div className="container-fluid mb-4">
               <div
                 className={`px-0 d-flex justify-content-center align-items-center w-100 z-1 left-0 ${UfoBg && RwdAnimate ? 'ufo-nav-bg position-fixed slide-down' : 'slide-up'}`}
-
               >
                 <div
                   className={`row container justify-content-between align-items-center ${UfoBg && RwdAnimate ? 'ufo-fixed-active slide-up mt-4' : 'ufo-fixed slide-down'} mt-lg-4 mt-5 z-3`}
@@ -461,8 +511,9 @@ const MyRewardFirstScreen = () => {
                       className={`bg-transparent rounded-5 px-3 py-1 font-16 montserrat-semibold ${UfoBg && RwdAnimate ? 'text-white border-white slide-up' : 'text-blue reward-history'}`}
                     >
                       Reward History
-                      <GiBackwardTime className={`ms-2 font-18 montserrat-semibold ${UfoBg && RwdAnimate ? 'text-white' : 'text-blue'}`} />
-
+                      <GiBackwardTime
+                        className={`ms-2 font-18 montserrat-semibold ${UfoBg && RwdAnimate ? 'text-white' : 'text-blue'}`}
+                      />
                     </button>
                   </div>
                 </div>
@@ -708,7 +759,8 @@ const MyRewardFirstScreen = () => {
                             </div>
 
                             {/* <h4 className="font-14 montserrat-regular">1000 Meteors</h4> */}
-                            {Number(slide?.point) >= Number(ContextHomeDataAPI?.part2) ? (
+                            {Number(slide?.point) >=
+                            Number(ContextHomeDataAPI?.part2) ? (
                               <button className="background-text-blue w-100 mt-4 mx-auto border-0 border-radius-8 font-size-12 d-flex justify-content-center align-items-center py-2 mx-3 opacity-25 montserrat-semibold text-white">
                                 {slide?.point} Meteors{' '}
                                 <img
@@ -744,19 +796,59 @@ const MyRewardFirstScreen = () => {
                       <Slider className="" {...settings}>
                         {discountData.map((item, index) => (
                           <div key={index} className="px-2">
-                            <div className="discount-card background-text-blue p-2 position-relative">
-                              <div className="row gx-0">
-                                <div className="col-9 text-white d-flex my-2 justify-content-center">
-                                  <div className="discount-white-box me-2"></div>
-                                  <p className="font-14 montserrat-medium mt-2 lh-sm">
-                                    {item.mainText}
-                                    <span className="font-16 montserrat-bold">
-                                      {item.highlight}
-                                    </span>{' '}
-                                    {item.subText}
-                                  </p>
-                                </div>
-                              </div>
+                            <div className="discount-card background-text-blue p-2 position-relative cursor-pointer">
+                              <PopupWrapper
+                                trigger={
+                                  <div
+                                    className=""
+                                    onClick={() =>
+                                      handleCopy(couponRef, 'coupon')
+                                    } // optional: trigger copy on click
+                                  >
+                                    <div className="row gx-0">
+                                      <div className="col-9 text-white d-flex my-2 justify-content-center">
+                                        <div className="discount-white-box me-2"></div>
+                                        <p className="font-14 montserrat-medium mt-2 lh-sm">
+                                          {item.mainText}
+                                          <span className="font-16 montserrat-bold">
+                                            {item.highlight}
+                                          </span>
+                                          {item.subText}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                }
+                              >
+                                {(close) => (
+                                  <div className="text-center">
+                                    <AiOutlineInfoCircle
+                                      size={50}
+                                      color="#1A2A6C"
+                                      style={{ marginBottom: '15px' }}
+                                    />
+                                    <h5 className="mb-3">
+                                      Are you sure you want to unlock this
+                                      offer?
+                                    </h5>
+                                    <div className="d-flex justify-content-center gap-3 py-2">
+                                      <Button
+                                        label="Yes"
+                                        onClick={() => handleYes(close)}
+                                        className="montserrat-semibold w-50 text-center mx-1 text-decoration-none font-16 py-2 rounded-3 bg-transparent border-blue text-blue"
+                                        hoverClass=""
+                                      />
+                                      <Button
+                                        label="No"
+                                        onClick={close}
+                                        className="montserrat-semibold w-50 mx-1 font-16 py-2 rounded-3 border-0 background-text-blue text-white"
+                                        hoverClass=""
+                                      />
+                                    </div>
+                                  </div>
+                                )}
+                              </PopupWrapper>
+
                               <div className="col-3">
                                 <div
                                   className={`discount-deals montserrat-semibold font-12 ${item.badgeClass} px-3 py-1 text-blue me-0 position-absolute top-0 end-0`}
@@ -767,29 +859,58 @@ const MyRewardFirstScreen = () => {
                               <div className="discount-card-footer p-2 d-flex justify-content-between">
                                 <p className="text-white mb-0 font-12 montserrat-regular">
                                   Coupon code:
-                                  <span className="text-uppercase font-14 montserrat-medium">
-                                    CB1234
+                                  <span className="text-uppercase font-14 montserrat-medium px-2">
+                                    {item.code || 'CB1234'}
                                   </span>
                                 </p>
-                                {/* <p className='text-white mb-0 font-12 montserrat-regular d-flex'>
-                                  Coupon code:
-                                  <input
-                                    ref={couponRef}
-                                    value="CB1234"
-                                    readOnly
-                                    className='border-0 bg-transparent text-uppercase font-14 montserrat-medium text-white'
-                                  />
-                                </p> */}
                                 <button
                                   className="border-0 bg-white text-blue font-10 montserrat-regular copy-btn px-2"
                                   onClick={() =>
-                                    handleCopy(couponRef, 'coupon')
+                                    discounthandleCopy(
+                                      item.code || 'CB1234',
+                                      index,
+                                    )
                                   }
                                 >
-                                  Copy Code
+                                  <span className='montserrat-medium font-12'>
+                                  
+                                    {copiedIndex === index
+                                      ? 'Copied!'
+                                      : 'Copy Link'}
+                                  </span>
                                 </button>
                               </div>
                             </div>
+
+                            {/* Second Popup (Congratulations) */}
+                            <Popup
+                              open={showCongrats}
+                              onClose={() => setShowCongrats(false)}
+                              modal
+                              position="center center"
+                            >
+                              {(close) => (
+                                <div className="text-center p-4">
+                                  <AiOutlineInfoCircle
+                                    size={50}
+                                    color="#28a745"
+                                    style={{ marginBottom: '15px' }}
+                                  />
+                                  <h4>🎉 Congratulations!</h4>
+                                  <p>
+                                    You have successfully unlocked the offer.
+                                  </p>
+                                  <Button
+                                    label="Close"
+                                    onClick={() => {
+                                      close();
+                                      setShowCongrats(false);
+                                    }}
+                                    className="bg-success text-white mt-3"
+                                  />
+                                </div>
+                              )}
+                            </Popup>
                           </div>
                         ))}
                       </Slider>
@@ -797,6 +918,7 @@ const MyRewardFirstScreen = () => {
                   </div>
 
                   {/* Exclusive Perks */}
+                  {/* Exclusive Perks Section */}
                   <div className="discount-code-section my-5 px-4">
                     <div className="discount-bg-img pt-4">
                       <p className="font-size-18 space-grotesk-bold text-blue">
@@ -812,32 +934,101 @@ const MyRewardFirstScreen = () => {
                         {ExclusiveCardData.map((item, index) => (
                           <div key={index}>
                             <div className="discount-card exclusive-cards w-100 background-text-blue p-3">
-                              <div className="row gx-0 mb-3">
-                                <div className="col-8 text-white">
-                                  <p className="font-16 mb-0 text-uppercase montserrat-medium lh-sm">
-                                    {item.title}
+                              <PopupWrapper
+                                trigger={
+                                  <div
+                                    className="discount-card background-text-blue p-2 position-relative cursor-pointer"
+                                    onClick={() =>
+                                      handleCopy(couponRef, 'coupon')
+                                    }
+                                  >
+                                    <div className="row gx-0 mb-3">
+                                      <div className="col-8 text-white">
+                                        <p className="font-16 mb-0 text-uppercase montserrat-medium lh-sm">
+                                          {item.title}
+                                        </p>
+                                        <p className="font-14 montserrat-semibold exclusive-card-yellow-text">
+                                          {item.subtitle}
+                                        </p>
+                                      </div>
+                                      <div className="col-4 d-flex justify-content-end">
+                                        <img
+                                          src={item.image}
+                                          className={item.imgClass}
+                                          alt="Loading"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-12 d-flex justify-content-between align-items-center">
+                                      <p className="font-14 space-grotesk-medium text-white mb-0">
+                                        {item.pointsText}
+                                      </p>
+                                      <p className="exclusive-card-blue-text font-12 montserrat-medium mb-0">
+                                        T&C Applied
+                                      </p>
+                                    </div>
+                                  </div>
+                                }
+                              >
+                                {(close) => (
+                                  <div className="text-center">
+                                    <AiOutlineInfoCircle
+                                      size={50}
+                                      color="#1A2A6C"
+                                      style={{ marginBottom: '15px' }}
+                                    />
+                                    <h5 className="mb-3">
+                                      Are you sure you want to unlock this
+                                      offer?
+                                    </h5>
+                                    <div className="d-flex justify-content-center gap-3 py-2">
+                                      <Button
+                                        label="Yes"
+                                        onClick={() => handleYes(close)} // triggers setShowCongrats(true)
+                                        className="montserrat-semibold w-50 text-center mx-1 text-decoration-none font-16 py-2 rounded-3 bg-transparent border-blue text-blue"
+                                        hoverClass=""
+                                      />
+                                      <Button
+                                        label="No"
+                                        onClick={close}
+                                        className="montserrat-semibold w-50 mx-1 font-16 py-2 rounded-3 border-0 background-text-blue text-white"
+                                        hoverClass=""
+                                      />
+                                    </div>
+                                  </div>
+                                )}
+                              </PopupWrapper>
+                            </div>
+
+                            {/* 🎉 Congratulations Popup for Exclusive Perks */}
+                            <Popup
+                              open={showCongrats}
+                              onClose={() => setShowCongrats(false)}
+                              modal
+                              position="center center"
+                            >
+                              {(close) => (
+                                <div className="text-center p-4">
+                                  <AiOutlineInfoCircle
+                                    size={50}
+                                    color="#28a745"
+                                    style={{ marginBottom: '15px' }}
+                                  />
+                                  <h4>🎉 Congratulations!</h4>
+                                  <p>
+                                    You have successfully unlocked the offer.
                                   </p>
-                                  <p className="font-14 montserrat-semibold exclusive-card-yellow-text">
-                                    {item.subtitle}
-                                  </p>
-                                </div>
-                                <div className="col-4 d-flex justify-content-end">
-                                  <img
-                                    src={item.image}
-                                    className={`${item.imgClass}`}
-                                    alt="Loading"
+                                  <Button
+                                    label="Close"
+                                    onClick={() => {
+                                      close();
+                                      setShowCongrats(false);
+                                    }}
+                                    className="bg-success text-white mt-3"
                                   />
                                 </div>
-                              </div>
-                              <div className="col-12 d-flex justify-content-between align-items-center">
-                                <p className="font-14 space-grotesk-medium text-white mb-0">
-                                  {item.pointsText}
-                                </p>
-                                <p className="exclusive-card-blue-text font-12 montserrat-medium mb-0">
-                                  T&C Applied
-                                </p>
-                              </div>
-                            </div>
+                              )}
+                            </Popup>
                           </div>
                         ))}
                       </Slider>

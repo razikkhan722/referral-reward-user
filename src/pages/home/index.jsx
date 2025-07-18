@@ -466,7 +466,7 @@ const Index = ({ isExiting, isActive }) => {
                     </div>
                  
                   </div>
-                  <div className="col-lg-9 planet-section">
+                  <div className="col-lg-9 planet-section"> 
                     <div className="row ">
                       <div className="col-lg-3 text-center">
                         <img
