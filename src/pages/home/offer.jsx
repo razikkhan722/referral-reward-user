@@ -85,6 +85,7 @@ const Offer = ({ isActive }) => {
   };
 
   const { ContextFaqsDataAPI } = useContext(UserContext);
+  console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI);
 
   const toggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -309,14 +310,12 @@ const Offer = ({ isActive }) => {
                       <div className="head-content ">
                         <h2 className="font-24 montserrat-medium text-white mb-2">
                           {
-                            ContextFaqsDataAPI?.exciting_prizes?.[0]?.prizes[0]
-                              ?.title
+                            ContextFaqsDataAPI?.exciting_prizes?.[0]?.title
                           }
                         </h2>
                         <p className="font-14 montserrat-light text-white mb-5 pb-5">
                           {
-                            ContextFaqsDataAPI?.exciting_prizes?.[0]?.prizes[0]
-                              ?.term_conditions
+                            ContextFaqsDataAPI?.exciting_prizes?.[0]?.term_conditions
                           }
                         </p>
                       </div>
@@ -327,15 +326,13 @@ const Offer = ({ isActive }) => {
                         <div className="d-flex align-items-center">
                           <span className="font-24 montserrat-semibold text-light-yellow">
                             {
-                              ContextFaqsDataAPI?.exciting_prizes?.[0]
-                                ?.prizes[0]?.required_meteors
+                              ContextFaqsDataAPI?.exciting_prizes?.[0]?.required_meteors
                             }
                           </span>
                           <img
                             className="mx-3"
                             src={
-                              ContextFaqsDataAPI?.exciting_prizes?.[0]
-                                ?.prizes[0]?.image_url || metero
+                              ContextFaqsDataAPI?.exciting_prizes?.[0]?.image_url || metero
                             }
                             alt=""
                           />
