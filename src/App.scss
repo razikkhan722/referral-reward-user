@@ -1412,11 +1412,11 @@ body::-webkit-scrollbar {
 
   &.progress-side-hr {
     border-style: solid;
-    height: pxToRem(35);
+    height: pxToRem(38);
   }
 
   &.progress-side-hr11 {
-    height: pxToRem(30);
+    height: pxToRem(38);
   }
 
   &.progress-side-hr-2 {
@@ -4354,3 +4354,5 @@ body::-webkit-scrollbar {
   background-position:center;
   background-repeat: no-repeat;
 }
+
+
