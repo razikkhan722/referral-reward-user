@@ -4366,6 +4366,75 @@ body::-webkit-scrollbar {
 // ------------------------------------------------
 // SIDE NAV POP CSS
 // ------------------------------------------------
+// .fab {
+//   background-color: transparent;
+//   height: 68px;
+//   width: 68px;
+//   border-radius: 32px;
+//   transition: height 300ms ease;
+//   position: absolute;
+//   right: 3%;
+//   bottom: 5%;
+//   text-align: center;
+//   overflow: hidden;
+// }
+
+// .fab:hover {
+//   height: 45%;
+// }
+
+// .fab:hover .mainop {
+//   transform: rotate(180deg);
+// }
+
+// .mainop {
+//   margin: auto;
+//   width: 66px;
+//   height: 66px;
+//   position: absolute;
+//   bottom: 0;
+//   right: 0;
+//   transition: transform 300ms;
+//   background-color: #1A2A6C;
+//   border-radius: 50px;
+//   z-index: 6;
+// }
+
+
+// .minifab {
+//   position: relative;
+//   width: 56px;
+//   height: 56px;
+//   border-radius: 50px;
+//   z-index: 5;
+
+//   filter: drop-shadow(1px 3px 2px black);
+
+//   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+// }
+
+
+// .flotnav-icon{
+//   width: 30%;
+// }
+
+
+// .opt1 {
+//   background-color:var(--text-blue);
+// }
+
+// .opt2 {
+//   background-color:var(--text-blue);
+// }
+
+// .opt3 {
+//   background-color:var(--text-blue);
+// }
+
+// .opt4 {
+//   background-color:var(--text-blue);
+// }
+
 .fab {
   background-color: transparent;
   height: 68px;
@@ -4373,14 +4442,15 @@ body::-webkit-scrollbar {
   border-radius: 32px;
   transition: height 300ms ease;
   position: absolute;
-  right: 3%;
+  right: 2%;
   bottom: 5%;
   text-align: center;
   overflow: hidden;
+  z-index: 10;
 }
 
 .fab:hover {
-  height: 45%;
+  height: 47%;
 }
 
 .fab:hover .mainop {
@@ -4395,11 +4465,10 @@ body::-webkit-scrollbar {
   bottom: 0;
   right: 0;
   transition: transform 300ms;
-  background-color: #f44336;
+  background-color: #1A2A6C;
   border-radius: 50px;
   z-index: 6;
 }
-
 
 .minifab {
   position: relative;
@@ -4407,33 +4476,22 @@ body::-webkit-scrollbar {
   height: 56px;
   border-radius: 50px;
   z-index: 5;
-
   filter: drop-shadow(1px 3px 2px black);
-
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+              0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-
-.flotnav-icon{
-  width: 40%;
+.flotnav-icon {
+  width: 30%;
 }
 
-
-.opt1 {
-  background-color:var(--text-blue);
-}
-
-.opt2 {
-  background-color:var(--text-blue);
-}
-
-.opt3 {
-  background-color:var(--text-blue);
-}
-
+.opt1,
+.opt2,
+.opt3,
 .opt4 {
-  background-color:var(--text-blue);
+  background-color: var(--text-blue);
 }
+
 
 // ---------------------------------
 // SPECIAL OFFER POPUP MODAL CSS

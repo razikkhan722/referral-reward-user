@@ -22,7 +22,7 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
-/* .popup-content {
+.popup-content {
   padding: 25px;
   background: #fff;
   width: 25% !important;
@@ -39,7 +39,7 @@ input[type='number'] {
   right: -0.8%;
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 30px;
   cursor: pointer;
 }
- */
+

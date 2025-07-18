@@ -91,6 +91,7 @@ const Offer = ({ isActive }) => {
 
   const { ContextFaqsDataAPI } = useContext(UserContext);
 
+
   const toggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
@@ -139,6 +140,7 @@ const Offer = ({ isActive }) => {
         mode: Auth?.mode,
       });
       const Decrpty = await DecryptFunction(enyptData);
+     
       setFaqDataAPI();
     } catch (error) {
       console.log('error: ', error);
@@ -357,14 +359,13 @@ const Offer = ({ isActive }) => {
                       <div className="head-content ">
                         <h2 className="font-24 montserrat-medium text-white mb-2">
                           {
-                            ContextFaqsDataAPI?.exciting_prizes?.[0]?.prizes[0]
+                            ContextFaqsDataAPI?.exciting_prizes
                               ?.title
                           }
                         </h2>
                         <p className="font-14 montserrat-light text-white mb-5 pb-5">
                           {
-                            ContextFaqsDataAPI?.exciting_prizes?.[0]?.prizes[0]
-                              ?.term_conditions
+                            ContextFaqsDataAPI?.exciting_prizes?.term_conditions
                           }
                         </p>
                       </div>
@@ -375,15 +376,13 @@ const Offer = ({ isActive }) => {
                         <div className="d-flex align-items-center">
                           <span className="font-24 montserrat-semibold text-light-yellow">
                             {
-                              ContextFaqsDataAPI?.exciting_prizes?.[0]
-                                ?.prizes[0]?.required_meteors
+                              ContextFaqsDataAPI?.exciting_prizes?.required_meteors
                             }
                           </span>
                           <img
                             className="mx-3"
                             src={
-                              ContextFaqsDataAPI?.exciting_prizes?.[0]
-                                ?.prizes[0]?.image_url || metero
+                              ContextFaqsDataAPI?.exciting_prizes?.prizes?.image_url || metero
                             }
                             alt=""
                           />
@@ -397,7 +396,7 @@ const Offer = ({ isActive }) => {
                       <img
                         className="align-self-end mb-1"
                         src={suitcase}
-                        alt=""
+                        alt="Loading"
                       />
                     </div>
                   </div>

@@ -281,7 +281,6 @@ const MyRewardFirstScreen = () => {
   const [MyRewardDataAPI, setMyRewardDataAPI] = useState();
   const [showGameCard, setShowGameCard] = useState('invite');
 
-  console.log("fghjkl", MyRewardDataAPI);
 
   // =============
   // Functions
@@ -306,7 +305,6 @@ const MyRewardFirstScreen = () => {
         mode: Auth?.mode,
       });
       const Decrpty = await DecryptFunction(enyptData);
-      console.log(Decrpty);
       setMyRewardDataAPI(Decrpty);
     } catch (error) {
       console.log('error: ', error);
@@ -382,19 +380,18 @@ const MyRewardFirstScreen = () => {
 
   const discountData = (() => {
     try {
-      const fixedString = MyRewardDataAPI.part8
+      const fixedString = MyRewardDataAPI?.part8
         ?.replace(/'/g, '"') // Replace single quotes with double quotes
         ?.replace(/\bNone\b/g, 'null') // Replace Python None with JSON null
         ?.replace(/\bTrue\b/g, 'true') // If needed, convert booleans
         ?.replace(/\bFalse\b/g, 'false');
 
-      return JSON.parse(fixedString) || [];
+      return JSON?.parse(fixedString) || [];
     } catch (error) {
       console.error('JSON parse error:', error);
       return [];
     }
   })();
-  console.log('discountData: ', discountData);
 
   const slidesToShow = discountData.length >= 3 ? 3 : discountData.length || 1;
   const Discoutsettings = {

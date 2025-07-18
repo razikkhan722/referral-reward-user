@@ -49,7 +49,6 @@ const MyReferralScreen = () => {
   // const inputRef = useRef(null);
   // const [copied, setCopied] = useState(false);
   const [RefralDataAPI, setRefralDataAPI] = useState();
-  console.log('RefralDataAPI: ', RefralDataAPI);
 
   const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
   const { ContextHomeDataAPI, ContextFaqsDataAPI } =
@@ -113,7 +112,6 @@ const MyReferralScreen = () => {
         mode: Auth?.mode,
       });
       const Decrpty = await DecryptFunction(enyptData);
-      console.log('Decrpty: ', Decrpty);
       setRefralDataAPI(Decrpty);
     } catch (error) {
       console.log('error: ', error);
