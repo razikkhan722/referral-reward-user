@@ -140,15 +140,15 @@ function Home() {
     setShow(false);
   };
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if(!ContextCheckSpecialOffer){
-      console.log('ContextCheckSpecialOffer: ', ContextCheckSpecialOffer);
-      setShow(true)
-      ContextsetCheckSpecialOffer(false)
-    }
+  //   if(!ContextCheckSpecialOffer){
+  //     console.log('ContextCheckSpecialOffer: ', ContextCheckSpecialOffer);
+  //     setShow(true)
+  //     ContextsetCheckSpecialOffer(false)
+  //   }
 
-  }, [])
+  // }, [])
   
   return (
     <>

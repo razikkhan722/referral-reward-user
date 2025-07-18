@@ -65,9 +65,9 @@ const Login = () => {
           log_alt: response?.log_alt,
           mode: response?.mode,
         });
-        if(faqsData?.special_offer?.offer_code){
-          ContextsetCheckSpecialOffer(true)
-        }
+        // if(faqsData?.special_offer?.offer_code){
+        //   ContextsetCheckSpecialOffer(true)
+        // }
         setContextFaqsDataAPI(faqsData);
         // Decrypt home data
         const decryptedHome = await DecryptFunction(homeEncrypted);
