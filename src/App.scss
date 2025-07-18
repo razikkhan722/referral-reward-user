@@ -2345,7 +2345,14 @@ body::-webkit-scrollbar {
 .discount-card {
   border-radius: 8px;
 }
-
+.dis-card{
+  width: 322px;
+  max-width: 100%;
+}
+.disc-status{
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
 .discount-white-box {
   height: 50px;
   width: 50px;

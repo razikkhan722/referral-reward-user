@@ -88,21 +88,24 @@ let ColorCode = ["user-green-card",
 
 const SliderCard = ({ RefralDataAPI }) => {
     const [showTable, setShowTable] = useState(false);
+
+    const slidesToShow = RefralDataAPI?.part4?.length >= 3 ? 3 : RefralDataAPI?.part4?.length || 1;
+
     var settings = {
         arrows: false,
         dots: false,
-        infinite: true,
-        slidesToShow: 3,
+        infinite: RefralDataAPI?.part4?.length > 3,
+        slidesToShow: slidesToShow,
         slidesToScroll: 1,
         // initialSlide: 0,
-        autoplay: true,
+        autoplay: RefralDataAPI?.part4?.length > 3,
         speed: 2000,
         autoplaySpeed: 3000,
         responsive: [
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 3,
+                    slidesToShow: Math.min(RefralDataAPI?.part4?.length || 1, 3),
                     slidesToScroll: 3,
                     infinite: true,
                     dots: true
@@ -111,7 +114,7 @@ const SliderCard = ({ RefralDataAPI }) => {
             {
                 breakpoint: 960,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: Math.min(RefralDataAPI?.part4?.length || 1, 2),
                     slidesToScroll: 2,
                     initialSlide: 2
                 }
