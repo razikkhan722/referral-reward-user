@@ -90,7 +90,7 @@ const Offer = ({ isActive }) => {
   };
 
   const { ContextFaqsDataAPI } = useContext(UserContext);
-  console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI?.special_offer);
+
 
   const toggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -140,6 +140,7 @@ const Offer = ({ isActive }) => {
         mode: Auth?.mode,
       });
       const Decrpty = await DecryptFunction(enyptData);
+
       setFaqDataAPI();
     } catch (error) {
       console.log('error: ', error);
@@ -183,7 +184,7 @@ const Offer = ({ isActive }) => {
                         </p>
                         <span className="text-decoration-none text-white font-18 montserrat-medium d-flex cursor-pointer">
                           Learn More
-                          <img className="ms-2" src={rightarrow} alt="" />
+                          <img className="ms-2" src={rightarrow} alt="Loading" />
                         </span>
                       </div>
                       <div className="col-lg-5 d-flex justify-content-center align-items-center">
@@ -255,6 +256,7 @@ const Offer = ({ isActive }) => {
                 {copiedCode ? 'Copied!' : 'Copy Code'}
               </button>
             </div>
+            <p className='font-14 montserrat-medium text-white text-end'>{ContextFaqsDataAPI?.special_offer?.tag}</p>
           </div>
           <h3 className='offer-tag text-white font-14 montserrat-medium'>{ContextFaqsDataAPI?.special_offer?.tag}</h3>
         </div>
@@ -265,85 +267,62 @@ const Offer = ({ isActive }) => {
             Exclusive Offers
           </h1>
           <div className="pt-5 d-grid price-exclusive gap-3">
-            <div className="mt-5 rounded-4 shadow-lg bg-white px-0">
-              <div className="head-sec position-relative">
-                <img className="w-100" src={offerexcimg} alt="offerexcimg" />
-                <img
-                  className="position-absolute offer-exc-rocket"
-                  src={excrocket}
-                  alt="Loading"
-                />
+            {ContextFaqsDataAPI?.exclusive_offers?.map((offer, index) => (
+              <div key={index} className="mt-5 rounded-4 shadow-lg bg-white px-0">
+                <div className="head-sec position-relative">
+                  <img className="w-100" src={offerexcimg} alt="offerimg" />
+                  <img
+                    className="position-absolute offer-exc-rocket"
+                    src={excrocket}
+                    alt="Loading"
+                  />
+                </div>
+                <div className="text-center px-5">
+                  <img src={zomato} alt="Loading" />
+                  <h3 className="font-24 text-light-black montserrat-semibold mt-3 mb-2">
+                    {offer.offer_name}
+                  </h3>
+                  <p className="font-16 text-light-black space-grotesk-regular">
+                    {offer.one_liner}
+                  </p>
+                  <hr className="my-4 border-1 card-divider width-65" />
+                  <PopupWrapper trigger={<button
+                    className="btn background-text-blue text-white font-14 montserrat-medium mb-4 width-65 rounded-5"
+                    type="button"
+                  >
+                    {offer?.button_txt}
+                  </button>}>
+                    {(close) => (
+                      <div className="text-center p-4">
+                        <AiOutlineInfoCircle
+                          size={50}
+                          color="#1A2A6C"
+                          className="mb-3"
+                        />
+                        <h5 className="mb-3">
+                          Are you sure you want to unlock this prize?
+                        </h5>
+                        <div className="d-flex justify-content-center gap-3">
+                          <Button
+                            label="Yes"
+                            onClick={() => handleYes(close)}
+                            className="w-50 py-2 rounded-3 bg-transparent border-blue text-blue montserrat-semibold"
+                          />
+                          <Button
+                            label="No"
+                            onClick={close}
+                            className="w-50 py-2 rounded-3 border-0 background-text-blue text-white montserrat-semibold"
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </PopupWrapper>
+
+                </div>
               </div>
-              <div className="text-center px-5">
-                <img src={zomato} alt="zomato" />
-                <h3 className="font-24 text-light-black montserrat-semibold mt-3 mb-2">
-                  Get 10% Off on Zomato
-                </h3>
-                <p className="font-16 text-light-black space-grotesk-regular">
-                  Enjoy delicious deals on your next order!
-                </p>
-                <hr className="my-4 border-1 card-divider width-65" />
-                <button
-                  className="btn background-text-blue text-white font-14 montserrat-medium mb-4 width-65 rounded-5"
-                  type="button"
-                >
-                  Claim Now
-                </button>
-              </div>
-            </div>
-            <div className="mt-5 rounded-4 shadow-lg bg-white px-0">
-              <div className="head-sec position-relative">
-                <img className="w-100" src={offerexcimg} alt="offerexcimg" />
-                <img
-                  className="position-absolute offer-exc-rocket"
-                  src={excrocket}
-                  alt="Loading"
-                />
-              </div>
-              <div className="text-center px-5">
-                <img src={zomato} alt="zomato" />
-                <h3 className="font-24 text-light-black montserrat-semibold mt-3 mb-2">
-                  Get 10% Off on Zomato
-                </h3>
-                <p className="font-16 text-light-black space-grotesk-regular">
-                  Enjoy delicious deals on your next order!
-                </p>
-                <hr className="my-4 border-1 card-divider width-65" />
-                <button
-                  className="btn background-text-blue text-white font-14 montserrat-medium mb-4 width-65 rounded-5"
-                  type="button"
-                >
-                  Claim Now
-                </button>
-              </div>
-            </div>
-            <div className="mt-5 rounded-4 shadow-lg bg-white px-0">
-              <div className="head-sec position-relative">
-                <img className="w-100" src={offerexcimg} alt="offerexcimg" />
-                <img
-                  className="position-absolute offer-exc-rocket"
-                  src={excrocket}
-                  alt=""
-                />
-              </div>
-              <div className="text-center px-5">
-                <img src={zomato} alt="zomato" />
-                <h3 className="font-24 text-light-black montserrat-semibold mt-3 mb-2">
-                  Get 10% Off on Zomato
-                </h3>
-                <p className="font-16 text-light-black space-grotesk-regular">
-                  Enjoy delicious deals on your next order!
-                </p>
-                <hr className="my-4 border-1 card-divider width-65" />
-                <button
-                  className="btn background-text-blue text-white font-14 montserrat-medium mb-4 width-65 rounded-5"
-                  type="button"
-                >
-                  Claim Now
-                </button>
-              </div>
-            </div>
+            ))}
           </div>
+
           {/* Win Exciting Prizes SECTION */}
           <h2 className="text-dark-blue mt-120 font-40 space-grotesk-bold mb-4 pb-4 ">
             Win Exciting Prizes
@@ -357,16 +336,15 @@ const Offer = ({ isActive }) => {
                     <div className="col-lg-8 pt-5 ps-5 d-grid">
                       <div className="head-content ">
                         <h2 className="font-24 montserrat-medium text-white mb-2">
-                            {/* {
-                              ContextFaqsDataAPI?.exciting_prizes?.[0]?.prizes[0]
-                                ?.title
-                            } */}
+                          {
+                            ContextFaqsDataAPI?.exciting_prizes[0]
+                              ?.title
+                          }
                         </h2>
                         <p className="font-14 montserrat-light text-white mb-5 pb-5">
-                          {/* {
-                            ContextFaqsDataAPI?.exciting_prizes?.[0]?.prizes[0]
-                              ?.term_conditions
-                          } */}
+                          {
+                            ContextFaqsDataAPI?.exciting_prizes[0]?.term_conditions
+                          }
                         </p>
                       </div>
                       <div className="section-offer align-self-end mb-3 pb-1">
@@ -375,17 +353,15 @@ const Offer = ({ isActive }) => {
                         </h4>
                         <div className="d-flex align-items-center">
                           <span className="font-24 montserrat-semibold text-light-yellow">
-                            {/* {
-                              ContextFaqsDataAPI?.exciting_prizes?.[0]
-                                ?.prizes[0]?.required_meteors
-                            } */}
+                            {
+                              ContextFaqsDataAPI?.exciting_prizes[0]?.required_meteors
+                            }
                           </span>
                           <img
                             className="mx-3"
-                            // src={
-                            //   ContextFaqsDataAPI?.exciting_prizes?.[0]
-                            //     ?.prizes[0]?.image_url || metero
-                            // }
+                            src={
+                              ContextFaqsDataAPI?.exciting_prizes?.prizes?.image_url || metero
+                            }
                             alt=""
                           />
                           <span className="font-28 montserrat-medium text-white">
@@ -398,7 +374,7 @@ const Offer = ({ isActive }) => {
                       <img
                         className="align-self-end mb-1"
                         src={suitcase}
-                        alt=""
+                        alt="Loading"
                       />
                     </div>
                   </div>
@@ -433,7 +409,7 @@ const Offer = ({ isActive }) => {
 
             {/* Second and Third Prizes */}
             <div className="col-lg-6 px-lg-4 px-0 d-flex flex-column gap-4">
-              {[smartwatch, headphone].map((img, i) => (
+              {ContextFaqsDataAPI?.exciting_prizes?.slice(1).map((item, i) => (
                 <PopupWrapper
                   key={i}
                   trigger={
@@ -441,14 +417,18 @@ const Offer = ({ isActive }) => {
                       className={`col-lg-12 py-3 shadow-lg d-flex justify-content-between align-self-lg-${i === 0 ? 'start' : 'end'} cursor-pointer ${i === 0 ? 'price-watch' : 'price-headphone'}`}
                     >
                       <div className="col-lg-8 ms-4 ps-4 align-self-end mb-1">
-                        <h4 className="font-40 space-grotesk-medium text-white mb-0">
-                          Collect
+                        <h4 className="font-40 space-grotesk-medium text-white lh-1">
+                          {
+                            item?.title
+                          }
                         </h4>
                         <div className="d-flex align-items-center">
                           <span className="font-24 montserrat-semibold text-light-yellow">
-                            1500
+                            {
+                              item?.required_meteors
+                            }
                           </span>
-                          <img className="mx-3" src={metero} alt="" />
+                          <img className="mx-3" src={metero} alt="Loading" />
                           <span className="font-28 montserrat-medium text-white">
                             Total Meteors
                           </span>
@@ -456,7 +436,7 @@ const Offer = ({ isActive }) => {
                       </div>
                       <div className="col-lg-4 d-flex align-items-center">
                         <img
-                          src={img}
+                          src={i === 0 ? smartwatch : headphone}
                           alt={i === 0 ? 'smartwatch' : 'headphone'}
                         />
                       </div>

@@ -1,24 +1,34 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 // import component
 import Navbar from '../../components/navbar';
+import FAQ from '../../components/faq';
+import PlayAndEarnCard from '../../components/playAndEarnCard';
+import RewardHistory from './rewardHistory';
+import { postData } from '../../services/api';
+import { DecryptFunction } from '../../utils/decryptFunction';
+import Button from '../../components/button';
+import { UserContext } from '../../UseContext/useContext';
+import PopupWrapper from '../../utils/PopupWrapper';
+import { toastInfo } from '../../utils/toster';
 
-// import slider
+// import slider and third party components
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { AiOutlineInfoCircle } from 'react-icons/ai'; // ✅ Import info icon
+import { GiBackwardTime } from 'react-icons/gi';
+import { NavLink } from 'react-router-dom';
+import Popup from 'reactjs-popup';
+
 
 // import images
 import metero from '../../assets/icons/home/secondScreen/metero.svg';
 import tiltship from '../../assets/icons/home/secondScreen/tillship1.svg';
 import star from '../../assets/icons/home/secondScreen/star.svg';
-// import moneypocket from '../../assets/icons/home/MyRewards/moneypkt.svg';
 import shootingmeteor from '../../assets/icons/home/MyRewards/shotmeteor.svg';
 import rewardRocket from '../../assets/icons/home/MyRewards/rewardRocket.svg';
 import longArrow from '../../assets/icons/home/MyRewards/longArrow.svg';
 import Label from '../../assets/icons/home/MyRewards/Label.svg';
-
-//
 import moverocket from '../../assets/icons/home/MyRewards/moverocket.svg';
 import clouds from '../../assets/icons/home/MyRewards/clouds.svg';
 import lock from '../../assets/icons/home/MyRewards/lock.svg';
@@ -30,74 +40,12 @@ import gifplnt4 from '../../assets/icons/home/HomePlanets/blue.svg';
 import TicTac from '../../assets/images/home/MyRewards/Tic Tak Toe.svg';
 import Quiz from '../../assets/images/home/MyRewards/Quiz.svg';
 import Spin from '../../assets/images/home/MyRewards/Spin The Bottle.svg';
-// import MyRewardSecondScreen from './myRewardScreen2';
-// import MyRewardThirdScreen from './myRewardScreen3';
-import Voucher from '../../assets/icons/home/MyRewards/Label.svg';
 import ProductDemo from '../../assets/icons/home/MyRewards/product-demo.svg';
 import Stratergy from '../../assets/icons/home/MyRewards/strategry-consultant.svg';
 import Report from '../../assets/icons/home/MyRewards/report.svg';
 import refalien from '../../assets/icons/home/MyRewards/refalien.svg';
 import StartFour from '../../assets/icons/home/MyRewards/StarFour.svg';
-// import revClock from '../../assets/icons/home/MyRewards/clock.svg';
-import FAQ from '../../components/faq';
-import PlayAndEarnCard from '../../components/playAndEarnCard';
-import RewardHistory from './rewardHistory';
-import { postData } from '../../services/api';
-import { DecryptFunction } from '../../utils/decryptFunction';
-import { GiBackwardTime } from 'react-icons/gi';
-import { NavLink } from 'react-router-dom';
-import { toastInfo } from '../../utils/toster';
-import { UserContext } from '../../UseContext/useContext';
-import PopupWrapper from '../../utils/PopupWrapper';
 
-import Button from '../../components/button';
-import Popup from 'reactjs-popup';
-
-// Discont card Json
-const discountData = [
-  {
-    mainText: 'Flat ',
-    highlight: '10% Off',
-    subText: 'on Sales Ninja',
-    badgeText: '7 d',
-    badgeClass: 'background-light-cream',
-  },
-  {
-    mainText: '',
-    highlight: '₹ 2000 Off',
-    subText: 'on Business Booster',
-    badgeText: 'Expire Soon',
-    badgeClass: 'background-light-pink',
-  },
-  {
-    mainText: '',
-    highlight: '₹ 2000 Off',
-    subText: 'on Robo Advisory',
-    badgeText: '7 d',
-    badgeClass: 'background-light-cream',
-  },
-  {
-    mainText: 'Flat ',
-    highlight: '10% Off',
-    subText: 'on Sales Ninja',
-    badgeText: '7 d',
-    badgeClass: 'background-light-cream',
-  },
-  {
-    mainText: 'Flat ',
-    highlight: '10% Off',
-    subText: 'on Sales Ninja',
-    badgeText: '7 d',
-    badgeClass: 'background-light-cream',
-  },
-  {
-    mainText: 'Flat ',
-    highlight: '10% Off',
-    subText: 'on Sales Ninja',
-    badgeText: '7 d',
-    badgeClass: 'background-light-cream',
-  },
-];
 
 // Exclusive card JSon
 const ExclusiveCardData = [
@@ -144,23 +92,6 @@ const ExclusiveCardData = [
     pointsText: 'Downloadable Exclusive',
   },
 ];
-const FaqData = [
-  {
-    title: '1. Collapsible Group Item',
-    content:
-      'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.',
-  },
-  {
-    title: '2. Collapsible Group Item',
-    content:
-      'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.',
-  },
-  {
-    title: '3. Collapsible Group Item',
-    content:
-      'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.',
-  },
-];
 
 const MyRewardFirstScreen = () => {
   const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
@@ -170,37 +101,33 @@ const MyRewardFirstScreen = () => {
   const RewardSliderJson = [
     {
       num: `${ContextFaqsDataAPI?.galaxy_data?.milestones[0]?.milestone_name}`,
-      point: `${
-        ContextFaqsDataAPI?.galaxy_data?.milestones[0]
-          ?.meteors_required_to_unlock
-      }`,
+      point: `${ContextFaqsDataAPI?.galaxy_data?.milestones[0]
+        ?.meteors_required_to_unlock
+        }`,
       img: gifplnt1,
       lock: false,
     },
     {
       num: `${ContextFaqsDataAPI?.galaxy_data?.milestones[1]?.milestone_name}`,
-      point: `${
-        ContextFaqsDataAPI?.galaxy_data?.milestones[1]
-          ?.meteors_required_to_unlock
-      }`,
+      point: `${ContextFaqsDataAPI?.galaxy_data?.milestones[1]
+        ?.meteors_required_to_unlock
+        }`,
       img: gifplnt2,
       lock: false,
     },
     {
       num: `${ContextFaqsDataAPI?.galaxy_data?.milestones[2]?.milestone_name}`,
-      point: `${
-        ContextFaqsDataAPI?.galaxy_data?.milestones[2]
-          ?.meteors_required_to_unlock
-      }`,
+      point: `${ContextFaqsDataAPI?.galaxy_data?.milestones[2]
+        ?.meteors_required_to_unlock
+        }`,
       img: gifplnt3,
       lock: true,
     },
     {
       num: `${ContextFaqsDataAPI?.galaxy_data?.milestones[3]?.milestone_name}`,
-      point: `${
-        ContextFaqsDataAPI?.galaxy_data?.milestones[3]
-          ?.meteors_required_to_unlock
-      }`,
+      point: `${ContextFaqsDataAPI?.galaxy_data?.milestones[3]
+        ?.meteors_required_to_unlock
+        }`,
       img: gifplnt4,
       lock: true,
     },
@@ -219,31 +146,23 @@ const MyRewardFirstScreen = () => {
     initialSlide: 0,
     centerPadding: '0px',
     responsive: [
-      // {
-      //   breakpoint: 1400,
-      //   settings: {
-      //     slidesToShow: 3,
-      //   },
-      // },
+
       {
         breakpoint: 1200, // screens ≤ 1200px
         settings: {
           slidesToShow: 3,
-          // centerPadding: '20px',
         },
       },
       {
         breakpoint: 992, // screens ≤ 992px
         settings: {
           slidesToShow: 2,
-          // centerPadding: '0px',
         },
       },
       {
         breakpoint: 768, // screens ≤ 768px (tablet)
         settings: {
           slidesToShow: 2,
-          // centerPadding: '20px',
         },
       },
       {
@@ -255,19 +174,28 @@ const MyRewardFirstScreen = () => {
       },
     ],
   };
+
+
   const settings = {
     arrow: false,
     // className: 'center',
     infinite: true,
     centerMode: true,
-    centerPadding: '40px',
-    slidesToShow: 3.1,
+    centerPadding: '0px',
+    slidesToShow: 3,
     swipeToSlide: true,
     autoplay: true,
     autoplaySpeed: 2000,
     speed: 500,
-    afterChange: function (index) {},
+    afterChange: function (index) { },
     responsive: [
+      // {
+      //   breakpoint: 1366,
+      //   settings: {
+      //     slidesToShow: 3,
+      //     centerPadding: '0px',
+      //   },
+      // },
       {
         breakpoint: 1200, // screens ≤ 1200px
         settings: {
@@ -327,10 +255,13 @@ const MyRewardFirstScreen = () => {
   const [UfoBg, setUfoBg] = useState(false);
   const [MyRewardDataAPI, setMyRewardDataAPI] = useState();
   const [showGameCard, setShowGameCard] = useState('invite');
+  const codeRef = useRef();
+  const linkRef = useRef();
+  const couponRef = useRef();
+  const [copiedCode, setCopiedCode] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [discount, setDiscount] = useState(false);
 
-  console.log(MyRewardDataAPI?.part8)
-
- 
 
   // =============
   // Functions
@@ -355,7 +286,6 @@ const MyRewardFirstScreen = () => {
         mode: Auth?.mode,
       });
       const Decrpty = await DecryptFunction(enyptData);
-      console.log(Decrpty)
       setMyRewardDataAPI(Decrpty);
     } catch (error) {
       console.log('error: ', error);
@@ -384,13 +314,7 @@ const MyRewardFirstScreen = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const codeRef = useRef();
-  const linkRef = useRef();
-  const couponRef = useRef();
-  const [copiedCode, setCopiedCode] = useState(false);
-  const [copiedLink, setCopiedLink] = useState(false);
-  const [discount, setDiscount] = useState(false);
-
+  // Copy Function
   const handleCopy = (ref, type) => {
     if (ref.current) {
       const value = ref.current.value;
@@ -406,15 +330,11 @@ const MyRewardFirstScreen = () => {
     }
   };
 
-  const [showCongrats, setShowCongrats] = useState(false);
 
+  const [showCongrats, setShowCongrats] = useState(false);
   const handleYes = (closeFirstPopup) => {
     closeFirstPopup(); // Close the first popup
     setShowCongrats(true); // Open second popup
-  };
-
-  const handleCloseCongrats = () => {
-    setShowCongrats(false);
   };
 
   const [copiedIndex, setCopiedIndex] = useState(null);
@@ -429,25 +349,55 @@ const MyRewardFirstScreen = () => {
     }
   };
 
+  const discountData = (() => {
+    try {
+      const fixedString = MyRewardDataAPI?.part8
+        ?.replace(/'/g, '"') // Replace single quotes with double quotes
+        ?.replace(/\bNone\b/g, 'null') // Replace Python None with JSON null
+        ?.replace(/\bTrue\b/g, 'true') // If needed, convert booleans
+        ?.replace(/\bFalse\b/g, 'false');
 
+      return JSON?.parse(fixedString) || [];
+    } catch (error) {
+      console.error('JSON parse error:', error);
+      return [];
+    }
+  })();
 
-const ChanlData = (() => {
-  try {
-    const fixedString = MyRewardDataAPI.part8
-      ?.replace(/'/g, '"')                     // Replace single quotes with double quotes
-      ?.replace(/\bNone\b/g, 'null')           // Replace Python None with JSON null
-      ?.replace(/\bTrue\b/g, 'true')           // If needed, convert booleans
-      ?.replace(/\bFalse\b/g, 'false');
-
-    return JSON.parse(fixedString) || [];
-  } catch (error) {
-    console.error("JSON parse error:", error);
-    return [];
-  }
-})();
-
-
-
+  const slidesToShow = discountData.length >= 3 ? 3 : discountData.length || 1;
+  const Discoutsettings = {
+    arrow: false,
+    infinite: discountData.length > 3,
+    slidesToShow: slidesToShow > 0 ? slidesToShow : 1,
+    swipeToSlide: true,
+    autoplay: discountData.length > 3,
+    autoplaySpeed: 2000,
+    speed: 500,
+    afterChange: function (index) { },
+    responsive: [
+      {
+        breakpoint: 1200, // screens ≤ 1200px
+        settings: {
+          slidesToShow: 3,
+          centerPadding: '0px',
+        },
+      },
+      {
+        breakpoint: 992, // screens ≤ 992px
+        settings: {
+          slidesToShow: 2,
+          centerPadding: '0px',
+        },
+      },
+      {
+        breakpoint: 768, // screens ≤ 768px (tablet)
+        settings: {
+          slidesToShow: 2,
+          centerPadding: '0px',
+        },
+      },
+    ],
+  };
 
   return (
     <>
@@ -622,7 +572,6 @@ const ChanlData = (() => {
                                   className="background-light-white-2 text-blue border-0 rounded-3 w-100 p-2 pr-5"
                                   type="text"
                                   defaultValue={MyRewardDataAPI?.part4}
-                                  // value={inviteCode}
                                   id="inviteCode"
                                 />
                                 <button
@@ -646,10 +595,8 @@ const ChanlData = (() => {
                                   ref={linkRef}
                                   className="background-light-white-2 text-blue border-0 rounded-3 w-100 p-2 pr-5"
                                   type="text"
-                                  // value={inviteLink}
                                   defaultValue={MyRewardDataAPI?.part6}
                                   id="inviteLink"
-                                  // readOnly
                                 />
                                 <button
                                   type="button"
@@ -664,21 +611,19 @@ const ChanlData = (() => {
                         )}
                         <div className="d-flex justify-content-between mt-4">
                           <button
-                            className={`px-4 font-16 montserrat-semibold width-48 py-2 rounded-3 ${
-                              showGameCard === 'cards'
-                                ? 'text-white background-text-blue' // Active style
-                                : 'bg-white text-blue border-blue' // Inactive style
-                            }`}
+                            className={`px-4 font-16 montserrat-semibold width-48 py-2 rounded-3 ${showGameCard === 'cards'
+                              ? 'text-white background-text-blue' // Active style
+                              : 'bg-white text-blue border-blue' // Inactive style
+                              }`}
                             onClick={() => setShowGameCard('cards')}
                           >
                             Play & Earn
                           </button>
                           <button
-                            className={`px-4 font-16 montserrat-semibold width-48 py-2 rounded-3 ${
-                              showGameCard === 'invite'
-                                ? 'text-white background-text-blue'
-                                : 'bg-white text-blue border-blue'
-                            }`}
+                            className={`px-4 font-16 montserrat-semibold width-48 py-2 rounded-3 ${showGameCard === 'invite'
+                              ? 'text-white background-text-blue'
+                              : 'bg-white text-blue border-blue'
+                              }`}
                             onClick={() => setShowGameCard('invite')}
                           >
                             Invite a Friend
@@ -760,7 +705,7 @@ const ChanlData = (() => {
 
                             {/* <h4 className="font-14 montserrat-regular">1000 Meteors</h4> */}
                             {Number(slide?.point) >=
-                            Number(ContextHomeDataAPI?.part2) ? (
+                              Number(ContextHomeDataAPI?.part2) ? (
                               <button className="background-text-blue w-100 mt-4 mx-auto border-0 border-radius-8 font-size-12 d-flex justify-content-center align-items-center py-2 mx-3 opacity-25 montserrat-semibold text-white">
                                 {slide?.point} Meteors{' '}
                                 <img
@@ -782,142 +727,142 @@ const ChanlData = (() => {
                       </Slider>
                     </div>
                   </div>
+
                   {/* Discount Cards start here */}
-                  <div className="discount-code-section my-5 px-4">
-                    <div className="discount-bg-img pt-4">
-                      <p className="font-size-18 space-grotesk-bold text-blue">
-                        Discount Codes
+                  {discountData[0]?.voucher_code ? (
+                    <div className="discount-code-section my-5 px-4">
+                      <div className="discount-bg-img pt-4">
+                        <p className="font-size-18 space-grotesk-bold text-blue">
+                          Discount Codes
+                        </p>
+                      </div>
+                      <p className="text-blue font-size-14 montserrat-medium mb-1">
+                        You earned these discount coupons, use these codes to get off on products.
                       </p>
-                    </div>
-                    <p className="text-blue font-size-14 montserrat-medium mb-1">
-                      Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
-                    </p>
-                    <div className="slider-container discount-slider pb-4">
-                      <Slider className="" {...settings}>
-                        {discountData.map((item, index) => (
-                          <div key={index} className="px-2">
-                            <div className="discount-card background-text-blue p-2 position-relative cursor-pointer">
-                              <PopupWrapper
-                                trigger={
-                                  <div
-                                    className=""
-                                    onClick={() =>
-                                      handleCopy(couponRef, 'coupon')
-                                    } // optional: trigger copy on click
-                                  >
-                                    <div className="row gx-0">
-                                      <div className="col-9 text-white d-flex my-2 justify-content-center">
-                                        <div className="discount-white-box me-2"></div>
-                                        <p className="font-14 montserrat-medium mt-2 lh-sm">
-                                          {item.mainText}
-                                          <span className="font-16 montserrat-bold">
-                                            {item.highlight}
-                                          </span>
-                                          {item.subText}
-                                        </p>
+                      <div className="slider-container discount-slider pb-4">
+                        <Slider className="" {...Discoutsettings}>
+                          {discountData.map((item, index) => (
+                            <div key={index} className="px-2">
+                              <div className="discount-card dis-card background-text-blue p-2 position-relative cursor-pointer">
+                                <PopupWrapper
+                                  trigger={
+                                    <div
+                                      className=""
+                                      onClick={() =>
+                                        handleCopy(couponRef, 'coupon')
+                                      } // optional: trigger copy on click
+                                    >
+                                      <div className='disc-status px-3 py-1 font-12 montserrat-semibold text-blue position-absolute top-0 end-0 bg-light-pink'>{item?.redeemed === true ? "Used" : item?.status}</div>
+                                      <div className="row gx-0">
+                                        <div className="col-9 text-white d-flex my-2 justify-content-center">
+                                          <div className="discount-white-box me-2"></div>
+                                          <p className="font-14 montserrat-medium mt-2 lh-sm">
+                                            {item?.offer_desc}
+                                          </p>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                }
-                              >
-                                {(close) => (
-                                  <div className="text-center">
-                                    <AiOutlineInfoCircle
-                                      size={50}
-                                      color="#1A2A6C"
-                                      style={{ marginBottom: '15px' }}
-                                    />
-                                    <h5 className="mb-3">
-                                      Are you sure you want to unlock this
-                                      offer?
-                                    </h5>
-                                    <div className="d-flex justify-content-center gap-3 py-2">
-                                      <Button
-                                        label="Yes"
-                                        onClick={() => handleYes(close)}
-                                        className="montserrat-semibold w-50 text-center mx-1 text-decoration-none font-16 py-2 rounded-3 bg-transparent border-blue text-blue"
-                                        hoverClass=""
-                                      />
-                                      <Button
-                                        label="No"
-                                        onClick={close}
-                                        className="montserrat-semibold w-50 mx-1 font-16 py-2 rounded-3 border-0 background-text-blue text-white"
-                                        hoverClass=""
-                                      />
-                                    </div>
-                                  </div>
-                                )}
-                              </PopupWrapper>
-
-                              <div className="col-3">
-                                <div
-                                  className={`discount-deals montserrat-semibold font-12 ${item.badgeClass} px-3 py-1 text-blue me-0 position-absolute top-0 end-0`}
-                                >
-                                  {item.badgeText}
-                                </div>
-                              </div>
-                              <div className="discount-card-footer p-2 d-flex justify-content-between">
-                                <p className="text-white mb-0 font-12 montserrat-regular">
-                                  Coupon code:
-                                  <span className="text-uppercase font-14 montserrat-medium px-2">
-                                    {item.code || 'CB1234'}
-                                  </span>
-                                </p>
-                                <button
-                                  className="border-0 bg-white text-blue font-10 montserrat-regular copy-btn px-2"
-                                  onClick={() =>
-                                    discounthandleCopy(
-                                      item.code || 'CB1234',
-                                      index,
-                                    )
                                   }
                                 >
-                                  <span className='montserrat-medium font-12'>
-                                  
-                                    {copiedIndex === index
-                                      ? 'Copied!'
-                                      : 'Copy Link'}
-                                  </span>
-                                </button>
-                              </div>
-                            </div>
+                                  {(close) => (
+                                    <div className="text-center">
+                                      <AiOutlineInfoCircle
+                                        size={50}
+                                        color="#1A2A6C"
+                                        style={{ marginBottom: '15px' }}
+                                      />
+                                      <h5 className="mb-3">
+                                        Are you sure you want to unlock this
+                                        offer?
+                                      </h5>
+                                      <div className="d-flex justify-content-center gap-3 py-2">
+                                        <Button
+                                          label="Yes"
+                                          onClick={() => handleYes(close)}
+                                          className="montserrat-semibold w-50 text-center mx-1 text-decoration-none font-16 py-2 rounded-3 bg-transparent border-blue text-blue"
+                                          hoverClass=""
+                                        />
+                                        <Button
+                                          label="No"
+                                          onClick={close}
+                                          className="montserrat-semibold w-50 mx-1 font-16 py-2 rounded-3 border-0 background-text-blue text-white"
+                                          hoverClass=""
+                                        />
+                                      </div>
+                                    </div>
+                                  )}
+                                </PopupWrapper>
 
-                            {/* Second Popup (Congratulations) */}
-                            <Popup
-                              open={showCongrats}
-                              onClose={() => setShowCongrats(false)}
-                              modal
-                              position="center center"
-                            >
-                              {(close) => (
-                                <div className="text-center p-4">
-                                  <AiOutlineInfoCircle
-                                    size={50}
-                                    color="#28a745"
-                                    style={{ marginBottom: '15px' }}
-                                  />
-                                  <h4>🎉 Congratulations!</h4>
-                                  <p>
-                                    You have successfully unlocked the offer.
-                                  </p>
-                                  <Button
-                                    label="Close"
-                                    onClick={() => {
-                                      close();
-                                      setShowCongrats(false);
-                                    }}
-                                    className="bg-success text-white mt-3"
-                                  />
+                                <div className="col-3">
+                                  <div
+                                    className={`discount-deals montserrat-semibold font-12 ${item.badgeClass} px-3 py-1 text-blue me-0 position-absolute top-0 end-0`}
+                                  >
+                                    {item.badgeText}
+                                  </div>
                                 </div>
-                              )}
-                            </Popup>
-                          </div>
-                        ))}
-                      </Slider>
-                    </div>
-                  </div>
+                                <div className="discount-card-footer p-2 d-flex justify-content-between">
+                                  <p className="text-white mb-0 font-12 montserrat-regular">
+                                    Coupon code:
+                                    <span className="text-uppercase font-14 montserrat-medium px-2">
+                                      {item?.voucher_code || 'CB1234'}
+                                    </span>
+                                  </p>
+                                  <button
+                                    className="border-0 bg-white text-blue font-10 montserrat-regular copy-btn px-2"
+                                    onClick={() =>
+                                      discounthandleCopy(
+                                        item.code || 'CB1234',
+                                        index,
+                                      )
+                                    }
+                                  >
+                                    <span className="montserrat-medium font-12">
+                                      {copiedIndex === index
+                                        ? 'Copied!'
+                                        : 'Copy Link'}
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
 
-                  {/* Exclusive Perks */}
+                              {/* Second Popup (Congratulations) */}
+                              {/* <Popup
+                                open={showCongrats}
+                                onClose={() => setShowCongrats(false)}
+                                modal
+                                position="center center"
+                              >
+                                {(close) => (
+                                  <div className="text-center p-4">
+                                    <AiOutlineInfoCircle
+                                      size={50}
+                                      color="#28a745"
+                                      style={{ marginBottom: '15px' }}
+                                    />
+                                    <h4>🎉 Congratulations!</h4>
+                                    <p>
+                                      You have successfully unlocked the offer.
+                                    </p>
+                                    <Button
+                                      label="Close"
+                                      onClick={() => {
+                                        close();
+                                        setShowCongrats(false);
+                                      }}
+                                      className="bg-success text-white mt-3"
+                                    />
+                                  </div>
+                                )}
+                              </Popup> */}
+                            </div>
+                          ))}
+                        </Slider>
+                      </div>
+                    </div>
+                  ) : (
+                    ''
+                  )}
+
                   {/* Exclusive Perks Section */}
                   <div className="discount-code-section my-5 px-4">
                     <div className="discount-bg-img pt-4">
@@ -1000,38 +945,38 @@ const ChanlData = (() => {
                               </PopupWrapper>
                             </div>
 
-                            {/* 🎉 Congratulations Popup for Exclusive Perks */}
-                            <Popup
-                              open={showCongrats}
-                              onClose={() => setShowCongrats(false)}
-                              modal
-                              position="center center"
-                            >
-                              {(close) => (
-                                <div className="text-center p-4">
-                                  <AiOutlineInfoCircle
-                                    size={50}
-                                    color="#28a745"
-                                    style={{ marginBottom: '15px' }}
-                                  />
-                                  <h4>🎉 Congratulations!</h4>
-                                  <p>
-                                    You have successfully unlocked the offer.
-                                  </p>
-                                  <Button
-                                    label="Close"
-                                    onClick={() => {
-                                      close();
-                                      setShowCongrats(false);
-                                    }}
-                                    className="bg-success text-white mt-3"
-                                  />
-                                </div>
-                              )}
-                            </Popup>
                           </div>
                         ))}
                       </Slider>
+                      {/* 🎉 Congratulations Popup for Exclusive Perks */}
+                      <Popup
+                        open={showCongrats}
+                        onClose={() => setShowCongrats(false)}
+                        modal
+                        position="center center"
+                      >
+                        {(close) => (
+                          <div className="text-center p-4">
+                            <AiOutlineInfoCircle
+                              size={50}
+                              color="#28a745"
+                              style={{ marginBottom: '15px' }}
+                            />
+                            <h4>🎉 Congratulations!</h4>
+                            <p>
+                              You have successfully unlocked the offer.
+                            </p>
+                            <Button
+                              label="Close"
+                              onClick={() => {
+                                close();
+                                setShowCongrats(false);
+                              }}
+                              className="bg-success text-white mt-3"
+                            />
+                          </div>
+                        )}
+                      </Popup>
                     </div>
                   </div>
                 </div>

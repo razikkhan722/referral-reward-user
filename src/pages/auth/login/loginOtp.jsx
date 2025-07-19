@@ -221,7 +221,7 @@ const LoginOtp = () => {
             </p>
           </div>
 
-          <div className="login-form-section row py-2 px-3 d-flex align-items-center justify-content-between">
+          <div className="login-form-section row py-3 px-3 d-flex align-items-center justify-content-between">
             {/* Left Side Image */}
             <div className="col-lg-6 col-12">
               <div className="login-img text-center">
@@ -231,7 +231,7 @@ const LoginOtp = () => {
 
             {/* Right Side Form */}
             <div className="col-lg-6 col-12">
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)} className='w-100'>
                 {/* Mobile Input */}
                 <div className="my-3 position-relative">
                   <input

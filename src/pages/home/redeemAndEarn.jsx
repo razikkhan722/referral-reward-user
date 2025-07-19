@@ -14,6 +14,7 @@ const RedeemAndEarn = ({ isActive }) => {
   const [showCircles, setShowCircles] = useState(false);
 
   const { ContextHomeDataAPI } = useContext(UserContext);
+  console.log("dfghjkl",ContextHomeDataAPI)
 
   useEffect(() => {
     if (isActive) {

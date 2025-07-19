@@ -33,12 +33,12 @@ const Registration = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  // const GetParams = useParams();
-  // console.log(GetParams , "GetParams")
-
   // Get referral ID and source from URL
   const { id, source } = useParams();
-  console.log('Referral Tag ID:', id, 'Accepted Via:', source);
+
+  console.log(id ,source )
+
+  console.log("k.nknknmbkj,jnj")
 
   const platformMap = {
     wa: 'whatsapp',
