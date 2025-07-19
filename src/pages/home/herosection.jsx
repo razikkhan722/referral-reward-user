@@ -5,9 +5,7 @@ const Herosection = ({ currentPlnt, HomeDataAPI }) => {
   const { ContextFaqsDataAPI,ContextHomeDataAPI,MeterUpdateData } = useContext(UserContext);
 
   let LtrToNum = currentPlnt?.charCodeAt(0) - 64;
-  // console.log(LtrToNum - 1 , ContextHomeDataAPI?.part3?.length - 1);
-  // console.log('ContextHomeDataAPI?.part3: ', ContextHomeDataAPI?.);
-  // =========
+
 
   // States
   // =========

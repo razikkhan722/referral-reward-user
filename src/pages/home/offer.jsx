@@ -20,6 +20,8 @@ import headphone from '../../assets/icons/home/offer/headphones.svg';
 import plus from '../../assets/icons/home/offer/plus.svg';
 import minus from '../../assets/icons/home/offer/minus.svg';
 
+import offSideImg from '../../assets/icons/home/offer/off-sideimg.svg';
+
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { DecryptFunction } from '../../utils/decryptFunction';
@@ -78,6 +80,9 @@ const Offer = ({ isActive }) => {
   const [SemiPlntRaise, setSemiPlntRaise] = useState(true);
   const [FaqDataAPI, setFaqDataAPI] = useState();
   const [showCongrats, setShowCongrats] = useState(false);
+  const [copiedCode, setCopiedCode] = useState(false);
+
+  const codeRef = useRef();
 
   const handleYes = (close) => {
     close();
@@ -85,7 +90,7 @@ const Offer = ({ isActive }) => {
   };
 
   const { ContextFaqsDataAPI } = useContext(UserContext);
-  console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI);
+
 
   const toggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -116,6 +121,13 @@ const Offer = ({ isActive }) => {
     };
   }, []);
 
+  const handleCopy = (ref) => {
+    const value = ref.current.value;
+    navigator.clipboard.writeText(value);
+    setCopiedCode(true);
+    setTimeout(() => setCopiedCode(false), 2000);
+  };
+
   // =================================
   //       API FUNCTIONALITY
   // =================================
@@ -128,6 +140,7 @@ const Offer = ({ isActive }) => {
         mode: Auth?.mode,
       });
       const Decrpty = await DecryptFunction(enyptData);
+     
       setFaqDataAPI();
     } catch (error) {
       console.log('error: ', error);
@@ -150,7 +163,7 @@ const Offer = ({ isActive }) => {
   return (
     <section id="Offer_Section" className="offer-section">
       <div className="offer-sect-content top-0 start-0 bottom-0 end-0">
-        <div className="container-fluid px-5 pt-5 overflow-hidden">
+        <div className="container-fluid px-5 pt-5 overflow-hidden pb-4">
           <div
             className={`row offer-slider-fade-left ${isActive ? 'aos-animate' : ''}`}
           >
@@ -186,32 +199,68 @@ const Offer = ({ isActive }) => {
                 >
                   {(close) => (
                     <div className="text-center p-4">
-                    <AiOutlineInfoCircle
-                      size={50}
-                      color="#1A2A6C"
-                      className="mb-3"
-                    />
-                    <h5 className="mb-3">
-                      Are you sure you want to unlock this prize?
-                    </h5>
-                    <div className="d-flex justify-content-center gap-3">
-                      <Button
-                        label="Yes"
-                        onClick={() => handleYes(close)}
-                        className="w-50 py-2 rounded-3 bg-transparent border-blue text-blue montserrat-semibold"
+                      <AiOutlineInfoCircle
+                        size={50}
+                        color="#1A2A6C"
+                        className="mb-3"
                       />
-                      <Button
-                        label="No"
-                        onClick={close}
-                        className="w-50 py-2 rounded-3 border-0 background-text-blue text-white montserrat-semibold"
-                      />
+                      <h5 className="mb-3">
+                        Are you sure you want to unlock this prize?
+                      </h5>
+                      <div className="d-flex justify-content-center gap-3">
+                        <Button
+                          label="Yes"
+                          onClick={() => handleYes(close)}
+                          className="w-50 py-2 rounded-3 bg-transparent border-blue text-blue montserrat-semibold"
+                        />
+                        <Button
+                          label="No"
+                          onClick={close}
+                          className="w-50 py-2 rounded-3 border-0 background-text-blue text-white montserrat-semibold"
+                        />
+                      </div>
                     </div>
-                  </div>
                   )}
                 </PopupWrapper>
               ))}
             </Slider>
           </div>
+        </div>
+
+        {/*  OFFER BANNER ON CONDITION */}
+        <div className="special-offer position-relative d-flex align-items-center  mt-5">
+          <div className="special-off-sideimg  position-absolute">
+            {/* <img src={offSideImg} alt="" /> */}
+          </div>
+          <div className="w-75 mx-auto text-center ">
+            <h3 className=" montserrat-bold text-white font-40 mb-3">
+              Independence Day Offer
+            </h3>
+
+            <p className="space-grotesk-bold font-32 mx-5 text-white">
+              Enjoy the spirit of freedom with exclusive rewards, a flat 15%
+              discount, and festive surprises!!!
+            </p>
+            <div className="copy-input-container w-25 mt-3">
+              <input
+                ref={codeRef}
+                id="inviteCode"
+                type="text"
+                value={''}
+                // defaultValue={RefralDataAPI?.part6}
+                className="copy-input input-invite-friend bg-white mb-16"
+              />
+              <button
+                className="copy-button font-14 montserrat-regular px-2"
+                onClick={() => handleCopy(codeRef, 'code')}
+              >
+                {copiedCode ? 'Copied!' : 'Copy Code'}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="container-fluid px-5 pt-5 overflow-hidden">
           {/*  Exclusive Offers SECTION */}
           <h1 className="text-dark-blue font-40 space-grotesk-bold mt-120 mb-4 pb-4 ">
             Exclusive Offers
@@ -310,12 +359,13 @@ const Offer = ({ isActive }) => {
                       <div className="head-content ">
                         <h2 className="font-24 montserrat-medium text-white mb-2">
                           {
-                            ContextFaqsDataAPI?.exciting_prizes?.[0]?.title
+                            ContextFaqsDataAPI?.exciting_prizes
+                              ?.title
                           }
                         </h2>
                         <p className="font-14 montserrat-light text-white mb-5 pb-5">
                           {
-                            ContextFaqsDataAPI?.exciting_prizes?.[0]?.term_conditions
+                            ContextFaqsDataAPI?.exciting_prizes?.term_conditions
                           }
                         </p>
                       </div>
@@ -326,13 +376,13 @@ const Offer = ({ isActive }) => {
                         <div className="d-flex align-items-center">
                           <span className="font-24 montserrat-semibold text-light-yellow">
                             {
-                              ContextFaqsDataAPI?.exciting_prizes?.[0]?.required_meteors
+                              ContextFaqsDataAPI?.exciting_prizes?.required_meteors
                             }
                           </span>
                           <img
                             className="mx-3"
                             src={
-                              ContextFaqsDataAPI?.exciting_prizes?.[0]?.image_url || metero
+                              ContextFaqsDataAPI?.exciting_prizes?.prizes?.image_url || metero
                             }
                             alt=""
                           />
@@ -346,7 +396,7 @@ const Offer = ({ isActive }) => {
                       <img
                         className="align-self-end mb-1"
                         src={suitcase}
-                        alt=""
+                        alt="Loading"
                       />
                     </div>
                   </div>

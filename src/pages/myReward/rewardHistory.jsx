@@ -5,125 +5,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { PiFadersHorizontal } from 'react-icons/pi';
 import { IoIosArrowBack } from 'react-icons/io';
 const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
-  console.log('MyRewardDataAPI: ', MyRewardDataAPI);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  // Sample data for rewards
-  const rewardsData = [
-    {
-      id: 1,
-      rewardType: 'Streak Store',
-      date: '29 May, 2025',
-      expiryDate: '-',
-      earnings: '+540 Meteors',
-      type: 'orange',
-    },
-    {
-      id: 2,
-      rewardType: 'Mystery Rewards',
-      date: '22 May, 2025',
-      expiryDate: '-',
-      earnings: '+200 Meteors',
-      type: 'green',
-    },
-    {
-      id: 3,
-      rewardType: 'Streak Store',
-      date: '29 May, 2025',
-      expiryDate: '22 Jun 2025',
-      earnings: '+540 Meteors',
-      type: 'orange',
-    },
-    {
-      id: 4,
-      rewardType: 'Streak Store',
-      date: '29 May, 2025',
-      expiryDate: '22 Jun 2025',
-      earnings: '+540 Meteors',
-      type: 'orange',
-    },
-    {
-      id: 5,
-      rewardType: 'Streak Store',
-      date: '29 May, 2025',
-      expiryDate: '-',
-      earnings: '+540 Meteors',
-      type: 'green',
-    },
-    {
-      id: 6,
-      rewardType: 'Streak Store',
-      date: '29 May, 2025',
-      expiryDate: '-',
-      earnings: '+540 Meteors',
-      type: 'orange',
-    },
-    {
-      id: 7,
-      rewardType: 'Streak Store',
-      date: '29 May, 2025',
-      expiryDate: '-',
-      earnings: '+540 Meteors',
-      type: 'orange',
-    },
-    {
-      id: 11,
-      rewardType: 'Streak Store',
-      date: '29 May, 2025',
-      expiryDate: '-',
-      earnings: '+540 Meteors',
-      type: 'orange',
-    },
-    {
-      id: 12,
-      rewardType: 'Mystery Rewards',
-      date: '22 May, 2025',
-      expiryDate: '-',
-      earnings: '+200 Meteors',
-      type: 'green',
-    },
-    {
-      id: 13,
-      rewardType: 'Streak Store',
-      date: '29 May, 2025',
-      expiryDate: '22 Jun 2025',
-      earnings: '+540 Meteors',
-      type: 'orange',
-    },
-    {
-      id: 14,
-      rewardType: 'Streak Store',
-      date: '29 May, 2025',
-      expiryDate: '22 Jun 2025',
-      earnings: '+540 Meteors',
-      type: 'orange',
-    },
-    {
-      id: 15,
-      rewardType: 'Streak Store',
-      date: '29 May, 2025',
-      expiryDate: '-',
-      earnings: '+540 Meteors',
-      type: 'green',
-    },
-    {
-      id: 16,
-      rewardType: 'Streak Store',
-      date: '29 May, 2025',
-      expiryDate: '-',
-      earnings: '+540 Meteors',
-      type: 'orange',
-    },
-    {
-      id: 17,
-      rewardType: 'Streak Store',
-      date: '29 May, 2025',
-      expiryDate: '-',
-      earnings: '+540 Meteors',
-      type: 'orange',
-    },
-  ];
 
   const handlePrevious = () => {
     if (currentPage > 1) {
@@ -132,7 +15,7 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
   };
 
   const handleNext = () => {
-    const totalPages = Math.ceil((MyRewardDataAPI?.part5 || rewardsData)?.length / rowsPerPage);
+    const totalPages = Math.ceil((MyRewardDataAPI?.part5)?.length / rowsPerPage);
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
@@ -150,7 +33,28 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
   // Calculate displayed data based on pagination
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
-  const displayedData = (MyRewardDataAPI?.part5 || rewardsData)?.slice(startIndex, endIndex);
+   // const displayedData = (MyRewardDataAPI?.part5)?.slice(startIndex, endIndex);
+
+
+    const displayedData = (() => {
+    try {
+      const fixedString = MyRewardDataAPI?.part5
+        ?.replace(/'/g, '"') // Replace single quotes with double quotes
+        ?.replace(/\bNone\b/g, 'null') // Replace Python None with JSON null
+        ?.replace(/\bTrue\b/g, 'true') // If needed, convert booleans
+        ?.replace(/\bFalse\b/g, 'false');
+
+      return JSON?.parse(fixedString) || [];
+    } catch (error) {
+      console.error('JSON parse error:', error);
+      return [];
+    }
+  })();
+
+  console.log(displayedData,"llml,l,")
+
+  
+
 
   const StatCard = ({ number, title, index }) => (
     <div
@@ -162,6 +66,7 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
   );
 
   const RewardRow = ({ reward }) => (
+    
     <tr className="bg-transparent">
       <td className="py-3 bg-transparent px-4">
         <div className="d-flex align-items-center font-16 montserrat-semibold">
@@ -201,17 +106,7 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
               My Reward History
             </h2>
             <span>
-              {/* <select
-                className="rows-select"
-                value={'Filter'}
-              // onChange={handleRowsPerPageChange}
-              >
-                <option value={5}>Filter</option>
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={15}>15</option>
-                <option value={20}>20</option>
-              </select> */}
+              
               <Dropdown>
                 <Dropdown.Toggle variant="light" id="dropdown-basic" className='custom-filter font-14 montserrat-medium'>
                   Filter
@@ -280,9 +175,9 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
                   <button
                     className="btn btn-pagination background-text-blue text-white active font-14 montserrat-medium"
                     onClick={handleNext}
-                    disabled={
-                      currentPage >= Math.ceil(rewardsData.length / rowsPerPage)
-                    }
+                    // disabled={
+                    //   currentPage >= Math.ceil(rewardsData.length / rowsPerPage)
+                    // }
                   >
                     Next
                   </button>
