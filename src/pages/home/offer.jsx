@@ -533,7 +533,7 @@ const Offer = ({ isActive }) => {
                   />
                   {/* <h4> Congratulations!</h4> */}
                   {/* <p>You have successfully unlocked the prize.</p> */}
-                  <p>🎉 {congratsMessage}</p>
+                  <p>{congratsMessage}</p>
                   <Button
                     label="Close"
                     onClick={() => {
