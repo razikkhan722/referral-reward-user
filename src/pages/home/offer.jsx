@@ -360,13 +360,13 @@ const Offer = ({ isActive }) => {
                       <div className="head-content ">
                         <h2 className="font-24 montserrat-medium text-white mb-2">
                           {
-                            ContextFaqsDataAPI?.exciting_prizes
+                            ContextFaqsDataAPI?.exciting_prizes[0]
                               ?.title
                           }
                         </h2>
                         <p className="font-14 montserrat-light text-white mb-5 pb-5">
                           {
-                            ContextFaqsDataAPI?.exciting_prizes?.term_conditions
+                            ContextFaqsDataAPI?.exciting_prizes[0]?.term_conditions
                           }
                         </p>
                       </div>
@@ -377,7 +377,7 @@ const Offer = ({ isActive }) => {
                         <div className="d-flex align-items-center">
                           <span className="font-24 montserrat-semibold text-light-yellow">
                             {
-                              ContextFaqsDataAPI?.exciting_prizes?.required_meteors
+                              ContextFaqsDataAPI?.exciting_prizes[0]?.required_meteors
                             }
                           </span>
                           <img
@@ -432,7 +432,7 @@ const Offer = ({ isActive }) => {
 
             {/* Second and Third Prizes */}
             <div className="col-lg-6 px-lg-4 px-0 d-flex flex-column gap-4">
-              {[smartwatch, headphone].map((img, i) => (
+              {ContextFaqsDataAPI?.exciting_prizes?.slice(1).map((item, i) => (
                 <PopupWrapper
                   key={i}
                   trigger={
@@ -440,14 +440,18 @@ const Offer = ({ isActive }) => {
                       className={`col-lg-12 py-3 shadow-lg d-flex justify-content-between align-self-lg-${i === 0 ? 'start' : 'end'} cursor-pointer ${i === 0 ? 'price-watch' : 'price-headphone'}`}
                     >
                       <div className="col-lg-8 ms-4 ps-4 align-self-end mb-1">
-                        <h4 className="font-40 space-grotesk-medium text-white mb-0">
-                          Collect
+                        <h4 className="font-40 space-grotesk-medium text-white lh-1">
+                            {
+                              item?.title
+                          }
                         </h4>
                         <div className="d-flex align-items-center">
                           <span className="font-24 montserrat-semibold text-light-yellow">
-                            1500
+                             {
+                              item?.required_meteors
+                            }
                           </span>
-                          <img className="mx-3" src={metero} alt="" />
+                          <img className="mx-3" src={metero} alt="Loading" />
                           <span className="font-28 montserrat-medium text-white">
                             Total Meteors
                           </span>
@@ -455,7 +459,7 @@ const Offer = ({ isActive }) => {
                       </div>
                       <div className="col-lg-4 d-flex align-items-center">
                         <img
-                          src={img}
+                            src={i === 0 ? smartwatch : headphone}
                           alt={i === 0 ? 'smartwatch' : 'headphone'}
                         />
                       </div>
