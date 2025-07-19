@@ -112,7 +112,6 @@ const MyReferralScreen = () => {
         mode: Auth?.mode,
       });
       const Decrpty = await DecryptFunction(enyptData);
-      console.log('Decrpty: ', Decrpty);
       setRefralDataAPI(Decrpty);
     } catch (error) {
       console.log('error: ', error);

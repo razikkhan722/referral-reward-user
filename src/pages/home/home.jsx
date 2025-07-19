@@ -133,22 +133,14 @@ function Home() {
 
   const HandleSet = () => {
     setActiveIndex(0);
-    console.log(activeIndex);
+   
   };
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
   };
 
-  // useEffect(() => {
 
-  //   if(!ContextCheckSpecialOffer){
-  //     console.log('ContextCheckSpecialOffer: ', ContextCheckSpecialOffer);
-  //     setShow(true)
-  //     ContextsetCheckSpecialOffer(false)
-  //   }
-
-  // }, [])
   
   return (
     <>
