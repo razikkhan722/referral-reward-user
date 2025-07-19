@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+
+// Import Third Party components
 import "./slidercard.scss"
 import Slider from "react-slick";
 import { FaList } from "react-icons/fa6";
@@ -87,6 +89,7 @@ let ColorCode = ["user-green-card",
     "user-purple-card",]
 
 const SliderCard = ({ RefralDataAPI }) => {
+    // useStates
     const [showTable, setShowTable] = useState(false);
 
     const slidesToShow = RefralDataAPI?.part4?.length >= 3 ? 3 : RefralDataAPI?.part4?.length || 1;
@@ -195,13 +198,11 @@ const SliderCard = ({ RefralDataAPI }) => {
                                             <td scope="row" className='text-start ps-5 d-flex'>
                                                 <span className='referral-table-user rounded-circle me-3'></span>
                                                 <div>
-                                                    {/* <p className='font-size-16 montserrat-semibold mb-0'>{item?.username}</p> */}
                                                     <p className='font-size-16 montserrat-semibold mb-0'>{item?.username}</p>
                                                     <p className='font-size-14 montserrat-medium mb-0'>{item?.email || "abc@gmail.com"}</p>
                                                 </div>
                                             </td>
                                             <td className='font-size-16 montserrat-semibold'>{item?.date}</td>
-                                            {/* <td className='font-size-16 montserrat-semibold'>{item?.referral_status}</td> */}
                                             <td className='font-size-16 montserrat-semibold'>{item?.status}</td>
                                             <td className='font-size-16 montserrat-semibold'>{item?.earned_meteors}</td>
                                             <td className='font-size-24 montserrat-medium'>

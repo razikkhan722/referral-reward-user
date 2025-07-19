@@ -5,10 +5,8 @@ import Astronut1 from '../../assets/icons/home/MyReferral/Character.svg';
 import Astronut2 from '../../assets/icons/home/MyReferral/Astronaut.svg';
 import BlueBottom from '../../assets/icons/home/MyReferral/BLUE PATTI.svg';
 import StartFour from '../../assets/icons/home/MyRewards/StarFour.svg';
-
 import fbImg from '../../assets/icons/home/MyReferral/fb.svg';
 import twitImg from '../../assets/icons/home/MyReferral/twit.svg';
-import ytImg from '../../assets/icons/home/MyReferral/yt.svg';
 import linkedinImg from '../../assets/icons/home/MyReferral/linkedin.svg';
 import whtpImg from '../../assets/icons/home/MyReferral/whatsapp.svg';
 import cloudImg from '../../assets/icons/home/MyReferral/clouds-2.svg';
@@ -18,24 +16,34 @@ import SliderCard from '../MyReferral/SliderCard';
 import FAQ from '../../components/faq';
 import Navbar from '../../components/navbar';
 import ReferralCards from '../MyReferral/referralCards';
+
+// API Service
 import { postData } from '../../services/api';
+
+// Global Context
 import { DecryptFunction } from '../../utils/decryptFunction';
+
+// Navigation
 import { NavLink } from 'react-router-dom';
+
+// Toast Messages
 import { toastInfo } from '../../utils/toster';
+
+// UseContext
 import { UserContext } from '../../UseContext/useContext';
 
 
 const MyReferralScreen = () => {
-  // ------------
+  // =================
   // UseStates
-  // -------------
+  // =================
   const [RefralDataAPI, setRefralDataAPI] = useState();
-  const codeRef = useRef();
-  const linkRef = useRef();
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
   const [showFooterPlanet, setShowFooterPlanet] = useState(false);
   const footerRef = useRef(null);
+  const codeRef = useRef();
+  const linkRef = useRef();
 
   const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
   const { ContextHomeDataAPI, ContextFaqsDataAPI } =
@@ -107,9 +115,9 @@ const MyReferralScreen = () => {
     }
   };
 
-  // ---------------
+  // =================
   // useEffect
-  // ----------------
+  // =================
 
   useEffect(() => {
     HandleAPI();
@@ -143,9 +151,11 @@ const MyReferralScreen = () => {
     <>
       <section className="hero-section position-relative">
         <div className="overflow-scroll h-100 z-3">
+          {/* Navbar */}
           <Navbar />
           <div className="container pt-100">
             <div className="mb-5 positin-relative">
+              {/* Referral Cards */}
               <ReferralCards RefralDataAPI={RefralDataAPI} />
             </div>
           </div>
