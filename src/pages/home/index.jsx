@@ -351,7 +351,7 @@ const Index = ({ isExiting, isActive }) => {
                         {/* Progress bar */}
 
                         <PlanetProgress
-                          Pnt={MeterUpdateData?.meteors}
+                          Pnt={MeterUpdateData?.total_meteors}
                           planets={planets}
                           prgicon={prgicon}
                         />

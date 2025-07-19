@@ -34,26 +34,26 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
   // Calculate displayed data based on pagination
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
-  //  const displayedData = (MyRewardDataAPI?.part5)?.slice(startIndex, endIndex);
+   const displayedData = (MyRewardDataAPI?.part5)?.slice(startIndex, endIndex);
 
 
-  const displayedData = (() => {
-    try {
-      const fixedString = MyRewardDataAPI?.part5
-        ?.replace(/'/g, '"') // Replace single quotes with double quotes
-        ?.replace(/\bNone\b/g, 'null') // Replace Python None with JSON null
-        ?.replace(/\bTrue\b/g, 'true') // If needed, convert booleans
-        ?.replace(/\bFalse\b/g, 'false')
-        ?.replace(/datetime\.datetime\([^)]*\)/g, '"2025-01-01"');
+  // const displayedData = (() => {
+  //   try {
+  //     const fixedString = MyRewardDataAPI?.part5
+  //       ?.replace(/'/g, '"') // Replace single quotes with double quotes
+  //       ?.replace(/\bNone\b/g, 'null') // Replace Python None with JSON null
+  //       ?.replace(/\bTrue\b/g, 'true') // If needed, convert booleans
+  //       ?.replace(/\bFalse\b/g, 'false')
+  //       ?.replace(/datetime\.datetime\([^)]*\)/g, '"2025-01-01"');
 
-      return JSON?.parse(fixedString) || [];
-    } catch (error) {
-      console.error('JSON parse error:', error);
-      return [];
-    }
-  })();
+  //     return JSON?.parse(fixedString) || [];
+  //   } catch (error) {
+  //     console.error('JSON parse error:', error);
+  //     return [];
+  //   }
+  // })();
 
-  console.log(displayedData, "llml,l,")
+  // console.log(displayedData, "llml,l,")
 
 
 
@@ -101,7 +101,9 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
       <div className="inner-div">
         <div className="container-fluid px-5">
           <div onClick={HandleToggle} className="back text-white my-3 d-flex align-items-center font-14 montserrat-medium">
+            <span className='cursor-pointer'>
             <IoIosArrowBack /> Back
+            </span>
           </div>
           <div className="head d-flex  justify-content-between my-3">
             <h2 className="font-32 space-grotesk-bold text-blue">

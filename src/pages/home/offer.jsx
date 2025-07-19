@@ -92,7 +92,6 @@ const Offer = ({ isActive }) => {
   };
 
   const { ContextFaqsDataAPI } = useContext(UserContext);
-  console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI);
 
 
   const toggle = (index) => {
@@ -292,7 +291,7 @@ const Offer = ({ isActive }) => {
                 type="text"
                 value={ContextFaqsDataAPI?.special_offer?.offer_code}
                 // defaultValue={RefralDataAPI?.part6}
-                className="copy-input input-invite-friend bg-white mb-16"
+                className="copy-input input-invite-friend bg-white mb-16 border-0  font-18 montserrat-medium text-blue"
               />
               <button
                 className="copy-button font-14 montserrat-regular px-2"
