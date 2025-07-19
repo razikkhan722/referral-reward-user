@@ -1,6 +1,10 @@
 import React from 'react'
+
+// Common Components
 import Navbar from "../../components/navbar"
 import Invitefriend from '../home/invitefriend';
+
+// import third Party Components
 import { NavLink } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 

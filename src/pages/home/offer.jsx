@@ -31,6 +31,7 @@ import Button from '../../components/button';
 import PopupWrapper from '../../utils/PopupWrapper';
 import Popup from 'reactjs-popup';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { responsiveArray } from 'antd/es/_util/responsiveObserver';
 
 const Offer = ({ isActive }) => {
   const cards = [
@@ -81,15 +82,17 @@ const Offer = ({ isActive }) => {
   const [FaqDataAPI, setFaqDataAPI] = useState();
   const [showCongrats, setShowCongrats] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
-
+  const [congratsMessage, setCongratsMessage] = useState("")
   const codeRef = useRef();
 
   const handleYes = (close) => {
+    HandleRedeemAPI()
     close();
     setShowCongrats(true);
   };
 
   const { ContextFaqsDataAPI } = useContext(UserContext);
+  console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI);
 
 
   const toggle = (index) => {
@@ -144,6 +147,48 @@ const Offer = ({ isActive }) => {
       setFaqDataAPI();
     } catch (error) {
       console.log('error: ', error);
+    }
+  };
+
+
+  const HandleRedeemAPI = async (off_percent, product_id, close) => {
+    try {
+      const response = await postData('/redeem-offer/offers', {
+        user_id: Auth?.user_id,
+        log_alt: Auth?.log_alt,
+        off_percent,
+        product_id,
+        mode: Auth?.mode,
+      });
+      console.log('response: ', response);
+      setCongratsMessage(response?.message || "Successfully unlocked prize!")
+      setShowCongrats(true);
+      close();
+
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
+
+  const HandleExcitingPrizeAPI = async (prize_id, close) => {
+    try {
+      const response = await postData('/redeem-offer/exciting-prizes', {
+        user_id: Auth?.user_id,
+        log_alt: Auth?.log_alt,
+        mode: Auth?.mode,
+        prize_id,
+      });
+      console.log('response: ', response);
+      setCongratsMessage(response?.message || "Successfully unlocked prize!")
+      setShowCongrats(true);
+      close();
+
+    } catch (error) {
+      console.log('error: ', error);
+      setCongratsMessage(error.error)
+      setShowCongrats(true);
+      close();
     }
   };
 
@@ -303,7 +348,8 @@ const Offer = ({ isActive }) => {
                         <div className="d-flex justify-content-center gap-3">
                           <Button
                             label="Yes"
-                            onClick={() => handleYes(close)}
+                            // onClick={() => handleYes(close)}
+                            onClick={() => HandleRedeemAPI(offer?.off_percent, offer?.product_id, close)}
                             className="w-50 py-2 rounded-3 bg-transparent border-blue text-blue montserrat-semibold"
                           />
                           <Button
@@ -391,7 +437,8 @@ const Offer = ({ isActive }) => {
                     <div className="d-flex justify-content-center gap-3">
                       <Button
                         label="Yes"
-                        onClick={() => handleYes(close)}
+                        // onClick={() => handleYes(close)}
+                        onClick={() => HandleExcitingPrizeAPI(ContextFaqsDataAPI?.exciting_prizes[0]?.prize_id, close)}
                         className="w-50 py-2 rounded-3 bg-transparent border-blue text-blue montserrat-semibold"
                       />
                       <Button
@@ -415,7 +462,7 @@ const Offer = ({ isActive }) => {
                       className={`col-lg-12 py-3 shadow-lg d-flex justify-content-between align-self-lg-${i === 0 ? 'start' : 'end'} cursor-pointer ${i === 0 ? 'price-watch' : 'price-headphone'}`}
                     >
                       <div className="col-lg-8 ms-4 ps-4 align-self-end mb-1">
-                        <h4 className="font-40 space-grotesk-medium text-white lh-1">
+                        <h4 className="font-28 space-grotesk-medium text-white lh-1">
                           {
                             item?.title
                           }
@@ -454,7 +501,8 @@ const Offer = ({ isActive }) => {
                       <div className="d-flex justify-content-center gap-3">
                         <Button
                           label="Yes"
-                          onClick={() => handleYes(close)}
+                          // onClick={() => handleYes(close)}
+                          onClick={() => HandleExcitingPrizeAPI(item?.prize_id, close)}
                           className="w-50 py-2 rounded-3 bg-transparent border-blue text-blue montserrat-semibold"
                         />
                         <Button
@@ -483,8 +531,9 @@ const Offer = ({ isActive }) => {
                     color="#28a745"
                     className="mb-3"
                   />
-                  <h4>🎉 Congratulations!</h4>
-                  <p>You have successfully unlocked the prize.</p>
+                  {/* <h4> Congratulations!</h4> */}
+                  {/* <p>You have successfully unlocked the prize.</p> */}
+                  <p>🎉 {congratsMessage}</p>
                   <Button
                     label="Close"
                     onClick={() => {
