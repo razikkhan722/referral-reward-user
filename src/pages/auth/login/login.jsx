@@ -28,7 +28,7 @@ const Login = () => {
   } = useForm();
 
   // Global context setters
-  const { setAuthLocal, setContextHomeDataAPI, setContextFaqsDataAPI,ContextsetCheckSpecialOffer } =
+  const { setAuthLocal, setContextHomeDataAPI, setContextFaqsDataAPI,ContextSpclOffer, setContextSpclOffer } =
     useContext(UserContext);
 
   const navigate = useNavigate();
@@ -65,10 +65,12 @@ const Login = () => {
           log_alt: response?.log_alt,
           mode: response?.mode,
         });
-        // if(faqsData?.special_offer?.offer_code){
-        //   ContextsetCheckSpecialOffer(true)
-        // }
         setContextFaqsDataAPI(faqsData);
+        // show special off modal 
+      if(faqsData?.special_offer?.offer_code){
+        console.log("test");
+        setContextSpclOffer(true)
+      }
         // Decrypt home data
         const decryptedHome = await DecryptFunction(homeEncrypted);
         setContextHomeDataAPI(decryptedHome);

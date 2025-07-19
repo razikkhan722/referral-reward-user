@@ -4523,3 +4523,11 @@ z-index: 9;
   left: 0;
   bottom: 0;
 }
+.special-off-img{
+  filter: drop-shadow(0px -20px 60px yellow);
+}
+.offer-tag{
+  position: absolute;
+  right: 10%;
+  bottom: 5%;
+}

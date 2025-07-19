@@ -193,7 +193,7 @@ const Howitworks = ({ isActive, isExiting }) => {
 
   const HandleAPI = async () => {
     try {
-      const enyptData = await postData('/admin/fetch_custom_data', {
+      const enyptData = await postData('/admin/fetch-custom-data', {
         user_id: Auth?.user_id,
         log_alt: Auth?.log_alt,
         mode: Auth?.mode,

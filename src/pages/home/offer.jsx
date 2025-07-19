@@ -228,16 +228,17 @@ const Offer = ({ isActive }) => {
         </div>
 
         {/*  OFFER BANNER ON CONDITION */}
-        <div className="special-offer position-relative d-flex align-items-center mt-5">
-          <div className="special-off-sideimg position-absolute">
+        <div className={`special-offer position-relative d-flex align-items-center mt-5 ${ContextFaqsDataAPI?.special_offer?.offer_code ? "":"d-none"}`}>
+          <div className="special-off-sideimg  position-absolute">
+            {/* <img src={offSideImg} alt="" /> */}
           </div>
-          <div className="w-75 mx-auto text-center">
+          <div className="w-75 mx-auto text-center z-1">
             <h3 className=" montserrat-bold text-white font-40 mb-3">
               {ContextFaqsDataAPI?.special_offer?.title}
             </h3>
 
             <p className="space-grotesk-bold font-32 mx-5 text-white">
-              {ContextFaqsDataAPI?.special_offer?.offer_desc}
+             {ContextFaqsDataAPI?.special_offer?.offer_desc}
             </p>
             <div className="copy-input-container w-25 mt-3">
               <input
@@ -255,8 +256,8 @@ const Offer = ({ isActive }) => {
                 {copiedCode ? 'Copied!' : 'Copy Code'}
               </button>
             </div>
-            <p className='font-14 montserrat-medium text-white text-end'>{ContextFaqsDataAPI?.special_offer?.tag}</p>
           </div>
+          <h3 className='offer-tag text-white font-14 montserrat-medium'>{ContextFaqsDataAPI?.special_offer?.tag}</h3>
         </div>
 
         <div className="container-fluid px-5 pt-5 overflow-hidden">
