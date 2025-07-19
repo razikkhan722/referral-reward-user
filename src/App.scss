@@ -2331,6 +2331,13 @@ body::-webkit-scrollbar {
   width: 235px !important;
 }
 
+.disabled-card {
+  pointer-events: none;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  background-color: #dcdcdc !important; /* optional gray */
+}
+
 .discount-code-section {
   border-radius: 16px;
   border: 1px solid $blue;

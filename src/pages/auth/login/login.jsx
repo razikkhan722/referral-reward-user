@@ -76,11 +76,11 @@ const Login = () => {
         navigate('/');
       }
     } catch (error) {
-      console.logtI(error)
+      console.log(error)
       if (error?.error) {
         toastError(error?.error);
       } else {
-        toastError(error?.message || 'Login failed');
+        toastError(error?.error || 'Login failed');
       }
     } finally {
       setLoading(false);
