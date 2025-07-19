@@ -1,24 +1,34 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 // import component
 import Navbar from '../../components/navbar';
+import FAQ from '../../components/faq';
+import PlayAndEarnCard from '../../components/playAndEarnCard';
+import RewardHistory from './rewardHistory';
+import { postData } from '../../services/api';
+import { DecryptFunction } from '../../utils/decryptFunction';
+import Button from '../../components/button';
+import { UserContext } from '../../UseContext/useContext';
+import PopupWrapper from '../../utils/PopupWrapper';
+import { toastInfo } from '../../utils/toster';
 
-// import slider
+// import slider and third party components
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { AiOutlineInfoCircle } from 'react-icons/ai'; // ✅ Import info icon
+import { GiBackwardTime } from 'react-icons/gi';
+import { NavLink } from 'react-router-dom';
+import Popup from 'reactjs-popup';
+
 
 // import images
 import metero from '../../assets/icons/home/secondScreen/metero.svg';
 import tiltship from '../../assets/icons/home/secondScreen/tillship1.svg';
 import star from '../../assets/icons/home/secondScreen/star.svg';
-// import moneypocket from '../../assets/icons/home/MyRewards/moneypkt.svg';
 import shootingmeteor from '../../assets/icons/home/MyRewards/shotmeteor.svg';
 import rewardRocket from '../../assets/icons/home/MyRewards/rewardRocket.svg';
 import longArrow from '../../assets/icons/home/MyRewards/longArrow.svg';
 import Label from '../../assets/icons/home/MyRewards/Label.svg';
-
-//
 import moverocket from '../../assets/icons/home/MyRewards/moverocket.svg';
 import clouds from '../../assets/icons/home/MyRewards/clouds.svg';
 import lock from '../../assets/icons/home/MyRewards/lock.svg';
@@ -30,30 +40,12 @@ import gifplnt4 from '../../assets/icons/home/HomePlanets/blue.svg';
 import TicTac from '../../assets/images/home/MyRewards/Tic Tak Toe.svg';
 import Quiz from '../../assets/images/home/MyRewards/Quiz.svg';
 import Spin from '../../assets/images/home/MyRewards/Spin The Bottle.svg';
-// import MyRewardSecondScreen from './myRewardScreen2';
-// import MyRewardThirdScreen from './myRewardScreen3';
-import Voucher from '../../assets/icons/home/MyRewards/Label.svg';
 import ProductDemo from '../../assets/icons/home/MyRewards/product-demo.svg';
 import Stratergy from '../../assets/icons/home/MyRewards/strategry-consultant.svg';
 import Report from '../../assets/icons/home/MyRewards/report.svg';
 import refalien from '../../assets/icons/home/MyRewards/refalien.svg';
 import StartFour from '../../assets/icons/home/MyRewards/StarFour.svg';
-// import revClock from '../../assets/icons/home/MyRewards/clock.svg';
-import FAQ from '../../components/faq';
-import PlayAndEarnCard from '../../components/playAndEarnCard';
-import RewardHistory from './rewardHistory';
-import { postData } from '../../services/api';
-import { DecryptFunction } from '../../utils/decryptFunction';
-import { GiBackwardTime } from 'react-icons/gi';
-import { NavLink } from 'react-router-dom';
-import { toastInfo } from '../../utils/toster';
-import { UserContext } from '../../UseContext/useContext';
-import PopupWrapper from '../../utils/PopupWrapper';
 
-import Button from '../../components/button';
-import Popup from 'reactjs-popup';
-
-// Discont card Json
 
 // Exclusive card JSon
 const ExclusiveCardData = [
@@ -98,23 +90,6 @@ const ExclusiveCardData = [
     image: Report,
     imgClass: 'report-img',
     pointsText: 'Downloadable Exclusive',
-  },
-];
-const FaqData = [
-  {
-    title: '1. Collapsible Group Item',
-    content:
-      'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.',
-  },
-  {
-    title: '2. Collapsible Group Item',
-    content:
-      'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.',
-  },
-  {
-    title: '3. Collapsible Group Item',
-    content:
-      'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.',
   },
 ];
 
@@ -280,6 +255,12 @@ const MyRewardFirstScreen = () => {
   const [UfoBg, setUfoBg] = useState(false);
   const [MyRewardDataAPI, setMyRewardDataAPI] = useState();
   const [showGameCard, setShowGameCard] = useState('invite');
+  const codeRef = useRef();
+  const linkRef = useRef();
+  const couponRef = useRef();
+  const [copiedCode, setCopiedCode] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [discount, setDiscount] = useState(false);
 
 
   // =============
@@ -333,13 +314,7 @@ const MyRewardFirstScreen = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const codeRef = useRef();
-  const linkRef = useRef();
-  const couponRef = useRef();
-  const [copiedCode, setCopiedCode] = useState(false);
-  const [copiedLink, setCopiedLink] = useState(false);
-  const [discount, setDiscount] = useState(false);
-
+  // Copy Function
   const handleCopy = (ref, type) => {
     if (ref.current) {
       const value = ref.current.value;
@@ -355,15 +330,11 @@ const MyRewardFirstScreen = () => {
     }
   };
 
-  const [showCongrats, setShowCongrats] = useState(false);
 
+  const [showCongrats, setShowCongrats] = useState(false);
   const handleYes = (closeFirstPopup) => {
     closeFirstPopup(); // Close the first popup
     setShowCongrats(true); // Open second popup
-  };
-
-  const handleCloseCongrats = () => {
-    setShowCongrats(false);
   };
 
   const [copiedIndex, setCopiedIndex] = useState(null);
@@ -396,10 +367,7 @@ const MyRewardFirstScreen = () => {
   const slidesToShow = discountData.length >= 3 ? 3 : discountData.length || 1;
   const Discoutsettings = {
     arrow: false,
-    // className: 'center',
     infinite: discountData.length > 3,
-    // centerMode: discountData.length > 3,
-    // centerPadding: discountData.length > 3 ? '0px' : '0px',
     slidesToShow: slidesToShow > 0 ? slidesToShow : 1,
     swipeToSlide: true,
     autoplay: discountData.length > 3,
@@ -604,7 +572,6 @@ const MyRewardFirstScreen = () => {
                                   className="background-light-white-2 text-blue border-0 rounded-3 w-100 p-2 pr-5"
                                   type="text"
                                   defaultValue={MyRewardDataAPI?.part4}
-                                  // value={inviteCode}
                                   id="inviteCode"
                                 />
                                 <button
@@ -628,10 +595,8 @@ const MyRewardFirstScreen = () => {
                                   ref={linkRef}
                                   className="background-light-white-2 text-blue border-0 rounded-3 w-100 p-2 pr-5"
                                   type="text"
-                                  // value={inviteLink}
                                   defaultValue={MyRewardDataAPI?.part6}
                                   id="inviteLink"
-                                // readOnly
                                 />
                                 <button
                                   type="button"
@@ -762,6 +727,8 @@ const MyRewardFirstScreen = () => {
                       </Slider>
                     </div>
                   </div>
+
+                  {/* Discount Cards start here */}
                   {discountData[0]?.voucher_code ? (
                     <div className="discount-code-section my-5 px-4">
                       <div className="discount-bg-img pt-4">
@@ -770,7 +737,7 @@ const MyRewardFirstScreen = () => {
                         </p>
                       </div>
                       <p className="text-blue font-size-14 montserrat-medium mb-1">
-                       You earned these discount coupons, use these codes to get off on products.
+                        You earned these discount coupons, use these codes to get off on products.
                       </p>
                       <div className="slider-container discount-slider pb-4">
                         <Slider className="" {...Discoutsettings}>
@@ -790,11 +757,6 @@ const MyRewardFirstScreen = () => {
                                         <div className="col-9 text-white d-flex my-2 justify-content-center">
                                           <div className="discount-white-box me-2"></div>
                                           <p className="font-14 montserrat-medium mt-2 lh-sm">
-                                            {/* {item.mainText}
-                                          <span className="font-16 montserrat-bold">
-                                            {item.highlight}
-                                          </span>
-                                          {item.subText} */}
                                             {item?.offer_desc}
                                           </p>
                                         </div>
@@ -900,9 +862,7 @@ const MyRewardFirstScreen = () => {
                   ) : (
                     ''
                   )}
-                  {/* Discount Cards start here */}
 
-                  {/* Exclusive Perks */}
                   {/* Exclusive Perks Section */}
                   <div className="discount-code-section my-5 px-4">
                     <div className="discount-bg-img pt-4">
@@ -988,35 +948,35 @@ const MyRewardFirstScreen = () => {
                           </div>
                         ))}
                       </Slider>
-                            {/* 🎉 Congratulations Popup for Exclusive Perks */}
-                            <Popup
-                              open={showCongrats}
-                              onClose={() => setShowCongrats(false)}
-                              modal
-                              position="center center"
-                            >
-                              {(close) => (
-                                <div className="text-center p-4">
-                                  <AiOutlineInfoCircle
-                                    size={50}
-                                    color="#28a745"
-                                    style={{ marginBottom: '15px' }}
-                                  />
-                                  <h4>🎉 Congratulations!</h4>
-                                  <p>
-                                    You have successfully unlocked the offer.
-                                  </p>
-                                  <Button
-                                    label="Close"
-                                    onClick={() => {
-                                      close();
-                                      setShowCongrats(false);
-                                    }}
-                                    className="bg-success text-white mt-3"
-                                  />
-                                </div>
-                              )}
-                            </Popup>
+                      {/* 🎉 Congratulations Popup for Exclusive Perks */}
+                      <Popup
+                        open={showCongrats}
+                        onClose={() => setShowCongrats(false)}
+                        modal
+                        position="center center"
+                      >
+                        {(close) => (
+                          <div className="text-center p-4">
+                            <AiOutlineInfoCircle
+                              size={50}
+                              color="#28a745"
+                              style={{ marginBottom: '15px' }}
+                            />
+                            <h4>🎉 Congratulations!</h4>
+                            <p>
+                              You have successfully unlocked the offer.
+                            </p>
+                            <Button
+                              label="Close"
+                              onClick={() => {
+                                close();
+                                setShowCongrats(false);
+                              }}
+                              className="bg-success text-white mt-3"
+                            />
+                          </div>
+                        )}
+                      </Popup>
                     </div>
                   </div>
                 </div>

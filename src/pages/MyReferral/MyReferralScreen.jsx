@@ -24,103 +24,29 @@ import { NavLink } from 'react-router-dom';
 import { toastInfo } from '../../utils/toster';
 import { UserContext } from '../../UseContext/useContext';
 
-// Import Json
-// const faqData = [
-//   {
-//     title: '1. What is wealth Elites Reward & Program?',
-//     content: 'You can return any item within 30 days of purchase.',
-//   },
-//   {
-//     title: '2. How do I track my referrals?',
-//     content:
-//       'You can track your order from the “My Orders” section after login.',
-//   },
-//   {
-//     title: '3. What does a successfull referral mean?',
-//     content: 'Yes, we offer 24/7 customer support via chat and email.',
-//   },
-//   {
-//     title: '3. What does a successfull referral mean?',
-//     content: 'Yes, we offer 24/7 customer support via chat and email.',
-//   },
-// ];
 
 const MyReferralScreen = () => {
-  // const inputRef = useRef(null);
-  // const [copied, setCopied] = useState(false);
+  // ------------
+  // UseStates
+  // -------------
   const [RefralDataAPI, setRefralDataAPI] = useState();
+  const codeRef = useRef();
+  const linkRef = useRef();
+  const [copiedCode, setCopiedCode] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [showFooterPlanet, setShowFooterPlanet] = useState(false);
+  const footerRef = useRef(null);
 
   const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
   const { ContextHomeDataAPI, ContextFaqsDataAPI } =
     useContext(UserContext);
 
-  const codeRef = useRef();
-  const linkRef = useRef();
-  const [copiedCode, setCopiedCode] = useState(false);
-  const [copiedLink, setCopiedLink] = useState(false);
-  // const inviteCode = "ABC123XYZ";
-  // const inviteLink = "https://yourapp.com/invite/ABC123XYZ";
 
-  const handleCopy = (ref, type) => {
-    if (ref.current) {
-      const value = ref.current.value;
-      navigator.clipboard.writeText(value);
-      // Set state to show "Copied!" text
-      if (type === "code") {
-        setCopiedCode(true);
-        setTimeout(() => setCopiedCode(false), 2000); // Reset after 2 seconds
-      } else {
-        setCopiedLink(true);
-        setTimeout(() => setCopiedLink(false), 2000);
-      }
-    }
-  };
-  const footerRef = useRef(null);
-  const [showFooterPlanet, setShowFooterPlanet] = useState(false);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          // add delay before showing
-          setTimeout(() => setShowFooterPlanet(true), 500);
-        } else {
-          setShowFooterPlanet(false);
-        }
-      },
-      {
-        root: null,
-        threshold: 0.3,
-      }
-    );
-
-    if (footerRef.current) observer.observe(footerRef.current);
-    return () => {
-      if (footerRef.current) observer.unobserve(footerRef.current);
-    };
-  }, []);
 
   // =================================
   //       API FUNCTIONALITY
   // =================================
-
-  const HandleAPI = async () => {
-    try {
-      const enyptData = await postData('/my-referrals', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
-      });
-      const Decrpty = await DecryptFunction(enyptData);
-      setRefralDataAPI(Decrpty);
-    } catch (error) {
-      console.log('error: ', error);
-    }
-  };
-
-  useEffect(() => {
-    HandleAPI();
-  }, []);
 
   const handleWhatsappClick = async () => {
     try {
@@ -150,29 +76,85 @@ const MyReferralScreen = () => {
     }
   };
 
+  const HandleAPI = async () => {
+    try {
+      const enyptData = await postData('/my-referrals', {
+        user_id: Auth?.user_id,
+        log_alt: Auth?.log_alt,
+        mode: Auth?.mode,
+      });
+      const Decrpty = await DecryptFunction(enyptData);
+      setRefralDataAPI(Decrpty);
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
+
+  // Copy Function
+  const handleCopy = (ref, type) => {
+    if (ref.current) {
+      const value = ref.current.value;
+      navigator.clipboard.writeText(value);
+      // Set state to show "Copied!" text
+      if (type === "code") {
+        setCopiedCode(true);
+        setTimeout(() => setCopiedCode(false), 2000); // Reset after 2 seconds
+      } else {
+        setCopiedLink(true);
+        setTimeout(() => setCopiedLink(false), 2000);
+      }
+    }
+  };
+
+  // ---------------
+  // useEffect
+  // ----------------
+
+  useEffect(() => {
+    HandleAPI();
+  }, []);
+
+  // Footer Animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // add delay before showing
+          setTimeout(() => setShowFooterPlanet(true), 500);
+        } else {
+          setShowFooterPlanet(false);
+        }
+      },
+      {
+        root: null,
+        threshold: 0.3,
+      }
+    );
+
+    if (footerRef.current) observer.observe(footerRef.current);
+    return () => {
+      if (footerRef.current) observer.unobserve(footerRef.current);
+    };
+  }, []);
+
+
   return (
     <>
       <section className="hero-section position-relative">
-        {/*
-        <div className="referral-wrapper position-relative">
-        <div className="container z-1 pt-5">
-        <ReferralCards />
-          </div>
-        </div> */}
         <div className="overflow-scroll h-100 z-3">
-        <Navbar />
+          <Navbar />
           <div className="container pt-100">
             <div className="mb-5 positin-relative">
               <ReferralCards RefralDataAPI={RefralDataAPI} />
-              {/* <div className="cloud-img w-100 z-2"></div> */}
-            </div>  
             </div>
-            <div className='container-fluid p-0'>
-              <div className='position-relative'>
-                <img src={cloudImg} alt="Cloud Image" className='cloud-img w-100' />
-              </div>
+          </div>
+          <div className='container-fluid p-0'>
+            <div className='position-relative'>
+              <img src={cloudImg} alt="Cloud Image" className='cloud-img w-100' />
             </div>
-            <div className='container'>        
+          </div>
+          <div className='container'>
             <div className="invite-card my-refral-inner-content overflow-hidden">
               <div className="row pt-36 px-5 align-items-center">
                 <div className='col-lg-1'></div>
@@ -191,7 +173,6 @@ const MyReferralScreen = () => {
                     <div className="copy-input-container">
                       <input
                         ref={codeRef}
-                        // value={inviteCode}
                         id="inviteCode"
                         type="text"
                         defaultValue={RefralDataAPI?.part6}
@@ -212,7 +193,6 @@ const MyReferralScreen = () => {
                     <div className="copy-input-container">
                       <input
                         ref={linkRef}
-                        // value={inviteLink}
                         id="inviteLink"
                         type="text"
                         defaultValue={RefralDataAPI?.part5}
@@ -237,7 +217,6 @@ const MyReferralScreen = () => {
                   <img className="mx-3 w-auto" src={linkedinImg} alt=""
                     onClick={() => handleIconLink('linkedin')}
                   />
-                  {/* <img className="mx-3 w-auto" src={ytImg} alt="" /> */}
                   <img className="mx-3 w-auto" src={twitImg} alt=""
                     onClick={() => handleIconLink('twitter')}
                   />
@@ -271,15 +250,15 @@ const MyReferralScreen = () => {
                   </div>
                   <div className="mt-3 row justify-content-between justify-content-lg-center align-items-center">
                     <div className='col-6 col-lg-3'>
-                     <NavLink to={"/invitefriend"}>
-                       <button className="py-2 mb-0 w-100 rounded-3 text-white bg-transparent border border-white font-16 montserrat-semibold">
-                        Invite a Friend
-                      </button>
-                     </NavLink>
+                      <NavLink to={"/invitefriend"}>
+                        <button className="py-2 mb-0 w-100 rounded-3 text-white bg-transparent border border-white font-16 montserrat-semibold">
+                          Invite a Friend
+                        </button>
+                      </NavLink>
                     </div>
                     <div className='col-6 col-lg-3'>
                       <button className="py-2 w-100 rounded-3 border-0 bg-white text-blue font-16 montserrat-semibold"
-                      onClick={()=>toastInfo("Comming Soon")}
+                        onClick={() => toastInfo("Comming Soon")}
                       >
                         Track
                       </button>
