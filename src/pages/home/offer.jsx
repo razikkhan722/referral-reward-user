@@ -90,6 +90,7 @@ const Offer = ({ isActive }) => {
   };
 
   const { ContextFaqsDataAPI } = useContext(UserContext);
+  console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI?.special_offer);
 
   const toggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -226,25 +227,24 @@ const Offer = ({ isActive }) => {
         </div>
 
         {/*  OFFER BANNER ON CONDITION */}
-        <div className="special-offer position-relative d-flex align-items-center  mt-5">
+        <div className={`special-offer position-relative d-flex align-items-center mt-5 ${ContextFaqsDataAPI?.special_offer?.offer_code ? "":"d-none"}`}>
           <div className="special-off-sideimg  position-absolute">
             {/* <img src={offSideImg} alt="" /> */}
           </div>
-          <div className="w-75 mx-auto text-center ">
+          <div className="w-75 mx-auto text-center z-1">
             <h3 className=" montserrat-bold text-white font-40 mb-3">
-              Independence Day Offer
+              {ContextFaqsDataAPI?.special_offer?.title}
             </h3>
 
             <p className="space-grotesk-bold font-32 mx-5 text-white">
-              Enjoy the spirit of freedom with exclusive rewards, a flat 15%
-              discount, and festive surprises!!!
+             {ContextFaqsDataAPI?.special_offer?.offer_desc}
             </p>
             <div className="copy-input-container w-25 mt-3">
               <input
                 ref={codeRef}
                 id="inviteCode"
                 type="text"
-                value={''}
+                value={ContextFaqsDataAPI?.special_offer?.offer_code}
                 // defaultValue={RefralDataAPI?.part6}
                 className="copy-input input-invite-friend bg-white mb-16"
               />
@@ -256,6 +256,7 @@ const Offer = ({ isActive }) => {
               </button>
             </div>
           </div>
+          <h3 className='offer-tag text-white font-14 montserrat-medium'>{ContextFaqsDataAPI?.special_offer?.tag}</h3>
         </div>
 
         <div className="container-fluid px-5 pt-5 overflow-hidden">
@@ -356,16 +357,16 @@ const Offer = ({ isActive }) => {
                     <div className="col-lg-8 pt-5 ps-5 d-grid">
                       <div className="head-content ">
                         <h2 className="font-24 montserrat-medium text-white mb-2">
-                          {
-                            ContextFaqsDataAPI?.exciting_prizes?.[0]?.prizes[0]
-                              ?.title
-                          }
+                            {/* {
+                              ContextFaqsDataAPI?.exciting_prizes?.[0]?.prizes[0]
+                                ?.title
+                            } */}
                         </h2>
                         <p className="font-14 montserrat-light text-white mb-5 pb-5">
-                          {
+                          {/* {
                             ContextFaqsDataAPI?.exciting_prizes?.[0]?.prizes[0]
                               ?.term_conditions
-                          }
+                          } */}
                         </p>
                       </div>
                       <div className="section-offer align-self-end mb-3 pb-1">
@@ -374,17 +375,17 @@ const Offer = ({ isActive }) => {
                         </h4>
                         <div className="d-flex align-items-center">
                           <span className="font-24 montserrat-semibold text-light-yellow">
-                            {
+                            {/* {
                               ContextFaqsDataAPI?.exciting_prizes?.[0]
                                 ?.prizes[0]?.required_meteors
-                            }
+                            } */}
                           </span>
                           <img
                             className="mx-3"
-                            src={
-                              ContextFaqsDataAPI?.exciting_prizes?.[0]
-                                ?.prizes[0]?.image_url || metero
-                            }
+                            // src={
+                            //   ContextFaqsDataAPI?.exciting_prizes?.[0]
+                            //     ?.prizes[0]?.image_url || metero
+                            // }
                             alt=""
                           />
                           <span className="font-28 montserrat-medium text-white">

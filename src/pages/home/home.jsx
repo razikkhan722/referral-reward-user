@@ -28,8 +28,12 @@ function Home() {
   const [exitAnimation, setExitAnimation] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
   const offerRef = useRef(null);
-  const { ContextFaqsDataAPI,ContextsetCheckSpecialOffer,ContextCheckSpecialOffer } =
+  const { ContextFaqsDataAPI, ContextSpclOffer, setContextSpclOffer } =
     useContext(UserContext);
+  console.log(
+    'ContextFaqsDataAPI: ',
+    ContextFaqsDataAPI?.special_offer?.offer_code,
+  );
   // Scroll lock flag for extra scroll at edge
   const edgeScrollUpTriggered = useRef(false);
 
@@ -140,16 +144,13 @@ function Home() {
     setShow(false);
   };
 
-  // useEffect(() => {
+  useEffect(() => {
+    if (ContextSpclOffer) {
+      setShow(true)
+      setContextSpclOffer(false);
+    }
+  }, []);
 
-  //   if(!ContextCheckSpecialOffer){
-  //     console.log('ContextCheckSpecialOffer: ', ContextCheckSpecialOffer);
-  //     setShow(true)
-  //     ContextsetCheckSpecialOffer(false)
-  //   }
-
-  // }, [])
-  
   return (
     <>
       <div className="fixed-section-container">
@@ -193,32 +194,47 @@ function Home() {
       {activeIndex > 0 ? <FloatingActionButton toTop={setActiveIndex} /> : null}
 
       {/* Side Special Offer Modal  */}
-      {/* {activeIndex == 0 && ContextCheckSpecialOffer ? <img
-        className="offer-popup cursor-pointer"
-        onClick={()=>setActiveIndex(5)}
-        src={offpop}
-        alt=""
-      /> : null} */}
+      {activeIndex == 0 && ContextFaqsDataAPI?.special_offer?.offer_code ? (
+        <img
+          className="offer-popup cursor-pointer"
+          onClick={()=>setActiveIndex(5)}
+          src={offpop}
+          alt=""
+        />
+      ) : null}
       {/* Offer Modal */}
-      {/* <Modal className="" show={show} onHide={handleClose} centered>
+      <Modal
+        className={` box-off ${!show ? 'box-open-off' : 'box-closing-off'}`}
+        show={show}
+        onHide={handleClose}
+        centered
+      >
         <Modal.Header className="border-0 justify-content-between">
           <span></span>
-          <button onClick={handleClose} className="p-2 rounded-circle border-0 d-flex align-items-center">
+          <button
+            onClick={handleClose}
+            className="p-2 rounded-circle border-0 d-flex align-items-center"
+          >
             <img src={cross} alt="" />
           </button>
         </Modal.Header>
         <Modal.Body className="">
           <div className="text-center mb-3">
-            <img src={offimg} alt="" />
+            <img className="special-off-img" src={offimg} alt="" />
           </div>
           <p className="font-16 montserrat-medium text-blue text-center my-2">
-            Let’s Celebrate Independence Day with Special Offers and Surprises!
+           {ContextFaqsDataAPI?.special_offer?.pop_up_text}
           </p>
-          <button onClick={()=>setActiveIndex(5)} className="w-100 font-14 mb-2 mt-2 montserrat-medium background-text-blue text-white rounded-4 border-0 py-2">
+          <button
+            onClick={() => {
+              (setActiveIndex(5), handleClose());
+            }}
+            className="w-100 font-14 mb-2 mt-2 montserrat-medium background-text-blue text-white rounded-4 border-0 py-2"
+          >
             See Offers
           </button>
         </Modal.Body>
-      </Modal> */}
+      </Modal>
     </>
   );
 }
