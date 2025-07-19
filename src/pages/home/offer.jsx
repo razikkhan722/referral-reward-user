@@ -30,7 +30,7 @@ import { UserContext } from '../../UseContext/useContext';
 import Button from '../../components/button';
 import PopupWrapper from '../../utils/PopupWrapper';
 import Popup from 'reactjs-popup';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { AiOutlineCheckCircle, AiOutlineInfoCircle } from 'react-icons/ai';
 import { responsiveArray } from 'antd/es/_util/responsiveObserver';
 
 const Offer = ({ isActive }) => {
@@ -83,6 +83,7 @@ const Offer = ({ isActive }) => {
   const [showCongrats, setShowCongrats] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [congratsMessage, setCongratsMessage] = useState("")
+  const [isSuccess, setIsSuccess] = useState(false);
   const codeRef = useRef();
 
   const handleYes = (close) => {
@@ -163,10 +164,15 @@ const Offer = ({ isActive }) => {
       console.log('response: ', response);
       setCongratsMessage(response?.message || "Successfully unlocked prize!")
       setShowCongrats(true);
+      setIsSuccess(true)
       close();
 
     } catch (error) {
       console.log('error: ', error);
+      setCongratsMessage(error.error)
+      setShowCongrats(true);
+      setIsSuccess(false);
+      close();
     }
   };
 
@@ -182,12 +188,14 @@ const Offer = ({ isActive }) => {
       console.log('response: ', response);
       setCongratsMessage(response?.message || "Successfully unlocked prize!")
       setShowCongrats(true);
+      setIsSuccess(true);
       close();
 
     } catch (error) {
       console.log('error: ', error);
       setCongratsMessage(error.error)
       setShowCongrats(true);
+      setIsSuccess(false);
       close();
     }
   };
@@ -526,11 +534,16 @@ const Offer = ({ isActive }) => {
             >
               {(close) => (
                 <div className="text-center p-4">
-                  <AiOutlineInfoCircle
+                  {isSuccess ? (
+                    <AiOutlineCheckCircle size={50} className="mb-3 text-success" />
+                  ) : (
+                    <AiOutlineInfoCircle size={50} className="mb-3 text-danger" />
+                  )}
+                  {/* <AiOutlineInfoCircle
                     size={50}
                     color="#28a745"
                     className="mb-3"
-                  />
+                  /> */}
                   {/* <h4> Congratulations!</h4> */}
                   {/* <p>You have successfully unlocked the prize.</p> */}
                   <p>{congratsMessage}</p>
@@ -540,7 +553,7 @@ const Offer = ({ isActive }) => {
                       close();
                       setShowCongrats(false);
                     }}
-                    className="bg-success text-white mt-3"
+                    className={`mt-3 border-0 ${isSuccess ? 'bg-success' : 'bg-danger'} text-white`}
                   />
                 </div>
               )}
