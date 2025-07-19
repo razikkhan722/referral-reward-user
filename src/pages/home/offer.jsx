@@ -141,7 +141,7 @@ const Offer = ({ isActive }) => {
         mode: Auth?.mode,
       });
       const Decrpty = await DecryptFunction(enyptData);
-     
+
       setFaqDataAPI();
     } catch (error) {
       console.log('error: ', error);
@@ -266,7 +266,7 @@ const Offer = ({ isActive }) => {
           <h1 className="text-dark-blue font-40 space-grotesk-bold mt-120 mb-4 pb-4 ">
             Exclusive Offers
           </h1>
-          <div className="pt-5 d-grid price-exclusive gap-3">
+          {/* <div className="pt-5 d-grid price-exclusive gap-3">
             <div className="mt-5 rounded-4 shadow-lg bg-white px-0">
               <div className="head-sec position-relative">
                 <img className="w-100" src={offerexcimg} alt="offerexcimg" />
@@ -345,7 +345,39 @@ const Offer = ({ isActive }) => {
                 </button>
               </div>
             </div>
+          </div> */}
+
+          <div className="pt-5 d-grid price-exclusive gap-3">
+            {ContextFaqsDataAPI?.exclusive_offers?.map((offer, index) => (
+              <div key={index} className="mt-5 rounded-4 shadow-lg bg-white px-0">
+                <div className="head-sec position-relative">
+                  <img className="w-100" src={offerexcimg} alt="offerimg" />
+                  <img
+                    className="position-absolute offer-exc-rocket"
+                    src={excrocket}
+                    alt="Loading"
+                  />
+                </div>
+                <div className="text-center px-5">
+                  <img src={zomato} alt="Loading" />
+                  <h3 className="font-24 text-light-black montserrat-semibold mt-3 mb-2">
+                    {offer.offer_name}
+                  </h3>
+                  <p className="font-16 text-light-black space-grotesk-regular">
+                    {offer.one_liner}
+                  </p>
+                  <hr className="my-4 border-1 card-divider width-65" />
+                  <button
+                    className="btn background-text-blue text-white font-14 montserrat-medium mb-4 width-65 rounded-5"
+                    type="button"
+                  >
+                    {offer?.button_txt}
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
+
           {/* Win Exciting Prizes SECTION */}
           <h2 className="text-dark-blue mt-120 font-40 space-grotesk-bold mb-4 pb-4 ">
             Win Exciting Prizes
@@ -441,13 +473,13 @@ const Offer = ({ isActive }) => {
                     >
                       <div className="col-lg-8 ms-4 ps-4 align-self-end mb-1">
                         <h4 className="font-40 space-grotesk-medium text-white lh-1">
-                            {
-                              item?.title
+                          {
+                            item?.title
                           }
                         </h4>
                         <div className="d-flex align-items-center">
                           <span className="font-24 montserrat-semibold text-light-yellow">
-                             {
+                            {
                               item?.required_meteors
                             }
                           </span>
@@ -459,7 +491,7 @@ const Offer = ({ isActive }) => {
                       </div>
                       <div className="col-lg-4 d-flex align-items-center">
                         <img
-                            src={i === 0 ? smartwatch : headphone}
+                          src={i === 0 ? smartwatch : headphone}
                           alt={i === 0 ? 'smartwatch' : 'headphone'}
                         />
                       </div>
