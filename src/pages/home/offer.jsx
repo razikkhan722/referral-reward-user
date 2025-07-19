@@ -360,21 +360,13 @@ const Offer = ({ isActive }) => {
                       <div className="head-content ">
                         <h2 className="font-24 montserrat-medium text-white mb-2">
                           {
-<<<<<<< HEAD
                             ContextFaqsDataAPI?.exciting_prizes
                               ?.title
-=======
-                            ContextFaqsDataAPI?.exciting_prizes?.[0]?.title
->>>>>>> e5d23ba500f432ad2e58b33448651d955357bc00
                           }
                         </h2>
                         <p className="font-14 montserrat-light text-white mb-5 pb-5">
                           {
-<<<<<<< HEAD
                             ContextFaqsDataAPI?.exciting_prizes?.term_conditions
-=======
-                            ContextFaqsDataAPI?.exciting_prizes?.[0]?.term_conditions
->>>>>>> e5d23ba500f432ad2e58b33448651d955357bc00
                           }
                         </p>
                       </div>
@@ -385,21 +377,13 @@ const Offer = ({ isActive }) => {
                         <div className="d-flex align-items-center">
                           <span className="font-24 montserrat-semibold text-light-yellow">
                             {
-<<<<<<< HEAD
                               ContextFaqsDataAPI?.exciting_prizes?.required_meteors
-=======
-                              ContextFaqsDataAPI?.exciting_prizes?.[0]?.required_meteors
->>>>>>> e5d23ba500f432ad2e58b33448651d955357bc00
                             }
                           </span>
                           <img
                             className="mx-3"
                             src={
-<<<<<<< HEAD
                               ContextFaqsDataAPI?.exciting_prizes?.prizes?.image_url || metero
-=======
-                              ContextFaqsDataAPI?.exciting_prizes?.[0]?.image_url || metero
->>>>>>> e5d23ba500f432ad2e58b33448651d955357bc00
                             }
                             alt=""
                           />
