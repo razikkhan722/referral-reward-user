@@ -258,6 +258,7 @@ const MyRewardFirstScreen = () => {
   const [leftScrolAnimt, setleftScrolAnimt] = useState(true);
   const [UfoBg, setUfoBg] = useState(false);
   const [MyRewardDataAPI, setMyRewardDataAPI] = useState();
+  console.log('MyRewardDataAPI: ', MyRewardDataAPI);
   const [showGameCard, setShowGameCard] = useState('invite');
   const codeRef = useRef();
   const linkRef = useRef();
@@ -379,12 +380,13 @@ const MyRewardFirstScreen = () => {
 
   const discountData = (() => {
     try {
+      // console.log('discountData: ', discountData);
       const fixedString = MyRewardDataAPI?.part8
-        ?.replace(/'/g, '"') // Replace single quotes with double quotes
-        ?.replace(/\bNone\b/g, 'null') // Replace Python None with JSON null
-        ?.replace(/\bTrue\b/g, 'true') // If needed, convert booleans
-        ?.replace(/\bFalse\b/g, 'false');
-
+      ?.replace(/'/g, '"') // Replace single quotes with double quotes
+      ?.replace(/\bNone\b/g, 'null') // Replace Python None with JSON null
+      ?.replace(/\bTrue\b/g, 'true') // If needed, convert booleans
+      ?.replace(/\bFalse\b/g, 'false');
+      
       return JSON?.parse(fixedString) || [];
     } catch (error) {
       console.error('JSON parse error:', error);
@@ -757,7 +759,7 @@ const MyRewardFirstScreen = () => {
                   </div>
 
                   {/* Discount Cards start here */}
-                  {discountData[0]?.voucher_code ? (
+                  {discountData[0]?.coupon_code ? (
                     <div className="discount-code-section my-5 px-4">
                       <div className="discount-bg-img pt-4">
                         <p className="font-size-18 space-grotesk-bold text-blue">
@@ -837,7 +839,7 @@ const MyRewardFirstScreen = () => {
                                   <p className="text-white mb-0 font-12 montserrat-regular">
                                     Coupon code:
                                     <span className="text-uppercase font-14 montserrat-medium px-2">
-                                      {item?.voucher_code || 'CB1234'}
+                                      {item?.coupon_code || 'CB1234'}
                                     </span>
                                   </p>
                                   <button
