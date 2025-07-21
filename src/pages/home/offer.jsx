@@ -169,7 +169,7 @@ const Offer = ({ isActive }) => {
 
     } catch (error) {
       console.log('error: ', error);
-      setCongratsMessage(error.error)
+      setCongratsMessage(error.message)
       setShowCongrats(true);
       setIsSuccess(false);
       close();
@@ -193,7 +193,7 @@ const Offer = ({ isActive }) => {
 
     } catch (error) {
       console.log('error: ', error);
-      setCongratsMessage(error.error)
+      setCongratsMessage(error.message)
       setShowCongrats(true);
       setIsSuccess(false);
       close();
