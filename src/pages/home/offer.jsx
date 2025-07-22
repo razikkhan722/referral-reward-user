@@ -151,13 +151,13 @@ const Offer = ({ isActive }) => {
   };
 
 
-  const HandleRedeemAPI = async (off_percent, product_id, close) => {
+  const HandleRedeemAPI = async (off_percent, product_uid, close) => {
     try {
       const response = await postData('/redeem-offer/offers', {
         user_id: Auth?.user_id,
         log_alt: Auth?.log_alt,
         off_percent,
-        product_id,
+        product_id: product_uid,
         mode: Auth?.mode,
       });
       console.log('response: ', response);
@@ -317,9 +317,10 @@ const Offer = ({ isActive }) => {
           <h1 className="text-dark-blue font-40 space-grotesk-bold mt-120 mb-4 pb-4 ">
             Exclusive Offers
           </h1>
-          <div className="pt-5 d-grid price-exclusive gap-3">
+          <div className="pt-5 row g-3">
             {ContextFaqsDataAPI?.exclusive_offers?.map((offer, index) => (
-              <div key={index} className="mt-5 rounded-4 shadow-lg bg-white px-0">
+             <div className='col-lg-4'>
+               <div key={index} className="mt-5 rounded-4 shadow-lg bg-white px-0">
                 <div className="head-sec position-relative">
                   <img className="w-100" src={offerexcimg} alt="offerimg" />
                   <img
@@ -357,7 +358,7 @@ const Offer = ({ isActive }) => {
                           <Button
                             label="Yes"
                             // onClick={() => handleYes(close)}
-                            onClick={() => HandleRedeemAPI(offer?.off_percent, offer?.product_id, close)}
+                            onClick={() => HandleRedeemAPI(offer?.off_percent, offer?.product_uid, close)}
                             className="w-50 py-2 rounded-3 bg-transparent border-blue text-blue montserrat-semibold"
                           />
                           <Button
@@ -372,6 +373,7 @@ const Offer = ({ isActive }) => {
 
                 </div>
               </div>
+             </div>
             ))}
           </div>
 
