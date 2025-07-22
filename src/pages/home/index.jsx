@@ -52,6 +52,7 @@ const Index = ({ isExiting, isActive }) => {
     MeterUpdateData,
     setMeterUpdateData,
   } = useContext(UserContext);
+  console.log('MeterUpdateData: ', MeterUpdateData);
 
   // Planet carousel states
   const [currentIndex, setCurrentIndex] = useState(

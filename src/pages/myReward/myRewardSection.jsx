@@ -101,6 +101,8 @@ const MyRewardFirstScreen = () => {
   const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
   const { ContextHomeDataAPI, ContextFaqsDataAPI, MeterUpdateData } =
   useContext(UserContext);
+  
+  console.log('MeterUpdateData: ', MeterUpdateData?.milestones);
 
   const RewardSliderJson = [
     {
@@ -734,8 +736,7 @@ const MyRewardFirstScreen = () => {
                             </div>
 
                             {/* <h4 className="font-14 montserrat-regular">1000 Meteors</h4> */}
-                            {Number(slide?.point) >=
-                              Number(ContextHomeDataAPI?.part2) ? (
+                            {!MeterUpdateData?.milestones?.includes(slide?.num) ? (
                               <button className="background-text-blue w-100 mt-4 mx-auto border-0 border-radius-8 font-size-12 d-flex justify-content-center align-items-center py-2 mx-3 opacity-25 montserrat-semibold text-white">
                                 {slide?.point} Meteors{' '}
                                 <img
