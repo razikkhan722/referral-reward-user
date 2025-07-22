@@ -100,7 +100,7 @@ const ExclusiveCardData = [
 const MyRewardFirstScreen = () => {
   const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
   const { ContextHomeDataAPI, ContextFaqsDataAPI, MeterUpdateData } =
-    useContext(UserContext);
+  useContext(UserContext);
 
   const RewardSliderJson = [
     {
