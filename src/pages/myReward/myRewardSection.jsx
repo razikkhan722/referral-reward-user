@@ -18,7 +18,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 // React-Icon
-import { AiOutlineInfoCircle } from 'react-icons/ai'; // ✅ Import info icon
+import { AiOutlineCheckCircle, AiOutlineInfoCircle } from 'react-icons/ai'; // ✅ Import info icon
 import { GiBackwardTime } from 'react-icons/gi';
 
 // Navigation
@@ -258,6 +258,7 @@ const MyRewardFirstScreen = () => {
   const [leftScrolAnimt, setleftScrolAnimt] = useState(true);
   const [UfoBg, setUfoBg] = useState(false);
   const [MyRewardDataAPI, setMyRewardDataAPI] = useState();
+  console.log('MyRewardDataAPI: ', MyRewardDataAPI);
   const [showGameCard, setShowGameCard] = useState('invite');
   const codeRef = useRef();
   const linkRef = useRef();
@@ -265,7 +266,8 @@ const MyRewardFirstScreen = () => {
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
   const [discount, setDiscount] = useState(false);
-
+  const [congratsMessage, setCongratsMessage] = useState("")
+  const [isSuccess, setIsSuccess] = useState(false);
 
   // =============
   // Functions
@@ -299,6 +301,29 @@ const MyRewardFirstScreen = () => {
   useEffect(() => {
     HandleAPI();
   }, []);
+
+  const HandleRedeemAPI = async (coupon_code, close) => {
+    try {
+      const response = await postData('/redeem-offer/discount-coupon', {
+        user_id: Auth?.user_id,
+        log_alt: Auth?.log_alt,
+        mode: Auth?.mode,
+        coupon_code,
+      });
+      console.log('response: ', response);
+      setCongratsMessage(response?.message || "Successfully unlocked prize!")
+      setShowCongrats(true);
+      setIsSuccess(true)
+      close();
+
+    } catch (error) {
+      console.log('error: ', error);
+      setCongratsMessage(error.error)
+      setShowCongrats(true);
+      setIsSuccess(false);
+      close();
+    }
+  };
 
   //============
   // UseEffect
@@ -355,12 +380,13 @@ const MyRewardFirstScreen = () => {
 
   const discountData = (() => {
     try {
+      // console.log('discountData: ', discountData);
       const fixedString = MyRewardDataAPI?.part8
-        ?.replace(/'/g, '"') // Replace single quotes with double quotes
-        ?.replace(/\bNone\b/g, 'null') // Replace Python None with JSON null
-        ?.replace(/\bTrue\b/g, 'true') // If needed, convert booleans
-        ?.replace(/\bFalse\b/g, 'false');
-
+      ?.replace(/'/g, '"') // Replace single quotes with double quotes
+      ?.replace(/\bNone\b/g, 'null') // Replace Python None with JSON null
+      ?.replace(/\bTrue\b/g, 'true') // If needed, convert booleans
+      ?.replace(/\bFalse\b/g, 'false');
+      
       return JSON?.parse(fixedString) || [];
     } catch (error) {
       console.error('JSON parse error:', error);
@@ -733,7 +759,7 @@ const MyRewardFirstScreen = () => {
                   </div>
 
                   {/* Discount Cards start here */}
-                  {discountData[0]?.voucher_code ? (
+                  {discountData[0]?.coupon_code ? (
                     <div className="discount-code-section my-5 px-4">
                       <div className="discount-bg-img pt-4">
                         <p className="font-size-18 space-grotesk-bold text-blue">
@@ -747,7 +773,11 @@ const MyRewardFirstScreen = () => {
                         <Slider className="" {...Discoutsettings}>
                           {discountData.map((item, index) => (
                             <div key={index} className="px-2">
-                              <div className="discount-card dis-card background-text-blue p-2 position-relative cursor-pointer">
+                              <div
+                                className={`discount-card dis-card p-2 position-relative ${item.redeemed === true ? 'disabled-card' : 'background-text-blue cursor-pointer'
+                                  }`}
+                              // className="discount-card dis-card background-text-blue p-2 position-relative cursor-pointer"
+                              >
                                 <PopupWrapper
                                   trigger={
                                     <div
@@ -782,7 +812,8 @@ const MyRewardFirstScreen = () => {
                                       <div className="d-flex justify-content-center gap-3 py-2">
                                         <Button
                                           label="Yes"
-                                          onClick={() => handleYes(close)}
+                                          // onClick={() => handleYes(close)}
+                                          onClick={() => HandleRedeemAPI(item?.coupon_code, close)}
                                           className="montserrat-semibold w-50 text-center mx-1 text-decoration-none font-16 py-2 rounded-3 bg-transparent border-blue text-blue"
                                           hoverClass=""
                                         />
@@ -808,7 +839,7 @@ const MyRewardFirstScreen = () => {
                                   <p className="text-white mb-0 font-12 montserrat-regular">
                                     Coupon code:
                                     <span className="text-uppercase font-14 montserrat-medium px-2">
-                                      {item?.voucher_code || 'CB1234'}
+                                      {item?.coupon_code || 'CB1234'}
                                     </span>
                                   </p>
                                   <button
@@ -961,22 +992,29 @@ const MyRewardFirstScreen = () => {
                       >
                         {(close) => (
                           <div className="text-center p-4">
-                            <AiOutlineInfoCircle
+                            {isSuccess ? (
+                              <AiOutlineCheckCircle size={50} className="mb-3 text-success" />
+                            ) : (
+                              <AiOutlineInfoCircle size={50} className="mb-3 text-danger" />
+                            )}
+                            {/* <AiOutlineInfoCircle
                               size={50}
                               color="#28a745"
                               style={{ marginBottom: '15px' }}
-                            />
-                            <h4>🎉 Congratulations!</h4>
+                            /> */}
+                            {/* <h4>🎉 Congratulations!</h4>
                             <p>
                               You have successfully unlocked the offer.
-                            </p>
+                            </p> */}
+                            <p>{congratsMessage}</p>
                             <Button
                               label="Close"
                               onClick={() => {
                                 close();
                                 setShowCongrats(false);
                               }}
-                              className="bg-success text-white mt-3"
+                              // className="bg-success text-white mt-3"
+                              className={`mt-3 border-0 ${isSuccess ? 'bg-success' : 'bg-danger'} text-white`}
                             />
                           </div>
                         )}
