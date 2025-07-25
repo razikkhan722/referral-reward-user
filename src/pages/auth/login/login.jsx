@@ -46,6 +46,7 @@ const Login = () => {
         password: data?.password,
         email: data?.email,
       });
+      console.log('response: ', response.message);
 
       if (response?.mode) {
         // Store auth session
@@ -80,7 +81,7 @@ const Login = () => {
       if (error?.error) {
         toastError(error?.error);
       } else {
-        toastError(error?.error || 'Login failed');
+        // toastError(error?.error || 'Login failed');
       }
     } finally {
       setLoading(false);

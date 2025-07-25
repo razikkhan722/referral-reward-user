@@ -38,14 +38,17 @@ const Registration = () => {
   // Get referral ID and source from URL
   const { id, source } = useParams();
 
-  const platformMap = {
+  // const url = "";
+  const currentURL = window.location.href;
+  // const currentURL = "http://localhost:5174/";
+
+    const platformMap = {
     wa: 'whatsapp',
     tele: 'telegram',
     tw: 'twitter',
     fb: 'facebook',
     in: 'linkedin',
   };
-
   // Watch password to match confirm password
   const password = watch('password');
 
@@ -58,10 +61,11 @@ const Registration = () => {
         confirm_password: data?.confirmPassword,
         email: data?.email,
         mobile_number: data?.mobile,
-        username: data?.name,
+        name: data?.name,
         password: data?.password,
         referral_code: data?.referralCode,
         tag_id: id,
+        url:currentURL,
         // accepted_via: source, // wa / tele / tw / fb / in
         accepted_via: platformMap[source] || source,
       });
