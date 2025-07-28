@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 // Logo Image
 import Logo from '../../../assets/icons/logo/logo.svg';
@@ -36,9 +36,9 @@ const Registration = () => {
   // Get referral ID and source from URL
   const { id, source } = useParams();
 
-  // const url = "";
-  const currentURL = window.location.href;
-  // const currentURL = "http://localhost:5174/";
+  // const currentURL = window.location.href;
+  const baseURL = window.location.origin; 
+  console.log('baseURL: ', baseURL);
 
     const platformMap = {
     wa: 'whatsapp',
@@ -63,7 +63,7 @@ const Registration = () => {
         password: data?.password,
         referral_code: data?.referralCode,
         tag_id: id,
-        url:currentURL,
+        url:baseURL,
         // accepted_via: source, // wa / tele / tw / fb / in
         accepted_via: platformMap[source] || source,
       });
