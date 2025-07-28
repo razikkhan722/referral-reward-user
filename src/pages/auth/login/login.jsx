@@ -46,11 +46,13 @@ const Login = () => {
         password: data?.password,
         email: data?.email,
       });
+      console.log('response: ', response.message);
 
       if (response?.mode) {
         // Store auth session
         sessionStorage.setItem('Auth', JSON.stringify(response));
         setAuthLocal(response);
+        toastSuccess(response?.message || "Login Successfully");
 
         // Fetch encrypted home data
         const homeEncrypted = await postData('/home', {
@@ -74,7 +76,6 @@ const Login = () => {
         // Decrypt home data
         const decryptedHome = await DecryptFunction(homeEncrypted);
         setContextHomeDataAPI(decryptedHome);
-        toastSuccess(response?.message);
         navigate('/');
       }
     } catch (error) {
@@ -82,7 +83,7 @@ const Login = () => {
       if (error?.error) {
         toastError(error?.error);
       } else {
-        toastError(error?.error || 'Login failed');
+        // toastError(error?.error || 'Login failed');
       }
     } finally {
       setLoading(false);
