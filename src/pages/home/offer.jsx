@@ -281,7 +281,8 @@ const Offer = ({ isActive }) => {
         </div>
 
         {/*  OFFER BANNER ON CONDITION */}
-        <div className="special-offer position-relative d-flex align-items-center mt-5">
+        {/* <div className="special-offer position-relative d-flex align-items-center mt-5"> */}
+        <div className={`special-offer position-relative d-flex align-items-center mt-5 ${ContextFaqsDataAPI?.special_offer?.offer_code ? "":"d-none"}`}>
           <div className="special-off-sideimg position-absolute">
           </div>
           <div className="w-75 mx-auto text-center">

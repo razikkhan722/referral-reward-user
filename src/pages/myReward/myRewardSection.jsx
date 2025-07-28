@@ -101,9 +101,9 @@ const MyRewardFirstScreen = () => {
   const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
   const { ContextHomeDataAPI, ContextFaqsDataAPI, MeterUpdateData } =
   useContext(UserContext);
+  console.log('MeterUpdateData: ', MeterUpdateData);
+  console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI);
   
-  console.log('MeterUpdateData: ', MeterUpdateData?.milestones);
-
   const RewardSliderJson = [
     {
       num: `${ContextFaqsDataAPI?.galaxy_data?.milestones[0]?.milestone_name}`,
