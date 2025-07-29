@@ -214,7 +214,6 @@ const Profile = () => {
         mode: Auth?.mode,
       });
       const Decrpty = await DecryptFunction(enyptData);
-      console.log('Decrpty: ', Decrpty);
       setUserDataAPI(Decrpty);
     } catch (error) {}
   };

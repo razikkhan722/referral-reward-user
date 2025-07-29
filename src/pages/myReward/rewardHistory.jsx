@@ -5,7 +5,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { PiFadersHorizontal } from 'react-icons/pi';
 import { IoIosArrowBack } from 'react-icons/io';
 const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
-  console.log('MyRewardDataAPI: ', MyRewardDataAPI);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -53,7 +52,6 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
   //   }
   // })();
 
-  // console.log(displayedData, "llml,l,")
 
 
 

@@ -68,7 +68,6 @@ const Login = () => {
         setContextFaqsDataAPI(faqsData);
         // show special off modal 
       if(faqsData?.special_offer?.offer_code){
-        console.log("test");
         setContextSpclOffer(true)
       }
         // Decrypt home data

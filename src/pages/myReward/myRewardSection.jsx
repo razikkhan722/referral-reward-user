@@ -12,14 +12,18 @@ import PopupWrapper from '../../utils/PopupWrapper';
 import { toastInfo } from '../../utils/toster';
 
 // import slider and third party components
+// Carousel
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+
+// React-Icon
 import { AiOutlineInfoCircle } from 'react-icons/ai'; // ✅ Import info icon
 import { GiBackwardTime } from 'react-icons/gi';
+
+// Navigation
 import { NavLink } from 'react-router-dom';
 import Popup from 'reactjs-popup';
-
 
 // import images
 import metero from '../../assets/icons/home/secondScreen/metero.svg';
@@ -480,7 +484,7 @@ const MyRewardFirstScreen = () => {
                           My Collections
                         </h2>
                         <p className="font-14 montserrat-medium text-white">
-                          Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+                          Your earnings so far
                         </p>
                         <div className="row justify-content-around">
                           <div className="col-lg-7 col-md-7">
@@ -539,7 +543,7 @@ const MyRewardFirstScreen = () => {
                           Earn More
                         </h2>
                         <p className="font-14 montserrat-medium text-white">
-                          Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+                          You can add in your collections by.
                         </p>
                         {showGameCard === 'cards' ? (
                           <>

@@ -30,10 +30,7 @@ function Home() {
   const offerRef = useRef(null);
   const { ContextFaqsDataAPI, ContextSpclOffer, setContextSpclOffer } =
     useContext(UserContext);
-  console.log(
-    'ContextFaqsDataAPI: ',
-    ContextFaqsDataAPI?.special_offer?.offer_code,
-  );
+
   // Scroll lock flag for extra scroll at edge
   const edgeScrollUpTriggered = useRef(false);
 

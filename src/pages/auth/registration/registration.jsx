@@ -36,10 +36,6 @@ const Registration = () => {
   // Get referral ID and source from URL
   const { id, source } = useParams();
 
-  console.log(id ,source )
-
-  console.log("k.nknknmbkj,jnj")
-
   const platformMap = {
     wa: 'whatsapp',
     tele: 'telegram',

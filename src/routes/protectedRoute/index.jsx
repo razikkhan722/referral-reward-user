@@ -6,7 +6,6 @@ const ProtectedRoute = ({ children }) => {
   const { AuthLocal, setAuthLocal } = useContext(UserContext);
 let isAuthenticated;
 isAuthenticated = JSON?.parse(sessionStorage.getItem('Auth')); // or use Redux/store
-console.log('isAuthenticated: ', isAuthenticated);
   useEffect(() => {
 
   }, [AuthLocal]);

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import "./trackModal.scss";
-import astronaut from "../../assets/icons/home/MyReferral/track-astronut.svg";
-import tick from "../../assets/icons/home/MyReferral/tick.svg";
+
 import { Modal, Button } from 'react-bootstrap';
-// import { FaCheck } from "react-icons/fa6";
 
 // Import Images
+import astronaut from "../../assets/icons/home/MyReferral/track-astronut.svg";
+import tick from "../../assets/icons/home/MyReferral/tick.svg";
 import PinkInvite from "../../assets/images/home/MyReferral/pink-invite.png";
 import GrayBox from "../../assets/images/home/MyReferral/gray-box.png";
 import GrayCart from "../../assets/images/home/MyReferral/gray-cart.png";
@@ -13,6 +13,7 @@ import PurpleBox from "../../assets/images/home/MyReferral/purple-box.png";
 import OrangeCart from "../../assets/images/home/MyReferral/orange-cart.png";
 
 const TrackModal = () => {
+    // useStates
     const [show, setShow] = useState(false);
 
     const [progressSteps, setprogressSteps] = useState({
@@ -49,6 +50,10 @@ const TrackModal = () => {
             desc: "Haven't done any purchase"
         }
     ];
+
+// --------------------------
+// Functions
+// --------------------------
 
     const handleClose = () => {
         setShow(false);
