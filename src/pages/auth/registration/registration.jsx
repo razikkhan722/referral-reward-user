@@ -86,7 +86,7 @@ const Registration = () => {
   };
 
   return (
-    <div className="login-bg-img vh-100 overflow-hidden" id="registration-id">
+    <div className="login-bg-img overflow-hidden" id="registration-id">
       {/* Logo Section */}
       <div className="nav-logo text-center mt-0">
         <img className="header-center-img width-13" src={Logo} alt="logo" />
