@@ -123,9 +123,9 @@ const Login = () => {
                       <input
                         type="text"
                         className="form-control login-form py-2"
-                        placeholder="Your Email / Username"
+                        placeholder="Your Email"
                         {...register('email', {
-                          required: 'Email / Username is required',
+                          required: 'Email is required',
                         })}
                       />
                       {errors.email && (

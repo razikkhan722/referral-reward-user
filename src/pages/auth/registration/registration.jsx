@@ -114,7 +114,7 @@ const Registration = () => {
                   <input
                     type="text"
                     className="form-control py-2"
-                    placeholder="Your User-Name"
+                    placeholder="Your Full-Name"
                     {...register('name', {
                       required: 'Name is required',
                       minLength: {
