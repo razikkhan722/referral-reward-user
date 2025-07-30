@@ -677,10 +677,10 @@ const Index = ({ isExiting, isActive }) => {
                         src={images[currentIndex]}
                         alt="center-planet"
                         onClick={
-                          currentIndex <= ContextHomeDataAPI?.part4?.length - 1
-                          ?
+                          // currentIndex <= ContextHomeDataAPI?.part4?.length - 1
+                          // ?
                           toggleAnimtElements
-                          : null
+                          // : null
                         }
                         className={`img-fluid ${currentIndex <= ContextHomeDataAPI?.part4?.length - 1 ? 'cursor-pointer' : ''} rounded-circle planet-shadow-${currentIndex === 0 ? 'purple' : currentIndex === 1 ? 'yellow' : currentIndex === 2 ? 'green' : 'blue'} ${
                           isAnimating ? 'fade-down-shrink' : ''

@@ -4283,10 +4283,10 @@ body::-webkit-scrollbar {
   }
 }
 
-@media (max-height: 700px) {
+@media (max-height: 1200px) {
   .reward-section {
     &.height-100vh {
-      height: 130vh !important;
+      height: 105vh !important;
     }
   }
 
