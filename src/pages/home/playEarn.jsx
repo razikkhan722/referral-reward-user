@@ -6,7 +6,7 @@ import SideModal from './sideModal';
 import { toast } from 'react-toastify';
 import { toastInfo } from '../../utils/toster';
 
-const PlayEarn = ({ isActive }) => {
+const PlayEarn = () => {
   const [hoveredCard, setHoveredCard] = useState();
 
   const handleMouseEnter = (cardId) => {
@@ -43,9 +43,9 @@ const PlayEarn = ({ isActive }) => {
 
   return (
     <section id='PlayEarn_Section'
-      className={`pay-earn-section position-relative ${isActive ? 'animate-section' : ''}`}
+      className={`pay-earn-section position-relative animate-section`}
     >
-      <div className={`pay-earn-content ${isActive ? 'animate-content' : ''}`}>
+      <div className={`pay-earn-content animate-content`}>
         <div className="container h-100 pb-5">
           <div className="h-100 d-flex align-items-end position-relative">
             <img
@@ -57,7 +57,7 @@ const PlayEarn = ({ isActive }) => {
               alt="spinwheel"
             />
             <div
-              className={`row justify-content-between playearn-card p-4 rounded-4 h-auto ${isActive ? 'animate-card' : ''}`}
+              className={`row justify-content-between playearn-card p-4 rounded-4 h-auto animate-card`}
             >
               {/* First Play & Win section */}
               <div className="col-lg-2 text-center d-flex justify-content-center flex-column ms-3 my-3">

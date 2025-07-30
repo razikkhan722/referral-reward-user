@@ -28,7 +28,7 @@ function Home() {
   const [exitAnimation, setExitAnimation] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
   const offerRef = useRef(null);
-  const { ContextFaqsDataAPI,ContextsetCheckSpecialOffer,ContextCheckSpecialOffer } =
+  const { ContextFaqsDataAPI, ContextsetCheckSpecialOffer, ContextCheckSpecialOffer } =
     useContext(UserContext);
   // Scroll lock flag for extra scroll at edge
   const edgeScrollUpTriggered = useRef(false);
@@ -133,7 +133,7 @@ function Home() {
 
   const HandleSet = () => {
     setActiveIndex(0);
-   
+
   };
   const [show, setShow] = useState(false);
   const handleClose = () => {
@@ -141,11 +141,11 @@ function Home() {
   };
 
 
-  
+
   return (
     <>
       <div className="fixed-section-container">
-        {[Index, Invitefriend, Howitworks, RedeemAndEarn, PlayEarn, Offer].map(
+        {/* {[Index, Invitefriend, Howitworks, RedeemAndEarn, PlayEarn, Offer].map(
           (Component, index) => {
             const isActive = index === activeIndex;
             const isOfferSection = index === 5;
@@ -179,10 +179,21 @@ function Home() {
               </div>
             );
           },
-        )}
+        )} */}
+
+        <Index />
+        <Invitefriend />
+        {/* <Howitworks /> */}
+        <RedeemAndEarn />
+        <PlayEarn />
+        <Offer />
+
+
       </div>
       {/* Side Popup Nav */}
-      {activeIndex > 0 ? <FloatingActionButton toTop={setActiveIndex} /> : null}
+      {/* {activeIndex > 0 ?  */}
+      <FloatingActionButton toTop={setActiveIndex} /> 
+      {/* : null} */}
 
       {/* Side Special Offer Modal  */}
       {/* {activeIndex == 0 && ContextCheckSpecialOffer ? <img

@@ -33,7 +33,7 @@ import Popup from 'reactjs-popup';
 import { AiOutlineCheckCircle, AiOutlineInfoCircle } from 'react-icons/ai';
 import { responsiveArray } from 'antd/es/_util/responsiveObserver';
 
-const Offer = ({ isActive }) => {
+const Offer = () => {
   const cards = [
     {
       id: 1,
@@ -218,7 +218,7 @@ const Offer = ({ isActive }) => {
       <div className="offer-sect-content top-0 start-0 bottom-0 end-0">
         <div className="container-fluid px-5 pt-5 overflow-hidden pb-4">
           <div
-            className={`row offer-slider-fade-left ${isActive ? 'aos-animate' : ''}`}
+            className={`row offer-slider-fade-left aos-animate`}
           >
             <Slider className="offer-slider" {...settings}>
               {cards?.map((card, index) => (
@@ -565,7 +565,7 @@ const Offer = ({ isActive }) => {
         </div>
 
         {/* FAQ SECTION */}
-        <div className={`faq-section ${isActive ? 'planet-slide-up' : ''}`}>
+        <div className={`faq-section planet-slide-up`}>
           <div className="container-fluid px-5 pb-5">
             <h2 className="text-dark-blue space-grotesk-bold mt-120 mb-1 pb-1 ">
               Frequently Asked Questions

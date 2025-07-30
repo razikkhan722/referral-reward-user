@@ -1556,13 +1556,13 @@ body::-webkit-scrollbar {
     &::after {
       content: '';
       flex: 1;
-      border-bottom: 1px solid white;
+      border-bottom: 1px solid #9D92D2;
       width: 50%;
     }
 
     .divider-border {
       margin: 0 pxToRem(10);
-      color: white;
+      color: #9D92D2;
       font-weight: 500;
       white-space: nowrap;
     }
@@ -1586,9 +1586,9 @@ body::-webkit-scrollbar {
 
 .invite-bg{
   background: url(./assets/icons/home/Invitefriend/invite-bg.svg)no-repeat center center;
-  height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
   background-size: cover;
-
 }
 /*===================== INVITE A FRIEND SECTION CSS END====================================*/
 /*===================== HOW IT WORKS SECTION CSS END====================================*/

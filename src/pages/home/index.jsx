@@ -331,7 +331,7 @@ const Index = ({ isExiting, isActive }) => {
               ) : (
                 // second page middle section sidepanel and 4 plnts
                 <div
-                  className={`row justify-content-between second-screen-xl ${isExiting ? 'hidden-second-sect' : 'visible-second-sect'} ${isActive ? 'default-position' : 'hidden-second-sect'} ${
+                  className={`row justify-content-between second-screen-xl  ${
                     !SecScrAnimt ? 'visible-second-sect' : 'hidden-second-sect'
                   }`}
                 >
@@ -343,7 +343,7 @@ const Index = ({ isExiting, isActive }) => {
                     }`}
                   >
                     <div
-                      className={`left-sidebar-main-div ${isExiting ? 'hidden-second-sect' : 'visible-second-sect'} ${isActive ? 'default-position' : 'hidden-second-sect'} `}
+                      className={`left-sidebar-main-div`}
                     >
                       <p className="text-dark-blue space-grotesk-medium font-16 mb-3">
                         Your Progress So far
@@ -591,7 +591,7 @@ const Index = ({ isExiting, isActive }) => {
                         className={'text-decoration-none'}
                       >
                         <div
-                          className={`d-flex justify-content-evenly background-text-blue rounded-2 position-relative py-2 px-5 left-box play-earn-box ${isExiting ? 'move-left' : ''} ${isActive ? 'default-position' : 'move-left'}`}
+                          className={`d-flex justify-content-evenly background-text-blue rounded-2 position-relative py-2 px-5 left-box play-earn-box `}
                           ref={leftBoxRef}
                           id="leftBox"
                         >
@@ -613,7 +613,7 @@ const Index = ({ isExiting, isActive }) => {
                         className={'text-decoration-none'}
                       >
                         <div
-                          className={`d-flex justify-content-evenly background-dark-pink mt-0 rounded-2 position-relative py-2 px-5 left-box ${isExiting ? 'move-left' : ''} ${isActive ? 'default-position' : 'move-left'} `}
+                          className={`d-flex justify-content-evenly background-dark-pink mt-0 rounded-2 position-relative py-2 px-5 left-box `}
                           ref={leftBoxRef}
                           id="leftBox"
                         >

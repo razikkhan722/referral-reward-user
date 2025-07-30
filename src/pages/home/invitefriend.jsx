@@ -11,7 +11,7 @@ import { postData } from '../../services/api';
 import { UserContext } from '../../UseContext/useContext';
 
 // const Invitefriend = ({ isActive, onAnimationComplete , isExiting }) => {
-const Invitefriend = ({ isActive , isExiting }) => {
+const Invitefriend = () => {
   const inputRef = useRef(null);
   // const animationTriggered = useRef(false);
 
@@ -125,27 +125,27 @@ const Invitefriend = ({ isActive , isExiting }) => {
   };
 
   return (
-    <div id='InviteFriend_Section' className="invitefriend-wrapper invite-bg-image section-invitefriend position-relative overflow-hidden vh-100 d-flex align-items-start pt-80 ustify-content-center">
+    <div id='InviteFriend_Section' className="invitefriend-wrapper invite-bg section-invitefriend position-relative overflow-hidden d-flex align-items-center justify-content-center">
       {/* Top Stars */}
       {/* <img
         className={`w-100 position-absolute top-0 left-0 asto-transition-all ${animateTop ? 'nav-slide-top' : ''} ${isActive ? '' : 'invitefriend-slide-top'}`}
         src={stars}
         alt="Stars"
       /> */}
-      <img
+      {/* <img
         className={`w-100 position-absolute top-0 left-0 asto-transition-all ${isExiting ? 'nav-slide-top' : ''} ${isActive ? '' : 'nav-slide-top'}`}
         src={stars}
         alt="Stars"
-      />
+      /> */}
       {/* Bottom Footer */}
-      <img
+      {/* <img
         className={`w-100 position-absolute bottom-0 left-0 asto-transition-all ${isExiting ? 'astro-slide-down' : ''} ${isActive ? '' : 'astro-slide-down'}`}
         src={footer}
         alt="Footer"
-      />
+      /> */}
 
       {/* Center Section */}
-      <div className={`container center-section transition-all duration-1000 ${isExiting ? 'form-fade-down' : ''}`}>
+      <div className={`container center-section transition-all duration-1000 `}>
         <div className="row text-center justify-content-center align-items-start h-100">
           <div className="col-12 col-lg-6 content-z-index">
             <h2 className="text-white font-40 mb-58 space-grotesk-bold">Invite a friend</h2>
