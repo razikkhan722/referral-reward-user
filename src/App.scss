@@ -2331,6 +2331,13 @@ body::-webkit-scrollbar {
   width: 235px !important;
 }
 
+.disabled-card {
+  pointer-events: none;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  background-color: #dcdcdc !important; /* optional gray */
+}
+
 .discount-code-section {
   border-radius: 16px;
   border: 1px solid $blue;
@@ -4169,7 +4176,7 @@ body::-webkit-scrollbar {
   }
 
   .play-earn-box {
-    margin-top: 75%;
+    margin-top: 5%;
   }
 
   .progress-test-mt {
@@ -4204,7 +4211,7 @@ body::-webkit-scrollbar {
   }
 
   .play-earn-box {
-    margin-top: 7.375rem;
+    // margin-top: 7.375rem;
   }
 
   .planet-section {

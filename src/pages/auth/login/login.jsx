@@ -46,11 +46,13 @@ const Login = () => {
         password: data?.password,
         email: data?.email,
       });
+      console.log('response: ', response.message);
 
       if (response?.mode) {
         // Store auth session
         sessionStorage.setItem('Auth', JSON.stringify(response));
         setAuthLocal(response);
+        toastSuccess(response?.message || "Login Successfully");
 
         // Fetch encrypted home data
         const homeEncrypted = await postData('/home', {
@@ -73,15 +75,14 @@ const Login = () => {
         // Decrypt home data
         const decryptedHome = await DecryptFunction(homeEncrypted);
         setContextHomeDataAPI(decryptedHome);
-        toastSuccess(response?.message);
         navigate('/');
       }
     } catch (error) {
-      console.logtI(error)
+      console.log(error)
       if (error?.error) {
         toastError(error?.error);
       } else {
-        toastError(error?.message || 'Login failed');
+        // toastError(error?.error || 'Login failed');
       }
     } finally {
       setLoading(false);
@@ -123,9 +124,9 @@ const Login = () => {
                       <input
                         type="text"
                         className="form-control login-form py-2"
-                        placeholder="Your Email / Username"
+                        placeholder="Your Email"
                         {...register('email', {
-                          required: 'Email / Username is required',
+                          required: 'Email is required',
                         })}
                       />
                       {errors.email && (

@@ -654,14 +654,14 @@ const Profile = () => {
                       Logout
                     </span>
                   </li>
-                  <li
+                  {/* <li
                     className="montserrat-medium font-14 text-primary-color"
                     role="button"
                   >
                     <a href="#" className="anchor-link">
                       Delete / De-activate account
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>

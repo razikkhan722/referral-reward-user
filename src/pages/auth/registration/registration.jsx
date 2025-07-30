@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 // Logo Image
 import Logo from '../../../assets/icons/logo/logo.svg';
@@ -36,14 +36,17 @@ const Registration = () => {
   // Get referral ID and source from URL
   const { id, source } = useParams();
 
-  const platformMap = {
+  // const currentURL = window.location.href;
+  const baseURL = window.location.origin; 
+  console.log('baseURL: ', baseURL);
+
+    const platformMap = {
     wa: 'whatsapp',
     tele: 'telegram',
     tw: 'twitter',
     fb: 'facebook',
     in: 'linkedin',
   };
-
   // Watch password to match confirm password
   const password = watch('password');
 
@@ -56,10 +59,11 @@ const Registration = () => {
         confirm_password: data?.confirmPassword,
         email: data?.email,
         mobile_number: data?.mobile,
-        username: data?.name,
+        name: data?.name,
         password: data?.password,
         referral_code: data?.referralCode,
         tag_id: id,
+        url:baseURL,
         // accepted_via: source, // wa / tele / tw / fb / in
         accepted_via: platformMap[source] || source,
       });
@@ -108,7 +112,7 @@ const Registration = () => {
                   <input
                     type="text"
                     className="form-control py-2"
-                    placeholder="Your User-Name"
+                    placeholder="Your Full-Name"
                     {...register('name', {
                       required: 'Name is required',
                       minLength: {
