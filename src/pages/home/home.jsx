@@ -242,93 +242,21 @@ import React, { useState } from 'react';
 import Howitworks from './howitworks';
 import Invitefriend from './invitefriend';
 import Index from './index';
- import RedeemAndEarn from './redeemAndEarn';
- import PlayEarn from './playEarn';
- import Offer from './offer';
+import RedeemAndEarn from './redeemAndEarn';
+import PlayEarn from './playEarn';
+import Offer from './offer';
 
 const Home = () => {
   const [exitAnimation, setExitAnimation] = useState(false);
   const isActive = true;
   return (
     <>
-      <div className="fixed-section-container">
-        {/* {[Index, Invitefriend, Howitworks, RedeemAndEarn, PlayEarn, Offer].map(
-          (Component, index) => {
-            const isActive = index === activeIndex;
-            const isOfferSection = index === 5;
-
-            return (
-              <div
-                key={index}
-                className={`section ${isActive ? 'active' : ''} ${isOfferSection ? ' offer' : ''}`}
-                ref={isOfferSection ? offerRef : null}
-                style={{
-                  overflowY: isOfferSection && isActive ? 'auto' : 'hidden',
-                }}
-              >
-                {index === 0 ? (
-                  <Index isActive={isActive} isExiting={exitAnimation} />
-                ) : index === 1 ? (
-                  <Invitefriend isActive={isActive} isExiting={exitAnimation} />
-                ) : index === 2 ? (
-                  <Howitworks isActive={isActive} isExiting={exitAnimation} />
-                ) : index === 3 ? (
-                  <RedeemAndEarn isActive={isActive} />
-                ) : index === 4 ? (
-                  <PlayEarn isActive={isActive} />
-                ) : index === 5 ? (
-                  <Offer isActive={isActive} />
-                ) : (
-                  <div data-aos="fade-up">
-                    <Component />
-                  </div>
-                )}
-              </div>
-            );
-          },
-        )} */}
-
-        <Index />
-        <Invitefriend />
-        {/* <Howitworks /> */}
-        <RedeemAndEarn />
-        <PlayEarn />
-        <Offer />
-
-
-      </div>
-      {/* Side Popup Nav */}
-      {/* {activeIndex > 0 ?  */}
-      <FloatingActionButton toTop={setActiveIndex} /> 
-      {/* : null} */}
-
-      {/* Side Special Offer Modal  */}
-      {/* {activeIndex == 0 && ContextCheckSpecialOffer ? <img
-        className="offer-popup cursor-pointer"
-        onClick={()=>setActiveIndex(5)}
-        src={offpop}
-        alt=""
-      /> : null} */}
-      {/* Offer Modal */}
-      {/* <Modal className="" show={show} onHide={handleClose} centered>
-        <Modal.Header className="border-0 justify-content-between">
-          <span></span>
-          <button onClick={handleClose} className="p-2 rounded-circle border-0 d-flex align-items-center">
-            <img src={cross} alt="" />
-          </button>
-        </Modal.Header>
-        <Modal.Body className="">
-          <div className="text-center mb-3">
-            <img src={offimg} alt="" />
-          </div>
-          <p className="font-16 montserrat-medium text-blue text-center my-2">
-            Let’s Celebrate Independence Day with Special Offers and Surprises!
-          </p>
-          <button onClick={()=>setActiveIndex(5)} className="w-100 font-14 mb-2 mt-2 montserrat-medium background-text-blue text-white rounded-4 border-0 py-2">
-            See Offers
-          </button>
-        </Modal.Body>
-      </Modal> */}
+      <Index isActive={isActive} isExiting={exitAnimation} />
+      <Invitefriend isActive={isActive} isExiting={exitAnimation} />
+      <Howitworks isActive={isActive} isExiting={exitAnimation} />
+      <RedeemAndEarn isActive={isActive} />
+      <PlayEarn isActive={isActive} />
+      <Offer isActive={isActive} />
     </>
   );
 };
