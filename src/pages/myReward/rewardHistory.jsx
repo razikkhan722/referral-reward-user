@@ -68,22 +68,22 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
   const RewardRow = ({ reward }) => (
 
     <tr className="bg-transparent">
-      <td className="py-3 bg-transparent px-4">
-        <div className="d-flex align-items-center font-16 montserrat-semibold">
+      <td className="py-3 text-center bg-transparent px-4">
+        <div className="d-flex justify-content-center align-items-center font-16 montserrat-semibold">
           {/* <span className={`reward-dot me-2 ${reward.type}`}></span> */}
           {reward?.earned_by_action}
         </div>
       </td>
-      <td className="py-3 px-4 bg-transparent font-16 montserrat-semibold">
+      <td className="py-3 text-center px-4 bg-transparent font-16 montserrat-semibold">
         {reward?.referred_on}
       </td>
       <td
-        className="py-3 px-4 expiry-text-color bg-transparent font-16 montserrat-semibold"
+        className="py-3 px-4 expiry-text-color text-center bg-transparent font-16 montserrat-semibold"
       // style={{ color: reward.expiryDate === '-' ? '#6c757d' : '#dc3545' }}
       >
         {reward.expiryDate || '-'}
       </td>
-      <td className="py-3 px-4 bg-transparent d-flex align-items-center">
+      <td className="py-3 text-center px-4 bg-transparent d-flex justify-content-center align-items-center">
         <span
           className={`py-2 px-3 rounded-2 btn-green font-14 montserrat-medium text-blue d-flex align-items-center`}
         >
@@ -141,16 +141,16 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
                   <table className="table table-hover text-start mb-0">
                     <thead className="">
                       <tr className="">
-                        <th className="px-4 font-14 montserrat-semibold">
+                        <th className="px-4 text-center font-14 montserrat-semibold">
                           Reward Type
                         </th>
-                        <th className="px-4 font-14 montserrat-semibold">
+                        <th className="px-4 text-center font-14 montserrat-semibold">
                           Date
                         </th>
-                        <th className="px-4 font-14 montserrat-semibold">
+                        <th className="px-4 text-center font-14 montserrat-semibold">
                           Expiry Date
                         </th>
-                        <th className="px-4 font-14 montserrat-semibold">
+                        <th className="px-4 text-center font-14 montserrat-semibold">
                           Earnings/Redemption
                         </th>
                       </tr>

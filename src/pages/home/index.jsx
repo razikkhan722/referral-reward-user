@@ -52,13 +52,12 @@ const Index = ({ isExiting, isActive }) => {
     MeterUpdateData,
     setMeterUpdateData,
   } = useContext(UserContext);
-  console.log('MeterUpdateData: ', MeterUpdateData);
 
   // Planet carousel states
   const [currentIndex, setCurrentIndex] = useState(
     ContextHomeDataAPI?.part4?.length - 1 || 0,
   ); // Set initial planet based on user progress
-
+  
   const [rotation, setRotation] = useState(0); // Planet rotation angle
   const [ringRotation, setRingRotation] = useState(0); // Ring rotation angle
   const [direction, setDirection] = useState(''); // Animation direction
@@ -158,6 +157,7 @@ const Index = ({ isExiting, isActive }) => {
       });
 
       const Decrpty = await DecryptFunction(enyptData);
+      console.log('Decrpty: ', Decrpty);
       setHomeDataAPI(Decrpty);
       setContextHomeDataAPI(Decrpty);
       setCurrentIndex(Decrpty?.part4?.length - 1 || 0);
@@ -324,7 +324,7 @@ const Index = ({ isExiting, isActive }) => {
               {showSecScr ? (
                 <span className={`${!SecScrAnimt ? '' : 'middle-sect'}`}>
                   <Herosection
-                    HomeDataAPI={HomeDataAPI}
+                    HomeDataAPI={HomeDataAPI || ContextHomeDataAPI}
                     currentPlnt={['A', 'B', 'C', 'D'][currentIndex]}
                   />
                 </span>
