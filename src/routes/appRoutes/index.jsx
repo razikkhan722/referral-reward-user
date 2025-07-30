@@ -21,7 +21,7 @@ import Product from '../../pages/auth/subscription/product';
 import Home from '../../pages/home/home';
 import MyRewardFirstScreen from '../../pages/myReward/myRewardSection';
 import MyReferralScreen from '../../pages/MyReferral/MyReferralScreen';
-import Invitefriend from '../../pages/InviteFriend/inviteFriend';
+import Invitefriend from '../../pages/home/invitefriend';
 import Error from '../../pages/Errror/error';
 
 // Contexts and Utils
