@@ -2053,10 +2053,11 @@ body::-webkit-scrollbar {
 
 .offer-section {
   width: 100%;
-  background-position: top;
+  // background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 350vh;
+  // height: 350vh;
+  background-image: url(../src/assets/images/home/offer/offerbg.png);
 
   &::-webkit-scrollbar {
     display: none;
@@ -2065,7 +2066,7 @@ body::-webkit-scrollbar {
   .offer-sect-content {
     position: relative;
     z-index: 2;
-    height: 10dvh;
+    // height: 10dvh;
   }
 
   .offer-slider-fade-left {

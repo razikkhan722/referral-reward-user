@@ -83,10 +83,10 @@ const AppRoutes = () => {
     <Router>
       <Routes>
         {/* Root route - redirects based on auth */}
-        {!AuthLocal && (
+        {AuthLocal && (
           <Route path="/" element={<Navigate to="/login" replace />} />
         )}
-        {AuthLocal && <Route path="/" element={<Home />} />}
+        {!AuthLocal && <Route path="/" element={<Home />} />}
 
         {/* Public Auth Routes (Redirect if already authenticated) */}
         <Route

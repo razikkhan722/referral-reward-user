@@ -211,7 +211,7 @@ const Offer = ({ isActive }) => {
   }, []);
 
   return (
-    <section id="Offer_Section" className="offer-section">
+    <section id="Offer_Section" className="offer-section h-100">
       <div className="offer-sect-content top-0 start-0 bottom-0 end-0">
         <div className="container-fluid px-5 pt-5 overflow-hidden pb-4">
           <div
