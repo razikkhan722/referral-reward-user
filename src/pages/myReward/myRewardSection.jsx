@@ -293,6 +293,7 @@ const MyRewardFirstScreen = () => {
         log_alt: Auth?.log_alt,
         mode: Auth?.mode,
       });
+      console.log('enyptData: ', enyptData);
       const Decrpty = await DecryptFunction(enyptData);
       setMyRewardDataAPI(Decrpty);
     } catch (error) {

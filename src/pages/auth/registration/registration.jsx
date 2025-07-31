@@ -77,6 +77,7 @@ const Registration = () => {
       toastSuccess(response?.message);
       navigate('/subscription');
     } catch (error) {
+      console.log('error: ', error);
       toastError(error?.error);
     } finally {
       setLoading(false);
