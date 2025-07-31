@@ -100,10 +100,10 @@ const ExclusiveCardData = [
 const MyRewardFirstScreen = () => {
   const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
   const { ContextHomeDataAPI, ContextFaqsDataAPI, MeterUpdateData } =
-  useContext(UserContext);
+    useContext(UserContext);
   console.log('MeterUpdateData: ', MeterUpdateData);
   console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI);
-  
+
   const RewardSliderJson = [
     {
       num: `${ContextFaqsDataAPI?.galaxy_data?.milestones[0]?.milestone_name}`,
@@ -384,11 +384,11 @@ const MyRewardFirstScreen = () => {
     try {
       // console.log('discountData: ', discountData);
       const fixedString = MyRewardDataAPI?.part8
-      ?.replace(/'/g, '"') // Replace single quotes with double quotes
-      ?.replace(/\bNone\b/g, 'null') // Replace Python None with JSON null
-      ?.replace(/\bTrue\b/g, 'true') // If needed, convert booleans
-      ?.replace(/\bFalse\b/g, 'false');
-      
+        ?.replace(/'/g, '"') // Replace single quotes with double quotes
+        ?.replace(/\bNone\b/g, 'null') // Replace Python None with JSON null
+        ?.replace(/\bTrue\b/g, 'true') // If needed, convert booleans
+        ?.replace(/\bFalse\b/g, 'false');
+
       return JSON?.parse(fixedString) || [];
     } catch (error) {
       console.error('JSON parse error:', error);
@@ -1114,7 +1114,9 @@ const MyRewardFirstScreen = () => {
           </div>
         </div>
         {/* FAQ SECTION */}
-        <FAQ items={ContextFaqsDataAPI?.rewards_faqs} />
+        {ContextFaqsDataAPI?.rewards_faqs?.length > 0 && (
+          <FAQ items={ContextFaqsDataAPI?.rewards_faqs} />
+        )}
         {/* FOOTER SECTION */}
         <div
           ref={footerRef}

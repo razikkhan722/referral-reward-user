@@ -4455,9 +4455,9 @@ body::-webkit-scrollbar {
   width: 68px;
   border-radius: 32px;
   transition: height 300ms ease;
-  position: absolute;
+  position: fixed;
   right: 2%;
-  bottom: 5%;
+  bottom: 3%;
   text-align: center;
   overflow: hidden;
   z-index: 10;
@@ -4475,9 +4475,9 @@ body::-webkit-scrollbar {
   margin: auto;
   width: 66px;
   height: 66px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
+  position: fixed;
+  bottom: 3%;
+  right: 2%;
   transition: transform 300ms;
   background-color: #1A2A6C;
   border-radius: 50px;
