@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import navCenterImg from '../assets/images/home/navCenterImg.svg';
+import { UserContext } from '../UseContext/useContext';
 
 const Navbar = () => {
   const navItems = [
@@ -19,6 +20,9 @@ const Navbar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const prevIndexRef = useRef(0);
+
+    const navigate = useNavigate();
+    const { setAuthLocal } =useContext(UserContext);
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -39,7 +43,9 @@ const Navbar = () => {
         if (currentItem && indicatorRef.current && blurShadowRef.current) {
           const { offsetWidth, offsetLeft } = currentItem;
           const direction =
-            activeIndex > prevIndexRef.current ? 'left-to-right' : 'right-to-left';
+            activeIndex > prevIndexRef.current
+              ? 'left-to-right'
+              : 'right-to-left';
 
           indicatorRef.current.style.width = `${offsetWidth}px`;
           indicatorRef.current.style.left = `${offsetLeft}px`;
@@ -62,6 +68,14 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResizeAndIndicator);
   }, [activeIndex]);
 
+  // ------Logout Functionailty
+  const HandleLogout = () => {
+    sessionStorage.removeItem('Auth');
+    setAuthLocal('');
+    console.log('check auth');
+    navigate('/login');
+  };
+
   return (
     <>
       <section className="header-section position-relative">
@@ -83,20 +97,58 @@ const Navbar = () => {
                 <ul className="d-flex justify-content-between nav-ul my-0 py-0 px-0 position-relative">
                   {navItems?.map((item, index) =>
                     !item?.img ? (
-                      <Link to={item?.to} key={index}>
-                        <li className="list-unstyled list-background h-100 text-white mt-4 pt-3">
-                          <span
-                            ref={(el) => (navRefs.current[index] = el)}
-                            className={`nav-link mx-3 cursor-pointer ${
-                              activeIndex === index
-                                ? 'active space-grotesk-bold'
-                                : 'space-grotesk-medium'
-                            }`}
-                          >
-                            {item?.label}
-                          </span>
-                        </li>
-                      </Link>
+                      item?.label == 'Profile' ? (
+                        <>
+                          <div className="dropdown mt-4 pt-3 position-relative">
+                            <button
+                              className=" dropdown-toggle bg-transparent text-white border-0"
+                              type="button"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                             User Profile
+                            </button>
+                            <ul className="dropdown-menu nav-profile-drop  position-absolute">
+                              
+                              <li className='py-1'>
+                                <Link className='montserrat-semibold text-blue' to={item?.to} key={index}>
+                                 <span
+                                ref={(el) => (navRefs.current[index] = el)}
+                                className={`nav-link mx-3 cursor-pointer text-center ${
+                                  activeIndex === index
+                                    ? 'active space-grotesk-bold'
+                                    : 'space-grotesk-medium'
+                                }`}
+                              >
+                                {item?.label}
+                              </span>
+                                </Link>
+                              </li>
+                              <hr className=' my-2'/>
+                              <li className='text-center py-1'>
+                                <button onClick={() => HandleLogout()} type="button" className="btn btn-danger px-4">Logout</button>
+                              </li>
+                            </ul>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <Link to={item?.to} key={index}>
+                            <li className="list-unstyled list-background h-100 text-white mt-4 pt-3">
+                              <span
+                                ref={(el) => (navRefs.current[index] = el)}
+                                className={`nav-link mx-3 cursor-pointer ${
+                                  activeIndex === index
+                                    ? 'active space-grotesk-bold'
+                                    : 'space-grotesk-medium'
+                                }`}
+                              >
+                                {item?.label}
+                              </span>
+                            </li>
+                          </Link>
+                        </>
+                      )
                     ) : (
                       <li className="list-unstyled text-center" key={index}>
                         <img
@@ -105,7 +157,7 @@ const Navbar = () => {
                           alt="navCenterImg"
                         />
                       </li>
-                    )
+                    ),
                   )}
                   <span
                     className="nav-indicator rounded-pill position-absolute"
@@ -157,7 +209,7 @@ const Navbar = () => {
                     </span>
                   </Link>
                 </li>
-              )
+              ),
           )}
         </ul>
       </div>
