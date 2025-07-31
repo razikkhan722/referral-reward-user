@@ -96,7 +96,7 @@ const PlayEarn = () => {
           </div>
         </div>
       </div>
-      <SideModal />
+      {/* <SideModal /> */}
     </section>
   );
 };

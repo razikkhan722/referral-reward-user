@@ -126,7 +126,7 @@ const RedeemAndEarn = ({ isActive }) => {
           </div>
         </div>
       </div>
-      <SideModal />
+      {/* <SideModal /> */}
     </section>
   );
 };
