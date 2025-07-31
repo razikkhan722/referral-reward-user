@@ -1039,9 +1039,9 @@ body::-webkit-scrollbar {
 //   z-index: 0;
 // }
 
-.nav-profile-drop {
-  top: 40% !important;
-  left: -35% !important;
+.nav-profile-drop{
+  top: 90% !important;
+      left: -35% !important;
 }
 
 .active-blur-shadow {
@@ -1608,6 +1608,7 @@ body::-webkit-scrollbar {
   min-height: 100dvh;
   width: 100%;
   background-size: cover;
+  background-position: 0% 83%;
 }
 /*===================== INVITE A FRIEND SECTION CSS END====================================*/
 /*===================== HOW IT WORKS SECTION CSS END====================================*/
@@ -4479,9 +4480,9 @@ body::-webkit-scrollbar {
   width: 68px;
   border-radius: 32px;
   transition: height 300ms ease;
-  position: absolute;
+  position: fixed;
   right: 2%;
-  bottom: 5%;
+  bottom: 3%;
   text-align: center;
   overflow: hidden;
   z-index: 10;
@@ -4499,9 +4500,9 @@ body::-webkit-scrollbar {
   margin: auto;
   width: 66px;
   height: 66px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
+  position: fixed;
+  bottom: 3%;
+  right: 2%;
   transition: transform 300ms;
   background-color: #1a2a6c;
   border-radius: 50px;

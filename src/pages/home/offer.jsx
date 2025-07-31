@@ -566,54 +566,56 @@ const Offer = () => {
         </div>
 
         {/* FAQ SECTION */}
-        <div className={`faq-section planet-slide-up`}>
-          <div className="container-fluid px-5 pb-5">
-            <h2 className="text-dark-blue space-grotesk-bold mt-120 mb-1 pb-1 ">
-              Frequently Asked Questions
-            </h2>
-            <div className="row">
-              <div className="accordion w-100">
-                {ContextFaqsDataAPI?.home_faqs?.map((item, index) => (
-                  <div className="mt-4 pt-3" key={index}>
-                    <div
-                      className="purple-border-bottom pb-4 pt-1"
-                      id={`heading${index}`}
-                    >
-                      <h6 className="mb-0 font-16 text-dark-blue montserrat-medium">
-                        <button
-                          className="border-0 bg-transparent d-flex justify-content-between align-items-center w-100"
-                          onClick={() => toggle(index)}
-                          aria-expanded={openIndex === index}
-                          aria-controls={`collapse${index}`}
-                        >
-                          {item?.question}
-                          <span>
-                            <img
-                              src={openIndex === index ? minus : plus}
-                              alt=""
-                            />
-                          </span>
-                        </button>
-                      </h6>
-                    </div>
+        {ContextFaqsDataAPI?.home_faqs?.length > 0 &&(
+          <div className={`faq-section planet-slide-up`}>
+            <div className="container-fluid px-5 pb-5">
+              <h2 className="text-dark-blue space-grotesk-bold mt-120 mb-1 pb-1 ">
+                Frequently Asked Questions
+              </h2>
+              <div className="row">
+                <div className="accordion w-100">
+                  {ContextFaqsDataAPI?.home_faqs?.map((item, index) => (
+                    <div className="mt-4 pt-3" key={index}>
+                      <div
+                        className="purple-border-bottom pb-4 pt-1"
+                        id={`heading${index}`}
+                      >
+                        <h6 className="mb-0 font-16 text-dark-blue montserrat-medium">
+                          <button
+                            className="border-0 bg-transparent d-flex justify-content-between align-items-center w-100"
+                            onClick={() => toggle(index)}
+                            aria-expanded={openIndex === index}
+                            aria-controls={`collapse${index}`}
+                          >
+                            {item?.question}
+                            <span>
+                              <img
+                                src={openIndex === index ? minus : plus}
+                                alt=""
+                              />
+                            </span>
+                          </button>
+                        </h6>
+                      </div>
 
-                    <div
-                      id={`collapse${index}`}
-                      className={`faq-answer ${openIndex === index ? 'open' : ''}`}
-                      aria-labelledby={`heading${index}`}
-                    >
-                      <div className="card-body">
-                        <p className="mb-0 font-16 text-dark-blue montserrat-regular">
-                          {item?.answer}
-                        </p>
+                      <div
+                        id={`collapse${index}`}
+                        className={`faq-answer ${openIndex === index ? 'open' : ''}`}
+                        aria-labelledby={`heading${index}`}
+                      >
+                        <div className="card-body">
+                          <p className="mb-0 font-16 text-dark-blue montserrat-regular">
+                            {item?.answer}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
         {/* FOOTER SECTION */}
         <div
           ref={footerRef}

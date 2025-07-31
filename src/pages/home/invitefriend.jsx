@@ -125,7 +125,7 @@ const Invitefriend = () => {
   };
 
   return (
-    <div id='InviteFriend_Section' className="invitefriend-wrapper invite-bg section-invitefriend position-relative overflow-hidden d-flex align-items-center justify-content-center">
+    <div id='InviteFriend_Section' className="invitefriend-wrapper invite-bg section-invitefriend position-relative overflow-hidden d-flex align-items-start pt-90 justify-content-center">
       {/* Top Stars */}
       {/* <img
         className={`w-100 position-absolute top-0 left-0 asto-transition-all ${animateTop ? 'nav-slide-top' : ''} ${isActive ? '' : 'invitefriend-slide-top'}`}

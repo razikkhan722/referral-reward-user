@@ -278,7 +278,9 @@ const MyReferralScreen = () => {
               </div>
               {/* FAQ Section Start here */}
               <div className="mb-5">
-                <FAQ items={ContextFaqsDataAPI?.referrals_faqs} />
+                {ContextFaqsDataAPI?.referrals_faqs?.length > 0 &&(
+                  <FAQ items={ContextFaqsDataAPI?.referrals_faqs} />
+                )}
               </div>
             </div>
           </div>
