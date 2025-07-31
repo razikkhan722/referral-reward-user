@@ -245,7 +245,7 @@ import Index from './index';
 import RedeemAndEarn from './redeemAndEarn';
 import PlayEarn from './playEarn';
 import Offer from './offer';
-
+import FloatingActionButton from '../MyReferral/floatingFab';
 const Home = () => {
   const [exitAnimation, setExitAnimation] = useState(false);
   const isActive = true;
@@ -257,6 +257,7 @@ const Home = () => {
       <RedeemAndEarn isActive={isActive} />
       <PlayEarn isActive={isActive} />
       <Offer isActive={isActive} />
+      <FloatingActionButton/>
     </>
   );
 };
