@@ -279,7 +279,7 @@ const Offer = () => {
 
         {/*  OFFER BANNER ON CONDITION */}
         {/* <div className="special-offer position-relative d-flex align-items-center mt-5"> */}
-        <div className={`special-offer position-relative d-flex align-items-center mt-5 ${ContextFaqsDataAPI?.special_offer?.offer_code ? "":"d-none"}`}>
+        <div className={`special-offer position-relative d-flex align-items-center mt-5 ${ContextFaqsDataAPI?.special_offer?.offer_code ? "" : "d-none"}`}>
           <div className="special-off-sideimg position-absolute">
           </div>
           <div className="w-75 mx-auto text-center z-1">
@@ -288,7 +288,7 @@ const Offer = () => {
             </h3>
 
             <p className="space-grotesk-bold font-32 mx-5 text-white">
-             {ContextFaqsDataAPI?.special_offer?.offer_desc}
+              {ContextFaqsDataAPI?.special_offer?.offer_desc}
             </p>
             <div className="copy-input-container w-25 mt-3">
               <input
@@ -312,68 +312,72 @@ const Offer = () => {
 
         <div className="container-fluid px-5 pt-5 overflow-hidden">
           {/*  Exclusive Offers SECTION */}
-          <h1 className="text-dark-blue font-40 space-grotesk-bold mt-120 mb-4 pb-4 ">
-            Exclusive Offers
-          </h1>
-          <div className="pt-5 row g-3">
-            {ContextFaqsDataAPI?.exclusive_offers?.map((offer, index) => (
-             <div className='col-lg-4'>
-               <div key={index} className="mt-5 rounded-4 shadow-lg bg-white px-0">
-                <div className="head-sec position-relative">
-                  <img className="w-100" src={offerexcimg} alt="offerimg" />
-                  <img
-                    className="position-absolute offer-exc-rocket"
-                    src={excrocket}
-                    alt="Loading"
-                  />
-                </div>
-                <div className="text-center px-5">
-                  <img src={zomato} alt="Loading" />
-                  <h3 className="font-24 text-light-black montserrat-semibold mt-3 mb-2">
-                    {offer.offer_name}
-                  </h3>
-                  <p className="font-16 text-light-black space-grotesk-regular">
-                    {offer.one_liner}
-                  </p>
-                  <hr className="my-4 border-1 card-divider width-65" />
-                  <PopupWrapper trigger={<button
-                    className="btn background-text-blue text-white font-14 montserrat-medium mb-4 width-65 rounded-5"
-                    type="button"
-                  >
-                    {offer?.button_txt}
-                  </button>}>
-                    {(close) => (
-                      <div className="text-center p-4">
-                        <AiOutlineInfoCircle
-                          size={50}
-                          color="#1A2A6C"
-                          className="mb-3"
+          {ContextFaqsDataAPI?.exclusive_offers?.length > 0 && (
+            <>
+              <h1 className="text-dark-blue font-40 space-grotesk-bold mt-120 mb-4 pb-4 ">
+                Exclusive Offers
+              </h1>
+              <div className="pt-5 row g-3">
+                {ContextFaqsDataAPI?.exclusive_offers?.map((offer, index) => (
+                  <div className='col-lg-4'>
+                    <div key={index} className="mt-5 rounded-4 shadow-lg bg-white px-0">
+                      <div className="head-sec position-relative">
+                        <img className="w-100" src={offerexcimg} alt="offerimg" />
+                        <img
+                          className="position-absolute offer-exc-rocket"
+                          src={excrocket}
+                          alt="Loading"
                         />
-                        <h5 className="mb-3">
-                          Are you sure you want to unlock this prize?
-                        </h5>
-                        <div className="d-flex justify-content-center gap-3">
-                          <Button
-                            label="Yes"
-                            // onClick={() => handleYes(close)}
-                            onClick={() => HandleRedeemAPI(offer?.off_percent, offer?.product_uid, close)}
-                            className="w-50 py-2 rounded-3 bg-transparent border-blue text-blue montserrat-semibold"
-                          />
-                          <Button
-                            label="No"
-                            onClick={close}
-                            className="w-50 py-2 rounded-3 border-0 background-text-blue text-white montserrat-semibold"
-                          />
-                        </div>
                       </div>
-                    )}
-                  </PopupWrapper>
+                      <div className="text-center px-5">
+                        <img src={zomato} alt="Loading" />
+                        <h3 className="font-24 text-light-black montserrat-semibold mt-3 mb-2">
+                          {offer.offer_name}
+                        </h3>
+                        <p className="font-16 text-light-black space-grotesk-regular">
+                          {offer.one_liner}
+                        </p>
+                        <hr className="my-4 border-1 card-divider width-65" />
+                        <PopupWrapper trigger={<button
+                          className="btn background-text-blue text-white font-14 montserrat-medium mb-4 width-65 rounded-5"
+                          type="button"
+                        >
+                          {offer?.button_txt}
+                        </button>}>
+                          {(close) => (
+                            <div className="text-center p-4">
+                              <AiOutlineInfoCircle
+                                size={50}
+                                color="#1A2A6C"
+                                className="mb-3"
+                              />
+                              <h5 className="mb-3">
+                                Are you sure you want to unlock this prize?
+                              </h5>
+                              <div className="d-flex justify-content-center gap-3">
+                                <Button
+                                  label="Yes"
+                                  // onClick={() => handleYes(close)}
+                                  onClick={() => HandleRedeemAPI(offer?.off_percent, offer?.product_uid, close)}
+                                  className="w-50 py-2 rounded-3 bg-transparent border-blue text-blue montserrat-semibold"
+                                />
+                                <Button
+                                  label="No"
+                                  onClick={close}
+                                  className="w-50 py-2 rounded-3 border-0 background-text-blue text-white montserrat-semibold"
+                                />
+                              </div>
+                            </div>
+                          )}
+                        </PopupWrapper>
 
-                </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-             </div>
-            ))}
-          </div>
+            </>
+          )}
 
           {/* Win Exciting Prizes SECTION */}
           <h2 className="text-dark-blue mt-120 font-40 space-grotesk-bold mb-4 pb-4 ">
