@@ -50,6 +50,7 @@ const RedeemAndEarn = ({ isActive }) => {
           {/* Redeem Circle */}
           <div
             className={`redeem-circle-sect position-absolute fade-left ${showCircles ? 'aos-animate' : ''}`}
+            data-aos="fade-left"
           >
             <div className="redeem-circle gift-circle-sec redeem-shadow position-relative d-flex justify-content-center align-items-center">
               <img
@@ -88,6 +89,7 @@ const RedeemAndEarn = ({ isActive }) => {
           {/* Earn More Circle */}
           <div
             className={`earnmore-circle-sect position-absolute fade-right ${showCircles ? 'aos-animate' : ''}`}
+            data-aos="fade-right"
           >
             <div className="redeem-circle playearn-circle-sec earn-shadow position-relative d-flex justify-content-center align-items-center">
               <img
