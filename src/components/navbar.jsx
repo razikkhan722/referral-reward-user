@@ -99,7 +99,17 @@ const Navbar = () => {
                     !item?.img ? (
                       item?.label == 'Profile' ? (
                         <>
-                          <div className="dropdown mt-4 pt-3 position-relative">
+                        <Link to={item?.to} key={index}>
+                            <li className="list-unstyled list-background h-100 text-white mt-4 pt-3">
+                              <span
+                                ref={(el) => (navRefs.current[index] = el)}
+                                className={`nav-link mx-3 cursor-pointer ${
+                                  activeIndex === index
+                                    ? 'active space-grotesk-bold'
+                                    : 'space-grotesk-medium'
+                                }`}
+                              >
+                                <div className="dropdown position-relative">
                             <button
                               className=" dropdown-toggle bg-transparent text-white border-0"
                               type="button"
@@ -130,6 +140,10 @@ const Navbar = () => {
                               </li>
                             </ul>
                           </div>
+                              </span>
+                            </li>
+                          </Link>
+                          
                         </>
                       ) : (
                         <>
