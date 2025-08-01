@@ -341,22 +341,21 @@ const Home = () => {
           <Howitworks isActive={isActive} isExiting={exitAnimation} />
         </div>
         <div className='position-sticky top-0 vh-100 slide-right section-animate'
-          // data-aos="flip-right"
-          // data-aos-duration="3000"
           ref={addToRefs}
         >
           <RedeemAndEarn isActive={isActive} />
         </div>
-        <div className='position-sticky top-0 vh-100'
+        <div className='position-sticky top-0 fade-up section-animate'
           // data-aos="zoom-in-left"
           ref={addToRefs}
         >
           <PlayEarn isActive={isActive} />
-        </div>
-        <div className='position-sticky top-0'
+        
+        {/* <div className='position-sticky'
           ref={addToRefs}
-        >
+        > */}
           <Offer isActive={isActive} />
+        {/* </div> */}
         </div>
         <FloatingActionButton />
       </div>

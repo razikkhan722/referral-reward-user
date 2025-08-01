@@ -4590,7 +4590,7 @@ body::-webkit-scrollbar {
 
 /* Bottom to Top */
 .fade-up {
-  transform: translate(60px);
+  transform: translateY(60px);
 }
 
 .visible.fade-up {
@@ -4602,7 +4602,7 @@ body::-webkit-scrollbar {
   transform: translateX(90px);
 }
 .visible.slide-right {
-  transform: translateX(10px);
+  transform: translateX(0);
 }
 
 /* Zoom In */
