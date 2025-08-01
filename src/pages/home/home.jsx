@@ -340,7 +340,7 @@ const Home = () => {
         >
           <Howitworks isActive={isActive} isExiting={exitAnimation} />
         </div>
-        <div className='position-sticky top-0 vh-100 slide-right section-animate'
+        <div className='position-sticky top-0 vh-100'
           // data-aos="flip-right"
           // data-aos-duration="3000"
           ref={addToRefs}
