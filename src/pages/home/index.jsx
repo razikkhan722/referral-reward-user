@@ -400,7 +400,7 @@ const Index = ({ isExiting, isActive }) => {
                         />
                       </div>
                        <div className="col-lg-3"></div>
-                      <div className={`col-lg-3 text-center ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 8 ?"":"d-none" }`}>
+                      <div className={`col-lg-3 text-center ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 7 ?"":"d-none" }`}>
                         <img
                           className={`width-50 width-md-50 width-lg-25 width-xl-70 planet-shadow-${imageNumbers[0] === 0 ? 'purple' : imageNumbers[0] === 1 ? 'yellow' : imageNumbers[0] === 2 ? 'green' : 'blue'}`}
                           src={images[imageNumbers]}
