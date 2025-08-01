@@ -17,6 +17,8 @@ import alenship from '../../assets/icons/home/secondScreen/alienship.svg';
 
 // Import planet and pathway assets
 import pathway from '../../assets/icons/home/secondScreen/pathway.svg';
+import pathbottom from '../../assets/icons/home/secondScreen/pathbottom.svg';
+import pathtop from '../../assets/icons/home/secondScreen/pathtop.svg';
 import centerPlanet1 from '../../assets/icons/planets/purple.svg';
 import centerPlanet2 from '../../assets/icons/planets/yellow.svg';
 import centerPlanet3 from '../../assets/icons/planets/green.svg';
@@ -52,7 +54,9 @@ const Index = ({ isExiting, isActive }) => {
     MeterUpdateData,
     setMeterUpdateData,
   } = useContext(UserContext);
+  console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI,ContextFaqsDataAPI?.galaxy_data?.milestones?.length);  
 
+  // console.log('ContextHomeDataAPI: ', ContextHomeDataAPI);
   // Planet carousel states
   const [currentIndex, setCurrentIndex] = useState(
     ContextHomeDataAPI?.part4?.length - 1 || 0,
@@ -370,8 +374,8 @@ const Index = ({ isExiting, isActive }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-9 planet-section"> 
-                    <div className="row ">
+                  <div className="col-lg-9 planet-section overflow-scroll"> 
+                    <div className="d-flex ">
                       <div className="col-lg-3 text-center">
                         <img
                           className={`width-50 width-md-50 width-lg-25 width-xl-70 planet-shadow-${currentIndex === 0 ? 'purple' : currentIndex === 1 ? 'yellow' : currentIndex === 2 ? 'green' : 'blue'}`}
@@ -388,13 +392,29 @@ const Index = ({ isExiting, isActive }) => {
                         />
                       </div>
                       <div className="col-lg-3"></div>
+                      <div className={`col-lg-3 text-center ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 5 ?"":"d-none" }`}>
+                        <img
+                          className={`width-50 width-md-50 width-lg-25 width-xl-70 planet-shadow-${currentIndex[0] === 0 ? 'purple' : currentIndex[0] === 1 ? 'yellow' : currentIndex[0] === 2 ? 'green' : 'blue'}`}
+                          src={images[currentIndex]}
+                          alt="yellow"
+                        />
+                      </div>
+                       <div className="col-lg-3"></div>
+                      <div className={`col-lg-3 text-center ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 8 ?"":"d-none" }`}>
+                        <img
+                          className={`width-50 width-md-50 width-lg-25 width-xl-70 planet-shadow-${imageNumbers[0] === 0 ? 'purple' : imageNumbers[0] === 1 ? 'yellow' : imageNumbers[0] === 2 ? 'green' : 'blue'}`}
+                          src={images[imageNumbers]}
+                          alt="yellow"
+                        />
+                      </div>
                     </div>
-                    <div className="row position-relative">
+                    <div className="d-flex position-relative">
                       <img
                         className="position-absolute second-screen-pathway px-0"
                         src={pathway}
                         alt="pathway"
                       />
+                      
                       <div className="col-lg-3 text-center text-dark-blue mt-4 pt-4 px-0">
                         <h4 className="mb-2 space-grotesk-medium font-24">
                           {
@@ -458,9 +478,93 @@ const Index = ({ isExiting, isActive }) => {
                             ),
                           )}
                       </div>
-                      <div className="col-lg-3"></div>
+                      
+                      <div className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 5 ?"":"d-none" }`}>
+                        <img
+                        className="position-absolute a scrol-path-1 px-0"
+                        src={pathtop}
+                        alt="pathway"
+                      />
+                      </div>
+                      <div className={`col-lg-3 text-center text-dark-blue mt-4 pt-4 px-0 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 5 ?"":"d-none" } `}>
+                        <h4 className="mb-2 space-grotesk-medium font-24">
+                          {
+                            ContextFaqsDataAPI?.galaxy_data?.milestones[
+                              4
+                            ]?.milestone_name
+                          }
+                        </h4>
+
+                        {ContextFaqsDataAPI?.galaxy_data?.milestones[
+                          4
+                        ]?.milestone_description
+                          ?.split(/(\d+\s*(?:Star|Meteors))/gi)
+                          ?.map((part, index) =>
+                            /(\d+\s*(?:Star|Meteors))/i.test(part) ? (
+                              <span
+                                className="space-grotesk-medium"
+                                key={index}
+                              >
+                                {part}
+                              </span>
+                            ) : (
+                              <p
+                                className="space-grotesk-regular font-14 my-0"
+                                key={index}
+                              >
+                                {part}
+                              </p>
+                            ),
+                          )}
+                      </div>
+                      
+                      <div className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 6 ?"":"d-none" }`}>
+                        <img
+                        className="position-absolute b scrol-path-2 px-0"
+                        src={pathbottom}
+                        alt="pathway"
+                      />
+                      </div>
+                      <div className={`col-lg-3 text-center text-dark-blue mt-4 pt-4 px-0 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 6 ?"":"d-none" } `}>
+                        <h4 className="mb-2 space-grotesk-medium font-24">
+                          {
+                            ContextFaqsDataAPI?.galaxy_data?.milestones[
+                              6
+                            ]?.milestone_name
+                          }
+                        </h4>
+
+                        {ContextFaqsDataAPI?.galaxy_data?.milestones[
+                          6
+                        ]?.milestone_description
+                          ?.split(/(\d+\s*(?:Star|Meteors))/gi)
+                          ?.map((part, index) =>
+                            /(\d+\s*(?:Star|Meteors))/i.test(part) ? (
+                              <span
+                                className="space-grotesk-medium"
+                                key={index}
+                              >
+                                {part}
+                              </span>
+                            ) : (
+                              <p
+                                className="space-grotesk-regular font-14 my-0"
+                                key={index}
+                              >
+                                {part}
+                              </p>
+                            ),
+                          )}
+                      </div>
+                       <div className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 7 ?"":"d-none" }`}>
+                        <img
+                        className="position-absolute c scrol-path-3 px-0"
+                        src={pathtop}
+                        alt="pathway"
+                      />
+                      </div>
                     </div>
-                    <div className="row">
+                    <div className="d-flex">
                       <div className="col-lg-3"></div>
                       <div className="col-lg-3 text-center text-dark-blue second-scrn-padding">
                         <img
@@ -500,7 +604,7 @@ const Index = ({ isExiting, isActive }) => {
                         </div>
                       </div>
                       <div className="col-lg-3"></div>
-                      <div className="col-lg-3 text-center text-dark-blue">
+                      <div className={`col-lg-3 text-center text-dark-blue ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 4 ?"":"d-none" }`}>
                         <img
                           className={`width-50 width-md-50 width-lg-25 width-xl-70 planet-shadow-${prevIndex === 0 ? 'purple' : prevIndex === 1 ? 'yellow' : prevIndex === 2 ? 'green' : 'blue'}`}
                           src={images[prevIndex]}
@@ -517,6 +621,45 @@ const Index = ({ isExiting, isActive }) => {
 
                           {ContextFaqsDataAPI?.galaxy_data?.milestones[
                             prevIndex
+                          ]?.milestone_description
+                            ?.split(/(\d+\s*(?:Star|Meteors))/gi) // Non-capturing group for the words
+                            ?.map((part, index) =>
+                              /(\d+\s*(?:Star|Meteors))/i.test(part) ? (
+                                <span
+                                  className="space-grotesk-medium"
+                                  key={index}
+                                >
+                                  {part}
+                                </span>
+                              ) : (
+                                <p
+                                  className="space-grotesk-regular font-14 my-0"
+                                  key={index}
+                                >
+                                  {part}
+                                </p>
+                              ),
+                            )}
+                        </div>
+                      </div>
+                      <div className="col-lg-3"></div>
+                      <div className={`col-lg-3 text-center text-dark-blue ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 6 ?"":"d-none" }`}>
+                        <img
+                          className={`width-50 width-md-50 width-lg-25 width-xl-70 planet-shadow-${nextIndex === 0 ? 'purple' : nextIndex === 1 ? 'yellow' : nextIndex === 2 ? 'green' : 'blue'}`}
+                          src={images[nextIndex]}
+                          alt="blueplnt"
+                        />
+                        <div className=" text-center text-dark-blue">
+                          <h4 className="mb-2 space-grotesk-medium font-24">
+                            {
+                              ContextFaqsDataAPI?.galaxy_data?.milestones[
+                                5
+                              ]?.milestone_name
+                            }
+                          </h4>
+
+                          {ContextFaqsDataAPI?.galaxy_data?.milestones[
+                            5
                           ]?.milestone_description
                             ?.split(/(\d+\s*(?:Star|Meteors))/gi) // Non-capturing group for the words
                             ?.map((part, index) =>
@@ -677,10 +820,10 @@ const Index = ({ isExiting, isActive }) => {
                         src={images[currentIndex]}
                         alt="center-planet"
                         onClick={
-                          // currentIndex <= ContextHomeDataAPI?.part4?.length - 1
-                          // ?
+                          currentIndex <= ContextHomeDataAPI?.part4?.length - 1
+                          ?
                           toggleAnimtElements
-                          // : null
+                          : null
                         }
                         className={`img-fluid ${currentIndex <= ContextHomeDataAPI?.part4?.length - 1 ? 'cursor-pointer' : ''} rounded-circle planet-shadow-${currentIndex === 0 ? 'purple' : currentIndex === 1 ? 'yellow' : currentIndex === 2 ? 'green' : 'blue'} ${
                           isAnimating ? 'fade-down-shrink' : ''
