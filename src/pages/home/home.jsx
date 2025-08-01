@@ -290,42 +290,10 @@ const Home = () => {
   };
 
 
-  // const sectionsRef = useRef([]);
-
-  // const addToRefs = (el) => {
-  //   if (el && !sectionsRef.current.includes(el)) {
-  //     sectionsRef.current.push(el);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   sectionsRef.current.forEach((section, i) => {
-  //     gsap.fromTo(
-  //       section,
-  //       { yPercent: 100, opacity: 0 },
-  //       {
-  //         yPercent: 0,
-  //         opacity: 1,
-  //         ease: "power3.out",
-  //         scrollTrigger: {
-  //           trigger: section,
-  //           start: "top bottom", // when section hits bottom of viewport
-  //           end: "top center", // until it reaches center
-  //           scrub: true,
-  //         },
-  //       }
-  //     );
-  //   });
-
-  //   return () => {
-  //     ScrollTrigger.getAll().forEach((t) => t.kill());
-  //   };
-  // }, []);
-
   return (
     <>
-      <div className='position-relative'>
-        <div className='position-sticky top-0 vh-100'
+      <div className='position-relative scroll-section'>
+        <div className='position-sticky top-0 vh-100 zoom-in section-animate'
           ref={addToRefs}
         >
           <Index isActive={isActive} isExiting={exitAnimation} />
@@ -335,7 +303,7 @@ const Home = () => {
         >
           <Invitefriend isActive={isActive} isExiting={exitAnimation} />
         </div>
-        <div className='position-sticky top-0 vh-100 zoom-in section-animate'
+        <div className='position-sticky top-0 vh-100 slide-left section-animate'
           ref={addToRefs}
         >
           <Howitworks isActive={isActive} isExiting={exitAnimation} />
@@ -345,7 +313,7 @@ const Home = () => {
         >
           <RedeemAndEarn isActive={isActive} />
         </div>
-        <div className='position-sticky top-0 fade-up section-animate'
+        <div className='position-sticky top-0'
           // data-aos="zoom-in-left"
           ref={addToRefs}
         >

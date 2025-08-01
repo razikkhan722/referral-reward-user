@@ -405,6 +405,7 @@ $spacing-values:
 
 body {
   margin: 0;
+  overflow-x: hidden;
   background-color: #f9f9f9; // Replace $white-secondry with a real value or define the variable
 }
 
@@ -4576,16 +4577,17 @@ body::-webkit-scrollbar {
 /* Common base */
 .section-animate {
   opacity: 0;
-  // transition: all 0.7s ease-out;
   // transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
    transform: translateY(60px); /* Default from bottom */
   transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), 
               opacity 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
   will-change: transform, opacity;
+  //  width: 100%;
 }
 
 .visible {
   opacity: 1;
+   transform: translateY(0);
 }
 
 /* Bottom to Top */
@@ -4597,9 +4599,17 @@ body::-webkit-scrollbar {
   transform: translateY(0);
 }
 
+/* ✅ Slide from Left */
+.slide-left {
+  transform: translateX(-100px);
+}
+.visible.slide-left {
+  transform: translateX(0);
+}
+
 /* Slide from Right */
 .slide-right {
-  transform: translateX(90px);
+  transform: translateX(100px);
 }
 .visible.slide-right {
   transform: translateX(0);
@@ -4607,12 +4617,19 @@ body::-webkit-scrollbar {
 
 /* Zoom In */
 .zoom-in {
-  transform: scale(0.8);
+  transform: scale(0.9);
 }
 
 .visible.zoom-in {
   transform: scale(1);
 }
+
+// .visible.delay-1 {
+//   transition-delay: 0.2s;
+// }
+// .visible.delay-2 {
+//   transition-delay: 0.4s;
+// }
 
 
 
