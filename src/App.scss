@@ -4570,3 +4570,57 @@ body::-webkit-scrollbar {
   right: 10%;
   bottom: 5%;
 }
+
+// Animationss Landing page
+
+/* Common base */
+.section-animate {
+  opacity: 0;
+  // transition: all 0.7s ease-out;
+  transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.visible {
+  opacity: 1;
+}
+
+/* Bottom to Top */
+.fade-up {
+  transform: translate(60px);
+}
+
+.visible.fade-up {
+  transform: translateY(0);
+}
+
+/* Slide from Right */
+.slide-right {
+  transform: translateX(90px);
+}
+.visible.slide-right {
+  transform: translateX(10px);
+}
+
+/* Zoom In */
+.zoom-in {
+  transform: scale(0.8);
+}
+
+.visible.zoom-in {
+  transform: scale(1);
+}
+
+
+
+// .sections-wrapper {
+//   overflow-x: hidden;
+// }
+
+// .panel {
+//   height: 100vh;
+//   width: 100%;
+//   position: relative;
+//   scroll-snap-align: start;
+//   box-sizing: border-box;
+//   will-change: transform, opacity;
+// }

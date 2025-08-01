@@ -238,7 +238,7 @@
 
 // export default Home;
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Howitworks from './howitworks';
 import Invitefriend from './invitefriend';
 import Index from './index';
@@ -246,18 +246,142 @@ import RedeemAndEarn from './redeemAndEarn';
 import PlayEarn from './playEarn';
 import Offer from './offer';
 import FloatingActionButton from '../MyReferral/floatingFab';
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const Home = () => {
   const [exitAnimation, setExitAnimation] = useState(false);
   const isActive = true;
+
+  const sectionsRef = useRef([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const target = entry.target;
+          if (entry.isIntersecting) {
+            target.classList.add('visible');
+          } else {
+            target.classList.remove('visible');
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    sectionsRef.current.forEach((section) => {
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sectionsRef.current.forEach((section) => {
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, []);
+
+  const addToRefs = (el) => {
+    if (el && !sectionsRef.current.includes(el)) {
+      sectionsRef.current.push(el);
+    }
+  };
+
+
+  // const sectionsRef = useRef([]);
+
+  // const addToRefs = (el) => {
+  //   if (el && !sectionsRef.current.includes(el)) {
+  //     sectionsRef.current.push(el);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   sectionsRef.current.forEach((section, i) => {
+  //     gsap.fromTo(
+  //       section,
+  //       { yPercent: 100, opacity: 0 },
+  //       {
+  //         yPercent: 0,
+  //         opacity: 1,
+  //         ease: "power3.out",
+  //         scrollTrigger: {
+  //           trigger: section,
+  //           start: "top bottom", // when section hits bottom of viewport
+  //           end: "top center", // until it reaches center
+  //           scrub: true,
+  //         },
+  //       }
+  //     );
+  //   });
+
+  //   return () => {
+  //     ScrollTrigger.getAll().forEach((t) => t.kill());
+  //   };
+  // }, []);
+
   return (
     <>
-      <Index isActive={isActive} isExiting={exitAnimation} />
-      <Invitefriend isActive={isActive} isExiting={exitAnimation} />
-      <Howitworks isActive={isActive} isExiting={exitAnimation} />
-      <RedeemAndEarn isActive={isActive} />
-      <PlayEarn isActive={isActive} />
-      <Offer isActive={isActive} />
-      <FloatingActionButton/>
+      <div className='position-relative'>
+        <div className='position-sticky top-0 vh-100'
+          ref={addToRefs}
+        >
+          <Index isActive={isActive} isExiting={exitAnimation} />
+        </div>
+        <div className='position-sticky top-0 vh-100 fade-up section-animate'
+          ref={addToRefs}
+        >
+          <Invitefriend isActive={isActive} isExiting={exitAnimation} />
+        </div>
+        <div className='position-sticky top-0 vh-100 zoom-in section-animate'
+          ref={addToRefs}
+        >
+          <Howitworks isActive={isActive} isExiting={exitAnimation} />
+        </div>
+        <div className='position-sticky top-0 vh-100 slide-right section-animate'
+          // data-aos="flip-right"
+          // data-aos-duration="3000"
+          ref={addToRefs}
+        >
+          <RedeemAndEarn isActive={isActive} />
+        </div>
+        <div className='position-sticky top-0 vh-100'
+          // data-aos="zoom-in-left"
+          ref={addToRefs}
+        >
+          <PlayEarn isActive={isActive} />
+        </div>
+        <div className='position-sticky top-0'
+          ref={addToRefs}
+        >
+          <Offer isActive={isActive} />
+        </div>
+        <FloatingActionButton />
+      </div>
+
+
+      {/* <div className="sections-wrapper">
+      <section ref={addToRefs} className="panel bg-1">
+        <Index />
+      </section>
+      <section ref={addToRefs} className="panel bg-2">
+        <Invitefriend />
+      </section>
+      <section ref={addToRefs} className="panel bg-3">
+        <Howitworks />
+      </section>
+      <section ref={addToRefs} className="panel bg-4">
+        <RedeemAndEarn />
+      </section>
+      <section ref={addToRefs} className="panel bg-5">
+        <PlayEarn />
+      </section>
+      <section ref={addToRefs} className="panel bg-6">
+        <Offer />
+      </section>
+    </div> */}
     </>
   );
 };
