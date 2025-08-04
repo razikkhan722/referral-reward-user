@@ -37,6 +37,8 @@ import Button from '../../components/button';
 import PopupWrapper from '../../utils/PopupWrapper';
 import Popup from 'reactjs-popup';
 import { AiOutlineCheckCircle, AiOutlineInfoCircle } from 'react-icons/ai';
+import { IoShareSocial } from "react-icons/io5";
+
 import { responsiveArray } from 'antd/es/_util/responsiveObserver';
 
 const Offer = () => {
@@ -631,10 +633,10 @@ const Offer = () => {
                   className={`${card.bgClass} home-product-card box-shadow d-flex flex-column justify-content-center align-items-center`}
                 >
                   {/* Discount Badge */}
-                  <div className="discount-badge d-flex justify-content-center align-items-center text-center">
+                  {/* <div className="discount-badge d-flex justify-content-center align-items-center text-center">
                     {card.discount} <br />
                     Discount
-                  </div>
+                  </div> */}
 
                   {/* Card Image */}
                   <div className="overflow-hidden">
@@ -644,6 +646,9 @@ const Offer = () => {
                       alt="Product Visual"
                     />
                   </div>
+                  {/* <div className='text-end'>
+                    <IoShareSocial />
+                  </div> */}
 
                   {/* Card Body */}
                   <div className="text-center px-4 pb-4 z-3 pt-5">
