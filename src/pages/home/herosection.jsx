@@ -3,8 +3,10 @@ import { UserContext } from '../../UseContext/useContext';
 
 const Herosection = ({ currentPlnt, HomeDataAPI }) => {
   const { ContextFaqsDataAPI,ContextHomeDataAPI,MeterUpdateData } = useContext(UserContext);
+  const CurntPlntStatus = MeterUpdateData?.galaxies[0]?.milestones?.find(item => item?.milestone_name === currentPlnt)
+  const RequTounlock = ContextFaqsDataAPI?.galaxy_data?.milestones?.find(item => item?.milestone_name === currentPlnt)
 
-  let LtrToNum = currentPlnt?.charCodeAt(0) - 64;
+  // let LtrToNum = currentPlnt?.charCodeAt(0) - 64;
 
 
   // States
@@ -35,24 +37,24 @@ const Herosection = ({ currentPlnt, HomeDataAPI }) => {
             {HomeDataAPI?.part1 || 0} Stars
           </li>
           <li className="list-unstyled space-grotesk-medium font-46 text-white">
-            Planet {currentPlnt}
+            {currentPlnt}
           </li>
-          <li className="list-unstyled text-dark-blue  montserrat-semibold font-24">
+          <li className="list-unstyled text-dark-blue text-center  montserrat-semibold font-24">
             <span className="d-block font-16 space-grotesk-regular text-white mb-1">
               Meteors to Unlock
             </span>
-            {
+            {RequTounlock?.meteors_required_to_unlock}
+            {/* {
               ContextFaqsDataAPI?.galaxy_data?.milestones[LtrToNum - 1]
                 ?.meteors_required_to_unlock
-            }{' '}
-            Meteors
+            }{' '} */}
+            {/* Meteors */}
           </li>
-          <li className="list-unstyled text-dark-blue  montserrat-semibold font-24">
+          <li className="list-unstyled text-dark-blue text-center montserrat-semibold font-24">
             <span className="d-block font-16 space-grotesk-regular text-white mb-1">
               Planet Status
             </span>
-            {LtrToNum - 1 <= ContextHomeDataAPI?.part4?.length - 1 ? "Unlocked":"Locked"}
-            
+            {CurntPlntStatus?.milestone_status || ""}
           </li>
         </ul>
         <div
@@ -83,17 +85,18 @@ const Herosection = ({ currentPlnt, HomeDataAPI }) => {
               <span className="d-block font-16 space-grotesk-regular text-white mb-1">
                 Total Meteors
               </span>
-              {
+              {/* {
                 ContextFaqsDataAPI?.galaxy_data?.milestones[LtrToNum - 1]
                   ?.meteors_required_to_unlock
-              }{' '}
-              Meteors
+              }{' '} */}
+               {RequTounlock?.meteors_required_to_unlock}
+              {/* Meteors */}
             </div>
             <div className="list-unstyled text-dark-blue montserrat-semibold font-24">
               <span className="d-block font-16 space-grotesk-regular text-white mb-1">
                 Planet Status
               </span>
-              Unlocked
+              {CurntPlntStatus?.milestone_status || ""}
             </div>
           </div>
         </div>
