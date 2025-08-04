@@ -22,6 +22,12 @@ import minus from '../../assets/icons/home/offer/minus.svg';
 
 import offSideImg from '../../assets/icons/home/offer/off-sideimg.svg';
 
+import Logo from '../../assets/icons/logo/logo.svg';
+import OrangePlanet from '../../assets/icons/subscription/Orange-Planet.svg';
+import GreenPlanet from '../../assets/icons/subscription/Green Planet 3.svg';
+import Plane from '../../assets/icons/subscription/Plane.svg';
+import stargroup from '../../assets/icons/auth/stargroup.svg';
+
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { DecryptFunction } from '../../utils/decryptFunction';
@@ -62,6 +68,54 @@ const Offer = () => {
       title: 'Reach for Rewards, Refer for More!',
       content:
         'Invite your friends, collect cosmic points, and unlock stellar perks!',
+    },
+  ];
+
+  // Card data for slider
+  const ProductCardData = [
+    {
+      discount: '20%',
+      bgClass: 'card-bg-purple-color',
+      img: OrangePlanet,
+      title: 'Social Media',
+      cardImg: 'orange-planet',
+      price: '₹ 20,000/-',
+      description: `Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem veritatis et quasi architecto beatae vitae dicta sunt, explicabo`,
+      btnText: 'Purchase',
+      btnClass: 'product-btn-purple',
+    },
+    {
+      discount: '10%',
+      bgClass: 'card-bg-pink-color',
+      img: Plane,
+      title: 'Sales Ninja',
+      cardImg: 'pink-planet',
+      price: '₹ 10,000/-',
+      description: `Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa unde omnis iste natus error sit voluptatem`,
+      btnText: 'Unlock with 300 points',
+      btnClass: 'product-btn-pink',
+    },
+    {
+      discount: '10%',
+      bgClass: 'card-bg-green-color',
+      img: GreenPlanet,
+      cardImg: 'green-planet',
+      title: 'Upcoming Offer',
+      description: `Next: Get 50% Off on DM Services at 500 Points unde omnis iste natus error sit voluptatem accusantium unde omnis iste natus error sit voluptatem accusantium unde omnis iste natus error sit voluptatem accusantium`,
+      btnText: 'Unlock with 500 points',
+      btnClass: 'product-btn-green',
+    },
+    // Duplicates (can be removed or reused)
+    {
+      discount: '10%',
+      bgClass: 'card-bg-purple-color',
+      img: OrangePlanet,
+      cardImg: 'orange-planet',
+      title: 'Social Media',
+      price: '₹ 20,000/-',
+      description: `Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem veritatis et quasi architecto beatae vitae dicta sunt, explicabo`,
+      btnText: 'Purchase',
+      btnClass: 'product-btn-purple',
     },
   ];
 
@@ -563,10 +617,68 @@ const Offer = () => {
               )}
             </Popup>
           </div>
+
+
+          {/* Products SECTION */}
+          <h2 className="text-dark-blue mt-120 font-40 space-grotesk-bold mb-4 pb-2">
+            Products
+          </h2>
+          <div className='row py-4'>
+            {ProductCardData.map((card, index) => (
+              <div className='col-lg-3' key={index}>
+                <div
+
+                  className={`${card.bgClass} home-product-card box-shadow d-flex flex-column justify-content-center align-items-center`}
+                >
+                  {/* Discount Badge */}
+                  <div className="discount-badge d-flex justify-content-center align-items-center text-center">
+                    {card.discount} <br />
+                    Discount
+                  </div>
+
+                  {/* Card Image */}
+                  <div className="overflow-hidden">
+                    <img
+                      src={card.img}
+                      className={`rounded-start-3 ${card.cardImg}`}
+                      alt="Product Visual"
+                    />
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="text-center px-4 pb-4 z-3 pt-5">
+                    <p className="text-blue font-size-24 montserrat-semibold mb-0">
+                      {card.title}
+                    </p>
+                    {card.price && (
+                      <p className="text-blue font-size-20 montserrat-medium">
+                        {card.price}
+                      </p>
+                    )}
+                    <p className="text-blue font-size-14 montserrat-medium">
+                      {card.description}
+                      <span className="text-red"> learn more....</span>
+                    </p>
+
+                    {/* CTA Button */}
+                    <button
+                      className={`product-btn w-100 text-white ${card?.btnClass} px-3 py-2 border-0 mt-3`}
+                    // onClick={card.btnText === 'Purchase' ? HandleClick : null}
+                    >
+                      {card.btnText}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+          </div>
+
         </div>
 
+
         {/* FAQ SECTION */}
-        {ContextFaqsDataAPI?.home_faqs?.length > 0 &&(
+        {ContextFaqsDataAPI?.home_faqs?.length > 0 && (
           <div className={`faq-section planet-slide-up`}>
             <div className="container-fluid px-5 pb-5">
               <h2 className="text-dark-blue space-grotesk-bold mt-120 mb-1 pb-1 ">

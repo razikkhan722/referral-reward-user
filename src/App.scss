@@ -1037,7 +1037,7 @@ body::-webkit-scrollbar {
 // }
 
 .nav-profile-drop {
-  top: 90% !important;
+  top: 110% !important;
   left: -35% !important;
 }
 
@@ -3199,6 +3199,13 @@ body::-webkit-scrollbar {
   transition: transform 0.3s ease;
   position: relative;
   // overflow: hidden;
+}
+
+.home-product-card {
+  position: relative;
+  border-radius: 12px !important;
+  height: 350px !important;
+  box-shadow: 0px 4px 16px 1px rgba(75, 56, 151, 0.2);
 }
 
 .slick-current .product-card {
