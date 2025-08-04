@@ -1452,8 +1452,10 @@ body::-webkit-scrollbar {
 }
 
 .second-screen-pathway {
-  width: 79% !important;
-  transform: translate(12.5%, 0%);
+  // width: 79% !important;
+  // transform: translate(12.5%, 0%);
+    width: 56% !important;
+    transform: translate(17.5%, 0%);
 }
 
 .second-scrn-bottom {
@@ -1510,6 +1512,10 @@ body::-webkit-scrollbar {
   }
 }
 // ---------
+.scrol-path-0{
+    width: 23%;
+    left: 65%;
+}
 .scrol-path-1{
   width: 27%;
   left: 88%;
@@ -1522,7 +1528,18 @@ body::-webkit-scrollbar {
 width: 27%;
 left: 137%;
 }
-
+.scrol-path-4{
+width: 24%;
+left: 164%;
+}
+.scrol-path-5{
+width: 27%;
+left: 187%;
+}
+.scrol-path-6{
+width: 24%;
+left: 214%;
+}
 
 /* ==================== SECOND SCREEN SECTIONS CSS END ==================================== */
 /* =================== INVITE A FRIEND SECTION CSS STRAT ==================================*/
