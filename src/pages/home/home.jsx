@@ -293,7 +293,7 @@ const Home = () => {
   const isActive = true;
 
   const sectionsRef = useRef([]);
-  const lastY = useRef(window.scrollY);
+  // const lastY = useRef(window.scrollY);
 
   const addToRefs = (el) => {
     if (el && !sectionsRef.current.includes(el)) {
