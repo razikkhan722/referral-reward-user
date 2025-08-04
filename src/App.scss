@@ -4564,14 +4564,14 @@ body::-webkit-scrollbar {
   opacity: 0;
   // transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
   // transform: translateY(60px);
-    transform: translateX(0);
+  transform: translateX(0);
   /* Default from bottom */
   // transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), 
   //             opacity 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
   transition: opacity 0.8s ease, transform 0.8s ease;
   will-change: transform, opacity;
   //  width: 100%;
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 .visible {
@@ -4591,7 +4591,7 @@ body::-webkit-scrollbar {
 
 /* ✅ Slide from Left */
 .slide-left {
-  transform: translateX(-100px);
+  transform: translateX(-150px);
   //  transform: translateX(-100vw)
 }
 
@@ -4601,7 +4601,7 @@ body::-webkit-scrollbar {
 
 /* Slide from Right */
 .slide-right {
-  transform: translateX(100px);
+  transform: translateX(160px);
   //  transform: translateX(100vw);
 }
 
@@ -4622,7 +4622,7 @@ body::-webkit-scrollbar {
 .exit-left {
   opacity: 0;
   transform: translateX(-100px);
-    // transform: translateX(-100vw);
+  // transform: translateX(-100vw);
   transition: transform 0.8s ease, opacity 0.8s ease;
 }
 
@@ -4633,6 +4633,7 @@ body::-webkit-scrollbar {
   //  transform: translateX(100vw);
   transition: transform 0.8s ease, opacity 0.8s ease;
 }
+
 .exit-zoom {
   transform: scale(0.8);
   opacity: 0;
