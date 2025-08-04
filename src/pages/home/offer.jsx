@@ -632,23 +632,19 @@ const Offer = () => {
 
                   className={`${card.bgClass} home-product-card box-shadow d-flex flex-column justify-content-center align-items-center`}
                 >
-                  {/* Discount Badge */}
-                  {/* <div className="discount-badge d-flex justify-content-center align-items-center text-center">
-                    {card.discount} <br />
-                    Discount
-                  </div> */}
-
                   {/* Card Image */}
-                  <div className="overflow-hidden">
-                    <img
-                      src={card.img}
-                      className={`rounded-start-3 ${card.cardImg}`}
-                      alt="Product Visual"
-                    />
+                    <div className="overflow-hidden">
+                      <img
+                        src={card.img}
+                        className={`rounded-start-3 ${card.cardImg}`}
+                        alt="Product Visual"
+                      />
+                    </div>
+                  <div className='position-relative w-100'>
+                    <div className="position-absolute top-0 end-0 d-flex align-items-center justify-content-center mx-2 text-white background-text-blue rounded-pill share-icon">
+                      <IoShareSocial />
+                    </div>
                   </div>
-                  {/* <div className='text-end'>
-                    <IoShareSocial />
-                  </div> */}
 
                   {/* Card Body */}
                   <div className="text-center px-4 pb-4 z-3 pt-5">

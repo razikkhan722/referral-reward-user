@@ -3206,6 +3206,11 @@ body::-webkit-scrollbar {
   border-radius: 12px !important;
   height: 350px !important;
   box-shadow: 0px 4px 16px 1px rgba(75, 56, 151, 0.2);
+
+  .share-icon{
+    width: 32px;
+    height: 32px;
+  }
 }
 
 .slick-current .product-card {
