@@ -252,42 +252,151 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
+  // const [exitAnimation, setExitAnimation] = useState(false);
+  // const isActive = true;
+
+  // const sectionsRef = useRef([]);
+
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       entries.forEach((entry) => {
+  //         const target = entry.target;
+  //         if (entry.isIntersecting) {
+  //           target.classList.add('visible');
+  //         } else {
+  //           target.classList.remove('visible');
+  //         }
+  //       });
+  //     },
+  //     { threshold: 0.2 }
+  //   );
+
+  //   sectionsRef.current.forEach((section) => {
+  //     if (section) observer.observe(section);
+  //   });
+
+  //   return () => {
+  //     sectionsRef.current.forEach((section) => {
+  //       if (section) observer.unobserve(section);
+  //     });
+  //   };
+  // }, []);
+
+  // const addToRefs = (el) => {
+  //   if (el && !sectionsRef.current.includes(el)) {
+  //     sectionsRef.current.push(el);
+  //   }
+  // };
+
   const [exitAnimation, setExitAnimation] = useState(false);
   const isActive = true;
 
   const sectionsRef = useRef([]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const target = entry.target;
-          if (entry.isIntersecting) {
-            target.classList.add('visible');
-          } else {
-            target.classList.remove('visible');
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    sectionsRef.current.forEach((section) => {
-      if (section) observer.observe(section);
-    });
-
-    return () => {
-      sectionsRef.current.forEach((section) => {
-        if (section) observer.unobserve(section);
-      });
-    };
-  }, []);
+  const lastY = useRef(window.scrollY);
 
   const addToRefs = (el) => {
     if (el && !sectionsRef.current.includes(el)) {
       sectionsRef.current.push(el);
     }
   };
+
+//   useEffect(() => {
+//     // const observer = new IntersectionObserver(
+//     //   (entries) => {
+//     //     const currentY = window.scrollY;
+//     //     const isScrollingDown = currentY > lastY.current;
+//     //     lastY.current = currentY;
+
+//     //     entries.forEach((entry) => {
+//     //       const target = entry.target;
+
+//     //       if (entry.isIntersecting) {
+//     //         target.classList.add('visible');
+//     //       } else {
+//     //         // Only remove on reverse scroll
+//     //         if (!isScrollingDown) {
+//     //           target.classList.remove('visible');
+//     //         }
+//     //       }
+//     //     });
+//     //   },
+//     //   {
+//     //     threshold: 0.3,
+//     //   }
+//     // );
+
+//     const observer = new IntersectionObserver(
+//   (entries) => {
+//     entries.forEach((entry) => {
+//       const target = entry.target;
+//       if (entry.isIntersecting) {
+//         target.classList.add('visible');
+//       } else {
+//         target.classList.remove('visible');
+//       }
+//     });
+//   },
+//   { threshold: 0.2 }
+// );
+
+//     sectionsRef.current.forEach((section) => {
+//       if (section) observer.observe(section);
+//     });
+
+//     return () => {
+//       sectionsRef.current.forEach((section) => {
+//         if (section) observer.unobserve(section);
+//       });
+//     };
+//   }, []);
+
+
+useEffect(() => {
+  let lastScrollY = window.scrollY;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const currentY = window.scrollY;
+      const isScrollingDown = currentY > lastScrollY;
+      lastScrollY = currentY;
+
+      entries.forEach((entry) => {
+        const target = entry.target;
+
+        if (entry.isIntersecting) {
+          target.classList.add("visible");
+          target.classList.remove("exit-left", "exit-right");
+        } else {
+          target.classList.remove("visible");
+
+          if (target.classList.contains("slide-left")) {
+            target.classList.add(isScrollingDown ? "exit-left" : "exit-right");
+          } else if (target.classList.contains("slide-right")) {
+            target.classList.add(isScrollingDown ? "exit-right" : "exit-left");
+          } else if (target.classList.contains("fade-up")) {
+            // optional: animate exit for fade-up
+          } else if (target.classList.contains("zoom-in")) {
+            // optional: animate exit for zoom-in
+          }
+        }
+      });
+    },
+    {
+      threshold: 0.3,
+    }
+  );
+
+  sectionsRef.current.forEach((section) => {
+    if (section) observer.observe(section);
+  });
+
+  return () => {
+    sectionsRef.current.forEach((section) => {
+      if (section) observer.unobserve(section);
+    });
+  };
+}, []);
 
 
   return (
@@ -298,7 +407,7 @@ const Home = () => {
         >
           <Index isActive={isActive} isExiting={exitAnimation} />
         </div>
-        <div className='position-sticky top-0 vh-100 fade-up section-animate'
+        <div className='position-sticky top-0 fade-up section-animate'
           ref={addToRefs}
         >
           <Invitefriend isActive={isActive} isExiting={exitAnimation} />
@@ -328,27 +437,6 @@ const Home = () => {
         <FloatingActionButton />
       </div>
 
-
-      {/* <div className="sections-wrapper">
-      <section ref={addToRefs} className="panel bg-1">
-        <Index />
-      </section>
-      <section ref={addToRefs} className="panel bg-2">
-        <Invitefriend />
-      </section>
-      <section ref={addToRefs} className="panel bg-3">
-        <Howitworks />
-      </section>
-      <section ref={addToRefs} className="panel bg-4">
-        <RedeemAndEarn />
-      </section>
-      <section ref={addToRefs} className="panel bg-5">
-        <PlayEarn />
-      </section>
-      <section ref={addToRefs} className="panel bg-6">
-        <Offer />
-      </section>
-    </div> */}
     </>
   );
 };
