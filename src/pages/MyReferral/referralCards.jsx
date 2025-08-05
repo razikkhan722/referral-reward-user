@@ -32,7 +32,7 @@ const ReferralCards = ({ RefralDataAPI }) => {
       id: 2,
       count: `${RefralDataAPI?.part2}`,
       title: 'Referrals Earnings',
-      subtitle: "People You've Referred",
+      subtitle: "Earning's by Referrals",
       image: ReferralUfo,
       hoverImage: HoverUfo,
     },

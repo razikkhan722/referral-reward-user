@@ -156,6 +156,7 @@ const Invitefriend = () => {
                 ref={inputRef}
                 type="text"
                 defaultValue={ContextHomeDataAPI?.part3}
+                 readOnly
                 className="copy-input input-invite-friend bg-white"
               />
               <button className="invite-copy-button" onClick={handleCopy}>
