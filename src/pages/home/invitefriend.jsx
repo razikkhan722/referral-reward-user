@@ -20,6 +20,7 @@ const Invitefriend = () => {
   // const [animateMiddle, setAnimateMiddle] = useState(false);
   const [copied, setCopied] = useState(false);
   const { ContextHomeDataAPI } = useContext(UserContext);
+  console.log('ContextHomeDataAPI-dfghjk: ', ContextHomeDataAPI);
   const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
 
   // Disable scroll outside while active
@@ -154,7 +155,7 @@ const Invitefriend = () => {
               <input
                 ref={inputRef}
                 type="text"
-                defaultValue={ContextHomeDataAPI?.part5}
+                defaultValue={ContextHomeDataAPI?.part3}
                 className="copy-input input-invite-friend bg-white"
               />
               <button className="invite-copy-button" onClick={handleCopy}>

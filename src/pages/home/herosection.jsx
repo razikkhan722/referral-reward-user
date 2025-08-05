@@ -2,7 +2,9 @@ import React, { useContext } from 'react';
 import { UserContext } from '../../UseContext/useContext';
 
 const Herosection = ({ currentPlnt, HomeDataAPI }) => {
+  console.log('HomeDataAPI: ', HomeDataAPI);
   const { ContextFaqsDataAPI,ContextHomeDataAPI,MeterUpdateData } = useContext(UserContext);
+  console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI);
   const CurntPlntStatus = MeterUpdateData?.galaxies[0]?.milestones?.find(item => item?.milestone_name === currentPlnt)
   const RequTounlock = ContextFaqsDataAPI?.galaxy_data?.milestones?.find(item => item?.milestone_name === currentPlnt)
 
@@ -17,7 +19,8 @@ const Herosection = ({ currentPlnt, HomeDataAPI }) => {
       <div className="container">
         <div className="text-center">
           <h3 className="text-uppercase text-blue space-grotesk-bold font-46 mb-0">
-            {HomeDataAPI?.part3?.at(-1) || 'Milky Way Galaxy'}
+            {/* {HomeDataAPI?.part3?.at(-1) || 'Milky Way Galaxy'} */}
+             {ContextFaqsDataAPI?.galaxy_data?.galaxy_name || 'Milky Way Galaxy'}
           </h3>
         </div>
         <ul
