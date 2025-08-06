@@ -24,9 +24,9 @@ const ResetPassword = () => {
     formState: { errors },
   } = useForm();
 
-  // Get stored email and OTP from sessionStorage
-  const GetEmail = sessionStorage.getItem('email');
-  const GetOtp = sessionStorage.getItem('otp');
+  // Get stored email and OTP from localStorage
+  const GetEmail = localStorage.getItem('email');
+  const GetOtp = localStorage.getItem('otp');
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -44,8 +44,8 @@ const ResetPassword = () => {
 
       if (response.success) {
         toastSuccess(response?.message);
-        sessionStorage.removeItem('email');
-        sessionStorage.removeItem('otp');
+        localStorage.removeItem('email');
+        localStorage.removeItem('otp');
         navigate('/login');
       }
     } catch (error) {

@@ -98,11 +98,9 @@ const ExclusiveCardData = [
 ];
 
 const MyRewardFirstScreen = () => {
-  const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
+  const Auth = JSON?.parse(localStorage.getItem('Auth') ?? '{}');
   const { ContextHomeDataAPI, ContextFaqsDataAPI, MeterUpdateData } =
     useContext(UserContext);
-  console.log('MeterUpdateData: ', MeterUpdateData);
-  console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI);
 
   const RewardSliderJson = [
     {
@@ -260,7 +258,6 @@ const MyRewardFirstScreen = () => {
   const [leftScrolAnimt, setleftScrolAnimt] = useState(true);
   const [UfoBg, setUfoBg] = useState(false);
   const [MyRewardDataAPI, setMyRewardDataAPI] = useState();
-  console.log('MyRewardDataAPI: ', MyRewardDataAPI);
   const [showGameCard, setShowGameCard] = useState('invite');
   const codeRef = useRef();
   const linkRef = useRef();
@@ -288,12 +285,12 @@ const MyRewardFirstScreen = () => {
 
   const HandleAPI = async () => {
     try {
+      const decrypt = await DecryptFunction(Auth)
       const enyptData = await postData('/my-rewards', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
       });
-      console.log('enyptData: ', enyptData);
       const Decrpty = await DecryptFunction(enyptData);
       setMyRewardDataAPI(Decrpty);
     } catch (error) {
@@ -307,13 +304,13 @@ const MyRewardFirstScreen = () => {
 
   const HandleRedeemAPI = async (coupon_code, close) => {
     try {
+      const decrypt = await DecryptFunction(Auth)
       const response = await postData('/redeem-offer/discount-coupon', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
         coupon_code,
       });
-      console.log('response: ', response);
       setCongratsMessage(response?.message || "Successfully unlocked prize!")
       setShowCongrats(true);
       setIsSuccess(true)
@@ -383,7 +380,6 @@ const MyRewardFirstScreen = () => {
 
   const discountData = (() => {
     try {
-      // console.log('discountData: ', discountData);
       const fixedString = MyRewardDataAPI?.part8
         ?.replace(/'/g, '"') // Replace single quotes with double quotes
         ?.replace(/\bNone\b/g, 'null') // Replace Python None with JSON null

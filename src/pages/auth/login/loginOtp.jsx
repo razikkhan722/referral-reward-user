@@ -105,27 +105,27 @@ const LoginOtp = () => {
         mobile_number: mobileNumber,
         otp_input: otp?.join(''),
       });
-
+      const decrypt = await DecryptFunction(response?.data)
       setTimeout(async () => {
         setOtpStatus('sent');
-        if (response?.mode) {
+        if (response?.message) {
           toastSuccess(response?.message);
 
           // Store auth in session
-          sessionStorage.setItem('Auth', JSON.stringify(response));
-          setAuthLocal(response);
+          localStorage.setItem('Auth', JSON.stringify(response?.data));
+          setAuthLocal(decrypt);
 
           // Fetch home data
           const encryptedData = await postData('/home', {
-            user_id: response?.user_id,
-            log_alt: response?.log_alt,
-            mode: response?.mode,
+            user_id: decrypt?.part3,
+            log_alt: decrypt?.part2,
+            mode: decrypt?.part1,
           });
 
           const FaqsData = await postData('/admin/fetch-custom-data', {
-            user_id: response?.user_id,
-            log_alt: response?.log_alt,
-            mode: response?.mode,
+            user_id: decrypt?.part3,
+            log_alt: decrypt?.part2,
+            mode: decrypt?.part1,
           });
 
           setContextFaqsDataAPI(FaqsData);

@@ -75,9 +75,8 @@ const Profile = () => {
 
   const { ContextFaqsDataAPI, ContextHomeDataAPI, setAuthLocal } =
   useContext(UserContext);
-  console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI?.conversion_data[0]?.conversion_rates);
 
-  const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
+  const Auth = JSON?.parse(localStorage.getItem('Auth') ?? '{}');
   // Add state to track the calculated value
   const [calculatedStars, setCalculatedStars] = useState(0);
   const [calculatedCash, setCalculatedCash] = useState(0);
@@ -175,6 +174,7 @@ const Profile = () => {
 
   // Handle message form submit
   const handleMessageSubmit = async (e) => {
+    const decrypt = await DecryptFunction(Auth)
     e.preventDefault();
     try {
       setIsMessageModalOpen(false);
@@ -187,9 +187,9 @@ const Profile = () => {
       });
       // messageForm
       const enyptData = await postData('/contact', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
         username: UserDataAPI?.part1,
         email: UserDataAPI?.part2,
         message: messageForm?.message,
@@ -208,11 +208,12 @@ const Profile = () => {
   // =================================
 
   const HandleAPI = async () => {
+    const decrypt = await DecryptFunction(Auth)
     try {
       const enyptData = await postData('/profile', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
       });
       const Decrpty = await DecryptFunction(enyptData);
       setUserDataAPI(Decrpty);
@@ -235,10 +236,11 @@ const Profile = () => {
 
   const onFormSubmit = async (data) => {
     try {
+      const decrypt = await DecryptFunction(Auth)
       const enyptData = await postData('/update-profile', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
         username: data?.name,
         email: data?.email,
         mobile_number: data?.mobile,
@@ -250,9 +252,9 @@ const Profile = () => {
       toastSuccess(enyptData?.message);
       if (enyptData?.success) {
         const response = await postData('/profile', {
-          user_id: Auth?.user_id,
-          log_alt: Auth?.log_alt,
-          mode: Auth?.mode,
+          user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
         });
         const Decrpty = await DecryptFunction(response);
         setUserDataAPI(Decrpty);
@@ -264,10 +266,11 @@ const Profile = () => {
 
   const onMeteorConvert = async (data) => {
     try {
+      const decrypt = await DecryptFunction(Auth)
       const response = await postData('/meteors-to-stars', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+        user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
         meteors_to_debit: Number(data?.meteors),
         stars_credited: calculatedStars,
       });
@@ -282,10 +285,11 @@ const Profile = () => {
 
   const onStarConvert = async (data) => {
     try {
+      const decrypt = await DecryptFunction(Auth)
       const response = await postData('/stars-to-currency', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
         stars_debited: Number(data?.stars),
         currency_credited: calculatedCash,
       });
@@ -321,9 +325,8 @@ const Profile = () => {
 
   // ------Logout Functionailty
   const HandleLogout = () => {
-    sessionStorage.removeItem('Auth');
+    localStorage.removeItem('Auth');
     setAuthLocal('');
-    console.log('check auth');
     navigate('/login');
   };
 

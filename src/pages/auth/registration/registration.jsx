@@ -38,7 +38,6 @@ const Registration = () => {
 
   // const currentURL = window.location.href;
   const baseURL = window.location.origin; 
-  console.log('baseURL: ', baseURL);
 
     const platformMap = {
     wa: 'whatsapp',
@@ -69,7 +68,7 @@ const Registration = () => {
       });
 
       // Save user ID to session
-      sessionStorage.setItem('uid', response?.user_id);
+      localStorage.setItem('uid', response?.user_id);
 
       if (response?.rewards) {
         setContextInviteRefferAPI(response?.rewards[0]?.signup_reward);

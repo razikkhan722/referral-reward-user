@@ -184,7 +184,7 @@ const Howitworks = ({ isActive, isExiting }) => {
   const [showSteps, setShowSteps] = useState(false);
   const [showExit, setShowExit] = useState(false);
   const [scrollDir, setScrollDir] = useState('down'); // Local scroll direction
-  const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
+  const Auth = JSON?.parse(localStorage.getItem('Auth') ?? '{}');
   const { ContextFaqsDataAPI } = useContext(UserContext);
 
   // =================================
@@ -193,10 +193,11 @@ const Howitworks = ({ isActive, isExiting }) => {
 
   const HandleAPI = async () => {
     try {
+  const decrypt = await DecryptFunction(Auth)
       const enyptData = await postData('/admin/fetch-custom-data', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+        user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
       });
       const Decrpty = await DecryptFunction(enyptData);
     } catch (error) {

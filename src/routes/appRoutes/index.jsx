@@ -25,10 +25,10 @@ import Invitefriend from '../../pages/home/invitefriend';
 import Error from '../../pages/Errror/error';
 
 // Contexts and Utils
-import {UserContext} from "../../UseContext/useContext"
+import { UserContext } from '../../UseContext/useContext';
 import { postData } from '../../services/api';
 // import {DecryptFunction} from "../../UseContext/useContext"
-import {DecryptFunction} from "../../utils/decryptFunction"
+import { DecryptFunction } from '../../utils/decryptFunction';
 
 const AppRoutes = () => {
   const {
@@ -45,18 +45,19 @@ const AppRoutes = () => {
   // Fetch Home and FAQ data after login
   const HandleAPI = async () => {
     try {
+      const decrypt = await DecryptFunction(Auth);
       const encryptedHomeData = await postData('/home', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+        user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
       });
       const decryptedHomeData = await DecryptFunction(encryptedHomeData);
       setContextHomeDataAPI(decryptedHomeData);
 
       const faqsData = await postData('/admin/fetch-custom-data', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+        user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
       });
       setContextFaqsDataAPI(faqsData);
     } catch (error) {
@@ -69,11 +70,16 @@ const AppRoutes = () => {
     HandleAPI(); // This fetches and sets context data if session exists
   }, []);
 
+  const HandleLog = async () => {
+    const getValue = JSON.parse(localStorage.getItem('Auth') ?? 'null');
+    const decrypt = await DecryptFunction(getValue);
+    setAuthLocal(decrypt?.part3 ?? null);
+    setLoading(false);
+  };
+
   // Get AuthLocal from session and set it in context
   useEffect(() => {
-    const getValue = JSON.parse(localStorage.getItem('Auth') ?? 'null');
-    setAuthLocal(getValue?.mode ?? null);
-    setLoading(false);
+    HandleLog();
   }, []);
 
   // Show nothing while checking auth (optional: replace with loader/spinner)
@@ -171,7 +177,6 @@ const AppRoutes = () => {
         <Route path="*" element={<Error />} />
       </Routes>
     </Router>
-    
   );
 };
 

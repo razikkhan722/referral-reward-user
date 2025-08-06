@@ -20,8 +20,7 @@ const Invitefriend = () => {
   // const [animateMiddle, setAnimateMiddle] = useState(false);
   const [copied, setCopied] = useState(false);
   const { ContextHomeDataAPI } = useContext(UserContext);
-  console.log('ContextHomeDataAPI-dfghjk: ', ContextHomeDataAPI);
-  const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
+  const Auth = JSON?.parse(localStorage.getItem('Auth') ?? '{}');
 
   // Disable scroll outside while active
   // useEffect(() => {
@@ -99,10 +98,11 @@ const Invitefriend = () => {
 
   const handleClick = async () => {
     try {
+      const decrypt = await DecryptFunction(Auth)
       const response = await postData('/send-whatsapp-invite', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
       });
       if (response?.success) {
         window.open(response?.link, '_blank');
@@ -112,10 +112,11 @@ const Invitefriend = () => {
 
   const handleIconLink = async (icon) => {
     try {
+      const decrypt = await DecryptFunction(Auth)
       const response = await postData(`/send-${icon}-invite`, {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
       });
       if (response?.success && response?.link) {
         window.open(response?.link, '_blank');

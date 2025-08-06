@@ -2,9 +2,7 @@ import React, { useContext } from 'react';
 import { UserContext } from '../../UseContext/useContext';
 
 const Herosection = ({ currentPlnt, HomeDataAPI }) => {
-  console.log('HomeDataAPI: ', HomeDataAPI);
   const { ContextFaqsDataAPI,ContextHomeDataAPI,MeterUpdateData } = useContext(UserContext);
-  console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI);
   const CurntPlntStatus = MeterUpdateData?.galaxies[0]?.milestones?.find(item => item?.milestone_name === currentPlnt)
   const RequTounlock = ContextFaqsDataAPI?.galaxy_data?.milestones?.find(item => item?.milestone_name === currentPlnt)
 

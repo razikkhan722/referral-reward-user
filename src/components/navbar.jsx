@@ -70,9 +70,8 @@ const Navbar = () => {
 
   // ------Logout Functionailty
   const HandleLogout = () => {
-    sessionStorage.removeItem('Auth');
+    localStorage.removeItem('Auth');
     setAuthLocal('');
-    console.log('check auth');
     navigate('/login');
   };
 
