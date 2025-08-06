@@ -40,7 +40,7 @@ const AppRoutes = () => {
 
   const [loading, setLoading] = useState(true); // Manage route protection check
 
-  const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
+  const Auth = JSON?.parse(localStorage.getItem('Auth') ?? '{}');
 
   // Fetch Home and FAQ data after login
   const HandleAPI = async () => {
@@ -71,7 +71,7 @@ const AppRoutes = () => {
 
   // Get AuthLocal from session and set it in context
   useEffect(() => {
-    const getValue = JSON.parse(sessionStorage.getItem('Auth') ?? 'null');
+    const getValue = JSON.parse(localStorage.getItem('Auth') ?? 'null');
     setAuthLocal(getValue?.mode ?? null);
     setLoading(false);
   }, []);

@@ -8,7 +8,6 @@ const Herosection = ({ currentPlnt, HomeDataAPI }) => {
 
   // let LtrToNum = currentPlnt?.charCodeAt(0) - 64;
 
-
   // States
   // =========
 

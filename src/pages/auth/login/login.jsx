@@ -50,7 +50,7 @@ const Login = () => {
 
       if (response?.mode) {
         // Store auth session
-        sessionStorage.setItem('Auth', JSON.stringify(response));
+        localStorage.setItem('Auth', JSON.stringify(response));
         setAuthLocal(response);
         toastSuccess(response?.message || "Login Successfully");
 
