@@ -45,7 +45,7 @@ const MyReferralScreen = () => {
   const codeRef = useRef();
   const linkRef = useRef();
 
-  const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
+  const Auth = JSON?.parse(localStorage.getItem('Auth') ?? '{}');
   const { ContextHomeDataAPI, ContextFaqsDataAPI } =
     useContext(UserContext);
 
@@ -58,10 +58,11 @@ const MyReferralScreen = () => {
 
   const handleWhatsappClick = async () => {
     try {
+      const decrypt = await DecryptFunction(Auth)
       const response = await postData('/send-whatsapp-invite', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
       });
       if (response?.success) {
         window.open(response?.link, '_blank');
@@ -71,10 +72,11 @@ const MyReferralScreen = () => {
 
   const handleIconLink = async (icon) => {
     try {
+      const decrypt = await DecryptFunction(Auth)
       const response = await postData(`/send-${icon}-invite`, {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
       });
       if (response?.success && response?.link) {
         window.open(response?.link, '_blank');
@@ -86,10 +88,11 @@ const MyReferralScreen = () => {
 
   const HandleAPI = async () => {
     try {
+      const decrypt = await DecryptFunction(Auth)
       const enyptData = await postData('/my-referrals', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
       });
       const Decrpty = await DecryptFunction(enyptData);
       setRefralDataAPI(Decrpty);

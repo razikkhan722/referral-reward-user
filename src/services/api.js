@@ -4,8 +4,8 @@ import axios from 'axios';
 const Auth = JSON?.parse(localStorage.getItem('Auth') ?? '{}');
 
 // 🔧 Base URL setup
-const ApiURL = 'https://elite.intelligence-world.com'; // Replace with your actual API base URL
-// const ApiURL = 'https://269479db5721.ngrok-free.app'; // Replace with your actual API base URL
+// const ApiURL = 'https://elite.intelligence-world.com'; // Replace with your actual API base URL
+const ApiURL = 'https://269479db5721.ngrok-free.app'; // Replace with your actual API base URL
 
 // 🌐 Axios instance
 const api = axios.create({
@@ -35,7 +35,7 @@ export const postData = async (endpoint, payload = {}) => {
       error?.response?.data?.message == 'Access token has expired' ||
       error?.response?.data?.message == 'Invalid access token'
     ) {
-      sessionStorage.removeItem('Auth');
+      localStorage.removeItem('Auth');
       window.location.href = '/login';
       throw error.response?.data || error.message;
     }

@@ -27,7 +27,7 @@ import {UserContext} from "../../../UseContext/useContext"
 
 const Product = () => {
   const navigate = useNavigate();
-  const uid = sessionStorage.getItem('uid');
+  const uid = localStorage.getItem('uid');
 
   const { ContextInviteRefferAPI } = useContext(UserContext); // Meteor points
 
@@ -130,7 +130,7 @@ const Product = () => {
 
       if (response?.success) {
         toastSuccess(response?.message);
-        sessionStorage.removeItem('uid');
+        localStorage.removeItem('uid');
         navigate("/login");
       }
     } catch (error) {

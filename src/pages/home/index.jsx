@@ -55,12 +55,11 @@ const Index = ({ isExiting, isActive }) => {
     setMeterUpdateData,
   } = useContext(UserContext);
 
-  // console.log('ContextHomeDataAPI: ', ContextHomeDataAPI);
   // Planet carousel states
   const [currentIndex, setCurrentIndex] = useState(
     ContextHomeDataAPI?.part4?.length - 1 || 0,
   ); // Set initial planet based on user progress
-  
+
   const [rotation, setRotation] = useState(0); // Planet rotation angle
   const [ringRotation, setRingRotation] = useState(0); // Ring rotation angle
   const [direction, setDirection] = useState(''); // Animation direction
@@ -93,7 +92,7 @@ const Index = ({ isExiting, isActive }) => {
   const [HomeDataAPI, setHomeDataAPI] = useState();
 
   // Get authentication data from session storage
-  const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
+  const Auth = JSON?.parse(localStorage.getItem('Auth') ?? '{}');
 
   // Loading Spinner Component
   const LoadingSpinner = () => (
@@ -153,10 +152,11 @@ const Index = ({ isExiting, isActive }) => {
 
   const HandleAPI = async () => {
     try {
+      const decrypt = await DecryptFunction(Auth);
       const enyptData = await postData('/home', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+        user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
       });
 
       const Decrpty = await DecryptFunction(enyptData);
@@ -172,12 +172,13 @@ const Index = ({ isExiting, isActive }) => {
     // setLoading(true); // Start loading
 
     try {
+      const decrypt = await DecryptFunction(Auth);
       const enyptData = await postData(
-        `/update-user-rewards/${Auth?.user_id}`,
+        `/update-user-rewards/${decrypt?.part3}`,
         {
-          user_id: Auth?.user_id,
-          log_alt: Auth?.log_alt,
-          mode: Auth?.mode,
+          user_id: decrypt?.part3,
+          log_alt: decrypt?.part2,
+          mode: decrypt?.part1,
         },
       );
       // setLoading(false); // Start loading
@@ -328,7 +329,10 @@ const Index = ({ isExiting, isActive }) => {
                 <span className={`${!SecScrAnimt ? '' : 'middle-sect'}`}>
                   <Herosection
                     HomeDataAPI={HomeDataAPI || ContextHomeDataAPI}
-                    currentPlnt={ MeterUpdateData?.galaxies[0]?.milestones[currentIndex]?.milestone_name}
+                    currentPlnt={
+                      MeterUpdateData?.galaxies[0]?.milestones[currentIndex]
+                        ?.milestone_name
+                    }
                   />
                 </span>
               ) : (
@@ -345,9 +349,7 @@ const Index = ({ isExiting, isActive }) => {
                         : 'hidden-second-sect'
                     }`}
                   >
-                    <div
-                      className={`left-sidebar-main-div`}
-                    >
+                    <div className={`left-sidebar-main-div`}>
                       <p className="text-dark-blue space-grotesk-medium font-16 mb-3">
                         Your Progress So far
                       </p>
@@ -373,7 +375,7 @@ const Index = ({ isExiting, isActive }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-9 planet-section overflow-scroll"> 
+                  <div className="col-lg-9 planet-section overflow-scroll">
                     <div className="d-flex ">
                       <div className="col-lg-3 text-center">
                         <img
@@ -391,15 +393,19 @@ const Index = ({ isExiting, isActive }) => {
                         />
                       </div>
                       <div className="col-lg-3"></div>
-                      <div className={`col-lg-3 text-center ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 5 ?"":"d-none" }`}>
+                      <div
+                        className={`col-lg-3 text-center ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 5 ? '' : 'd-none'}`}
+                      >
                         <img
                           className={`width-50 width-md-50 width-lg-25 width-xl-70 planet-shadow-${currentIndex[0] === 0 ? 'purple' : currentIndex[0] === 1 ? 'yellow' : currentIndex[0] === 2 ? 'green' : 'blue'}`}
                           src={images[currentIndex]}
                           alt="yellow"
                         />
                       </div>
-                       <div className="col-lg-3"></div>
-                      <div className={`col-lg-3 text-center ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 7 ?"":"d-none" }`}>
+                      <div className="col-lg-3"></div>
+                      <div
+                        className={`col-lg-3 text-center ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 7 ? '' : 'd-none'}`}
+                      >
                         <img
                           className={`width-50 width-md-50 width-lg-25 width-xl-70 planet-shadow-${imageNumbers[0] === 0 ? 'purple' : imageNumbers[0] === 1 ? 'yellow' : imageNumbers[0] === 2 ? 'green' : 'blue'}`}
                           src={images[imageNumbers]}
@@ -407,7 +413,9 @@ const Index = ({ isExiting, isActive }) => {
                         />
                       </div>
                       <div className="col-lg-3"></div>
-                      <div className={`col-lg-3 text-center ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 9 ?"":"d-none" }`}>
+                      <div
+                        className={`col-lg-3 text-center ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 9 ? '' : 'd-none'}`}
+                      >
                         <img
                           className={`width-50 width-md-50 width-lg-25 width-xl-70 planet-shadow-${imageNumbers[0] === 0 ? 'purple' : imageNumbers[0] === 1 ? 'yellow' : imageNumbers[0] === 2 ? 'green' : 'blue'}`}
                           src={images[imageNumbers]}
@@ -421,7 +429,7 @@ const Index = ({ isExiting, isActive }) => {
                         src={pathway}
                         alt="pathway"
                       />
-                      
+
                       <div className="col-lg-3 text-center text-dark-blue mt-4 pt-4 px-0">
                         <h4 className="mb-2 space-grotesk-medium font-24">
                           {
@@ -454,19 +462,16 @@ const Index = ({ isExiting, isActive }) => {
                           )}
                       </div>
 
-
-
-                     <div className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 4 ?"":"d-none" }`}>
+                      <div
+                        className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 4 ? '' : 'd-none'}`}
+                      >
                         <img
-                        className="position-absolute a scrol-path-0 px-0"
-                        src={pathbottom}
-                        alt="pathway"
-                      />
+                          className="position-absolute a scrol-path-0 px-0"
+                          src={pathbottom}
+                          alt="pathway"
+                        />
                       </div>
 
-
-
-                      
                       <div className="col-lg-3 text-center text-dark-blue mt-4 pt-4 px-0">
                         <h4 className="mb-2 space-grotesk-medium font-24">
                           {
@@ -498,26 +503,27 @@ const Index = ({ isExiting, isActive }) => {
                             ),
                           )}
                       </div>
-                      
-                      <div className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 5 ?"":"d-none" }`}>
+
+                      <div
+                        className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 5 ? '' : 'd-none'}`}
+                      >
                         <img
-                        className="position-absolute a scrol-path-1 px-0"
-                        src={pathtop}
-                        alt="pathway"
-                      />
+                          className="position-absolute a scrol-path-1 px-0"
+                          src={pathtop}
+                          alt="pathway"
+                        />
                       </div>
-                      <div className={`col-lg-3 text-center text-dark-blue mt-4 pt-4 px-0 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 5 ?"":"d-none" } `}>
+                      <div
+                        className={`col-lg-3 text-center text-dark-blue mt-4 pt-4 px-0 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 5 ? '' : 'd-none'} `}
+                      >
                         <h4 className="mb-2 space-grotesk-medium font-24">
                           {
-                            ContextFaqsDataAPI?.galaxy_data?.milestones[
-                              4
-                            ]?.milestone_name
+                            ContextFaqsDataAPI?.galaxy_data?.milestones[4]
+                              ?.milestone_name
                           }
                         </h4>
 
-                        {ContextFaqsDataAPI?.galaxy_data?.milestones[
-                          4
-                        ]?.milestone_description
+                        {ContextFaqsDataAPI?.galaxy_data?.milestones[4]?.milestone_description
                           ?.split(/(\d+\s*(?:Star|Meteors))/gi)
                           ?.map((part, index) =>
                             /(\d+\s*(?:Star|Meteors))/i.test(part) ? (
@@ -537,25 +543,26 @@ const Index = ({ isExiting, isActive }) => {
                             ),
                           )}
                       </div>
-                      <div className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 6 ?"":"d-none" }`}>
+                      <div
+                        className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 6 ? '' : 'd-none'}`}
+                      >
                         <img
-                        className="position-absolute b scrol-path-2 px-0"
-                        src={pathbottom}
-                        alt="pathway"
-                      />
+                          className="position-absolute b scrol-path-2 px-0"
+                          src={pathbottom}
+                          alt="pathway"
+                        />
                       </div>
-                      <div className={`col-lg-3 text-center text-dark-blue mt-4 pt-4 px-0 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 6 ?"":"d-none" } `}>
+                      <div
+                        className={`col-lg-3 text-center text-dark-blue mt-4 pt-4 px-0 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 6 ? '' : 'd-none'} `}
+                      >
                         <h4 className="mb-2 space-grotesk-medium font-24">
                           {
-                            ContextFaqsDataAPI?.galaxy_data?.milestones[
-                              6
-                            ]?.milestone_name
+                            ContextFaqsDataAPI?.galaxy_data?.milestones[6]
+                              ?.milestone_name
                           }
                         </h4>
 
-                        {ContextFaqsDataAPI?.galaxy_data?.milestones[
-                          6
-                        ]?.milestone_description
+                        {ContextFaqsDataAPI?.galaxy_data?.milestones[6]?.milestone_description
                           ?.split(/(\d+\s*(?:Star|Meteors))/gi)
                           ?.map((part, index) =>
                             /(\d+\s*(?:Star|Meteors))/i.test(part) ? (
@@ -575,25 +582,26 @@ const Index = ({ isExiting, isActive }) => {
                             ),
                           )}
                       </div>
-                       <div className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 7 ?"":"d-none" }`}>
+                      <div
+                        className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 7 ? '' : 'd-none'}`}
+                      >
                         <img
-                        className="position-absolute c scrol-path-3 px-0"
-                        src={pathtop}
-                        alt="pathway"
-                      />
+                          className="position-absolute c scrol-path-3 px-0"
+                          src={pathtop}
+                          alt="pathway"
+                        />
                       </div>
-                       <div className={`col-lg-3 text-center text-dark-blue mt-4 pt-4 px-0 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 8 ?"":"d-none" } `}>
+                      <div
+                        className={`col-lg-3 text-center text-dark-blue mt-4 pt-4 px-0 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 8 ? '' : 'd-none'} `}
+                      >
                         <h4 className="mb-2 space-grotesk-medium font-24">
                           {
-                            ContextFaqsDataAPI?.galaxy_data?.milestones[
-                            8
-                            ]?.milestone_name
+                            ContextFaqsDataAPI?.galaxy_data?.milestones[8]
+                              ?.milestone_name
                           }
                         </h4>
 
-                        {ContextFaqsDataAPI?.galaxy_data?.milestones[
-                        8
-                        ]?.milestone_description
+                        {ContextFaqsDataAPI?.galaxy_data?.milestones[8]?.milestone_description
                           ?.split(/(\d+\s*(?:Star|Meteors))/gi)
                           ?.map((part, index) =>
                             /(\d+\s*(?:Star|Meteors))/i.test(part) ? (
@@ -613,27 +621,33 @@ const Index = ({ isExiting, isActive }) => {
                             ),
                           )}
                       </div>
-                       <div className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 8 ?"":"d-none" }`}>
+                      <div
+                        className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 8 ? '' : 'd-none'}`}
+                      >
                         <img
-                        className="position-absolute c scrol-path-4 px-0"
-                        src={pathbottom}
-                        alt="pathway"
-                      />
+                          className="position-absolute c scrol-path-4 px-0"
+                          src={pathbottom}
+                          alt="pathway"
+                        />
                       </div>
 
-                       <div className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 9 ?"":"d-none" }`}>
+                      <div
+                        className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 9 ? '' : 'd-none'}`}
+                      >
                         <img
-                        className="position-absolute c scrol-path-5 px-0"
-                        src={pathtop}
-                        alt="pathway"
-                      />
+                          className="position-absolute c scrol-path-5 px-0"
+                          src={pathtop}
+                          alt="pathway"
+                        />
                       </div>
-                      <div className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 10 ?"":"d-none" }`}>
+                      <div
+                        className={`col-lg-3 ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 10 ? '' : 'd-none'}`}
+                      >
                         <img
-                        className="position-absolute c scrol-path-6 px-0"
-                        src={pathbottom}
-                        alt="pathway"
-                      />
+                          className="position-absolute c scrol-path-6 px-0"
+                          src={pathbottom}
+                          alt="pathway"
+                        />
                       </div>
                     </div>
                     <div className="d-flex">
@@ -676,7 +690,9 @@ const Index = ({ isExiting, isActive }) => {
                         </div>
                       </div>
                       <div className="col-lg-3"></div>
-                      <div className={`col-lg-3 text-center text-dark-blue ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 4 ?"":"d-none" }`}>
+                      <div
+                        className={`col-lg-3 text-center text-dark-blue ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 4 ? '' : 'd-none'}`}
+                      >
                         <img
                           className={`width-50 width-md-50 width-lg-25 width-xl-70 planet-shadow-${prevIndex === 0 ? 'purple' : prevIndex === 1 ? 'yellow' : prevIndex === 2 ? 'green' : 'blue'}`}
                           src={images[prevIndex]}
@@ -715,7 +731,9 @@ const Index = ({ isExiting, isActive }) => {
                         </div>
                       </div>
                       <div className="col-lg-3"></div>
-                      <div className={`col-lg-3 text-center text-dark-blue ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 6 ?"":"d-none" }`}>
+                      <div
+                        className={`col-lg-3 text-center text-dark-blue ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 6 ? '' : 'd-none'}`}
+                      >
                         <img
                           className={`width-50 width-md-50 width-lg-25 width-xl-70 planet-shadow-${nextIndex === 0 ? 'purple' : nextIndex === 1 ? 'yellow' : nextIndex === 2 ? 'green' : 'blue'}`}
                           src={images[nextIndex]}
@@ -724,15 +742,12 @@ const Index = ({ isExiting, isActive }) => {
                         <div className=" text-center text-dark-blue">
                           <h4 className="mb-2 space-grotesk-medium font-24">
                             {
-                              ContextFaqsDataAPI?.galaxy_data?.milestones[
-                                5
-                              ]?.milestone_name
+                              ContextFaqsDataAPI?.galaxy_data?.milestones[5]
+                                ?.milestone_name
                             }
                           </h4>
 
-                          {ContextFaqsDataAPI?.galaxy_data?.milestones[
-                            5
-                          ]?.milestone_description
+                          {ContextFaqsDataAPI?.galaxy_data?.milestones[5]?.milestone_description
                             ?.split(/(\d+\s*(?:Star|Meteors))/gi) // Non-capturing group for the words
                             ?.map((part, index) =>
                               /(\d+\s*(?:Star|Meteors))/i.test(part) ? (
@@ -753,8 +768,10 @@ const Index = ({ isExiting, isActive }) => {
                             )}
                         </div>
                       </div>
-                        <div className="col-lg-3"></div>
-                      <div className={`col-lg-3 text-center text-dark-blue ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 8 ?"":"d-none" }`}>
+                      <div className="col-lg-3"></div>
+                      <div
+                        className={`col-lg-3 text-center text-dark-blue ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 8 ? '' : 'd-none'}`}
+                      >
                         <img
                           className={`width-50 width-md-50 width-lg-25 width-xl-70 planet-shadow-${nextIndex === 0 ? 'purple' : nextIndex === 1 ? 'yellow' : nextIndex === 2 ? 'green' : 'blue'}`}
                           src={images[nextIndex]}
@@ -763,15 +780,12 @@ const Index = ({ isExiting, isActive }) => {
                         <div className=" text-center text-dark-blue">
                           <h4 className="mb-2 space-grotesk-medium font-24">
                             {
-                              ContextFaqsDataAPI?.galaxy_data?.milestones[
-                                7
-                              ]?.milestone_name
+                              ContextFaqsDataAPI?.galaxy_data?.milestones[7]
+                                ?.milestone_name
                             }
                           </h4>
 
-                          {ContextFaqsDataAPI?.galaxy_data?.milestones[
-                            7
-                          ]?.milestone_description
+                          {ContextFaqsDataAPI?.galaxy_data?.milestones[7]?.milestone_description
                             ?.split(/(\d+\s*(?:Star|Meteors))/gi) // Non-capturing group for the words
                             ?.map((part, index) =>
                               /(\d+\s*(?:Star|Meteors))/i.test(part) ? (
@@ -792,8 +806,10 @@ const Index = ({ isExiting, isActive }) => {
                             )}
                         </div>
                       </div>
-                          <div className="col-lg-3"></div>
-                      <div className={`col-lg-3 text-center text-dark-blue ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 10 ?"":"d-none" }`}>
+                      <div className="col-lg-3"></div>
+                      <div
+                        className={`col-lg-3 text-center text-dark-blue ${ContextFaqsDataAPI?.galaxy_data?.milestones?.length >= 10 ? '' : 'd-none'}`}
+                      >
                         <img
                           className={`width-50 width-md-50 width-lg-25 width-xl-70 planet-shadow-${nextIndex === 0 ? 'purple' : nextIndex === 1 ? 'yellow' : nextIndex === 2 ? 'green' : 'blue'}`}
                           src={images[nextIndex]}
@@ -802,15 +818,12 @@ const Index = ({ isExiting, isActive }) => {
                         <div className=" text-center text-dark-blue">
                           <h4 className="mb-2 space-grotesk-medium font-24">
                             {
-                              ContextFaqsDataAPI?.galaxy_data?.milestones[
-                                9
-                              ]?.milestone_name
+                              ContextFaqsDataAPI?.galaxy_data?.milestones[9]
+                                ?.milestone_name
                             }
                           </h4>
 
-                          {ContextFaqsDataAPI?.galaxy_data?.milestones[
-                            9
-                          ]?.milestone_description
+                          {ContextFaqsDataAPI?.galaxy_data?.milestones[9]?.milestone_description
                             ?.split(/(\d+\s*(?:Star|Meteors))/gi) // Non-capturing group for the words
                             ?.map((part, index) =>
                               /(\d+\s*(?:Star|Meteors))/i.test(part) ? (
@@ -971,9 +984,8 @@ const Index = ({ isExiting, isActive }) => {
                         alt="center-planet"
                         onClick={
                           currentIndex <= ContextHomeDataAPI?.part4?.length - 1
-                          ?
-                          toggleAnimtElements
-                          : null
+                            ? toggleAnimtElements
+                            : null
                         }
                         className={`img-fluid ${currentIndex <= ContextHomeDataAPI?.part4?.length - 1 ? 'cursor-pointer' : ''} rounded-circle planet-shadow-${currentIndex === 0 ? 'purple' : currentIndex === 1 ? 'yellow' : currentIndex === 2 ? 'green' : 'blue'} ${
                           isAnimating ? 'fade-down-shrink' : ''

@@ -121,7 +121,7 @@ const Offer = () => {
     },
   ];
 
-  const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
+  const Auth = JSON?.parse(localStorage.getItem('Auth') ?? '{}');
   const settings = {
     dots: false,
     infinite: true,
@@ -193,10 +193,11 @@ const Offer = () => {
 
   const HandleAPI = async () => {
     try {
+      const decrypt = await DecryptFunction(Auth)
       const enyptData = await postData('/home', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
       });
       const Decrpty = await DecryptFunction(enyptData);
 
@@ -209,12 +210,13 @@ const Offer = () => {
 
   const HandleRedeemAPI = async (off_percent, product_uid, close) => {
     try {
+      const decrypt = await DecryptFunction(Auth)
       const response = await postData('/redeem-offer/offers', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
         off_percent,
         product_id: product_uid,
-        mode: Auth?.mode,
       });
       setCongratsMessage(response?.message || "Successfully unlocked prize!")
       setShowCongrats(true);
@@ -233,10 +235,11 @@ const Offer = () => {
 
   const HandleExcitingPrizeAPI = async (prize_id, close) => {
     try {
+      const decrypt = await DecryptFunction(Auth)
       const response = await postData('/redeem-offer/exciting-prizes', {
-        user_id: Auth?.user_id,
-        log_alt: Auth?.log_alt,
-        mode: Auth?.mode,
+         user_id: decrypt?.part3,
+        log_alt: decrypt?.part2,
+        mode: decrypt?.part1,
         prize_id,
       });
       setCongratsMessage(response?.message || "Successfully unlocked prize!")

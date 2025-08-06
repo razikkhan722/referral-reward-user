@@ -46,26 +46,26 @@ const Login = () => {
         password: data?.password,
         email: data?.email,
       });
-      console.log('response: ', response.message);
+      const decrypt = await DecryptFunction(response?.data)
 
-      if (response?.mode) {
+      if (response?.message) {
         // Store auth session
-        localStorage.setItem('Auth', JSON.stringify(response));
-        setAuthLocal(response);
+        localStorage.setItem('Auth', JSON.stringify(response?.data));
+        setAuthLocal(decrypt);
         toastSuccess(response?.message || "Login Successfully");
 
         // Fetch encrypted home data
         const homeEncrypted = await postData('/home', {
-          user_id: response?.user_id,
-          log_alt: response?.log_alt,
-          mode: response?.mode,
+          user_id: decrypt?.part3,
+          log_alt: decrypt?.part2,
+          mode: decrypt?.part1,
         });
 
         // Fetch FAQs data
         const faqsData = await postData('/admin/fetch-custom-data', {
-          user_id: response?.user_id,
-          log_alt: response?.log_alt,
-          mode: response?.mode,
+          user_id: decrypt?.part3,
+          log_alt: decrypt?.part2,
+          mode: decrypt?.part1,
         });
         setContextFaqsDataAPI(faqsData);
         // show special off modal 
