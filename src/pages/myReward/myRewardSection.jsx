@@ -606,6 +606,7 @@ const MyRewardFirstScreen = () => {
                                   type="text"
                                   defaultValue={MyRewardDataAPI?.part4}
                                   id="inviteCode"
+                                   readOnly
                                 />
                                 <button
                                   type="button"
@@ -630,6 +631,7 @@ const MyRewardFirstScreen = () => {
                                   type="text"
                                   defaultValue={MyRewardDataAPI?.part6}
                                   id="inviteLink"
+                                   readOnly
                                 />
                                 <button
                                   type="button"
@@ -840,7 +842,7 @@ const MyRewardFirstScreen = () => {
                                 <div className="discount-card-footer p-2 d-flex justify-content-between">
                                   <p className="text-white mb-0 font-12 montserrat-regular">
                                     Coupon code:
-                                    <span className="text-uppercase font-14 montserrat-medium px-2">
+                                    <span className="text-uppercase font-14 montserrat-medium px-2"  readOnly>
                                       {item?.coupon_code || 'CB1234'}
                                     </span>
                                   </p>

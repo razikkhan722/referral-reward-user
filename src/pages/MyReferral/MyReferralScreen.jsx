@@ -186,6 +186,7 @@ const MyReferralScreen = () => {
                         id="inviteCode"
                         type="text"
                         defaultValue={RefralDataAPI?.part6}
+                        readOnly
                         className="copy-input input-invite-friend bg-white mb-16"
                       />
                       <button
@@ -206,6 +207,7 @@ const MyReferralScreen = () => {
                         id="inviteLink"
                         type="text"
                         defaultValue={RefralDataAPI?.part5}
+                         readOnly
                         className="copy-input input-invite-friend bg-white mb-16"
                       />
                       <button
@@ -278,7 +280,7 @@ const MyReferralScreen = () => {
               </div>
               {/* FAQ Section Start here */}
               <div className="mb-5">
-                {ContextFaqsDataAPI?.referrals_faqs?.length > 0 &&(
+                {ContextFaqsDataAPI?.referrals_faqs?.length > 0 && (
                   <FAQ items={ContextFaqsDataAPI?.referrals_faqs} />
                 )}
               </div>

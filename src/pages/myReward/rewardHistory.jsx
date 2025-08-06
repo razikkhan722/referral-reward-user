@@ -67,7 +67,7 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
           </th>
           <th className="px-4 text-center font-14 montserrat-semibold">Date</th>
           <th className="px-4 text-center font-14 montserrat-semibold">
-            Meteors
+            Earned
           </th>
           <th className="px-4 text-center font-14 montserrat-semibold">
             Status
@@ -241,6 +241,16 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
                       {displayedData?.map((row, index) =>
                         renderTableRow(row, index),
                       )}
+
+                      {/* {displayedData?.length > 0 ? (
+                        displayedData?.map((row, index) => renderTableRow(row, index))
+                      ) : (
+                        <tr>
+                          <td colSpan="4" className="text-center py-4 text-muted">
+                            No data available.
+                          </td>
+                        </tr>
+                      )} */}
                     </tbody>
                   </table>
                 </div>
@@ -259,9 +269,9 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
                   <button
                     className="btn btn-pagination background-text-blue text-white active font-14 montserrat-medium"
                     onClick={handleNext}
-                    // disabled={
-                    //   currentPage >= Math.ceil(rewardsData.length / rowsPerPage)
-                    // }
+                  // disabled={
+                  //   currentPage >= Math.ceil(rewardsData.length / rowsPerPage)
+                  // }
                   >
                     Next
                   </button>
@@ -270,7 +280,7 @@ const RewardHistory = ({ showHistory, MyRewardDataAPI }) => {
                 <div className="d-flex align-items-center">
                   <span className="me-2 text-muted">Rows per page:</span>
                   <select
-                    className="rows-select bg-transparent   "
+                    className="rows-select bg-transparent"
                     value={rowsPerPage}
                     onChange={handleRowsPerPageChange}
                   >

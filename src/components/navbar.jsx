@@ -111,7 +111,7 @@ const Navbar = () => {
                               >
                                 <div className="dropdown position-relative">
                             <button
-                              className=" dropdown-toggle bg-transparent text-white border-0"
+                              className=" dropdown-toggle background-text-blue px-3 py-1 rounded-pill font-14 text-white text-white border-0"
                               type="button"
                               data-bs-toggle="dropdown"
                               aria-expanded="false"

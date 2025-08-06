@@ -74,7 +74,8 @@ const Profile = () => {
   const [UserDataAPI, setUserDataAPI] = useState();
 
   const { ContextFaqsDataAPI, ContextHomeDataAPI, setAuthLocal } =
-    useContext(UserContext);
+  useContext(UserContext);
+  console.log('ContextFaqsDataAPI: ', ContextFaqsDataAPI?.conversion_data[0]?.conversion_rates);
 
   const Auth = JSON?.parse(sessionStorage.getItem('Auth') ?? '{}');
   // Add state to track the calculated value
@@ -510,7 +511,7 @@ const Profile = () => {
                   >
                     {
                       ContextFaqsDataAPI?.conversion_data[0]?.conversion_rates
-                        ?.meteor_to_star
+                        ?.meteors_to_stars
                     }{' '}
                     <span className="font-16 montserrat-semibold">Meteors</span>
                   </span>
@@ -521,7 +522,7 @@ const Profile = () => {
                   >
                     {
                       ContextFaqsDataAPI?.conversion_data[0]?.conversion_rates
-                        ?.star_to_meteor
+                        ?.stars
                     }{' '}
                     <span className="font-16 montserrat-semibold">Stars</span>
                   </span>
@@ -532,7 +533,7 @@ const Profile = () => {
                   >
                     {
                       ContextFaqsDataAPI?.conversion_data[0]?.conversion_rates
-                        ?.reward_to_currency
+                        ?.currency
                     }
                     <span className="font-16 montserrat-semibold">
                       {' '}
