@@ -37,10 +37,10 @@ const Registration = () => {
   const { id, source } = useParams();
 
   // const currentURL = window.location.href;
-  const baseURL = window.location.origin; 
+  const baseURL = window.location.origin;
   console.log('baseURL: ', baseURL);
 
-    const platformMap = {
+  const platformMap = {
     wa: 'whatsapp',
     tele: 'telegram',
     tw: 'twitter',
@@ -63,7 +63,7 @@ const Registration = () => {
         password: data?.password,
         referral_code: data?.referralCode,
         tag_id: id,
-        url:baseURL,
+        url: baseURL,
         // accepted_via: source, // wa / tele / tw / fb / in
         accepted_via: platformMap[source] || source,
       });
@@ -159,7 +159,11 @@ const Registration = () => {
                   <input
                     type="number"
                     className="form-control py-2"
+                    maxLength={10}
                     placeholder="Your Mobile No."
+                    onInput={(e) => {
+                      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10); // Only digits, max 10
+                    }}
                     {...register('mobile', {
                       required: 'Mobile No. is required',
                       pattern: {

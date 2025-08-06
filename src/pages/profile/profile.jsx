@@ -1215,7 +1215,8 @@ const Profile = () => {
                 My Wallet
               </h5>
               <p className="font-12 text-primary-color montserrat-medium mb-20">
-                Convert your Stars and stars below
+                {/* Convert your Stars and stars below */}
+                Convert your stars into Cash/Points
               </p>
 
               <form onSubmit={handleSubmitStar(onStarConvert)}>
@@ -1259,7 +1260,8 @@ const Profile = () => {
                   </div>
                   <div className="col-lg-12">
                     <label className="form-label mb-8 font-14 text-light-color montserrat-regular">
-                      Stars you’ll get after conversion
+                      {/* Stars you’ll get after conversion */}
+                      Cash/Points you'll get after conversion
                     </label>
                     <input
                       className="form-control meterStarConvrt font-12  montserrat-medium mb-20"
