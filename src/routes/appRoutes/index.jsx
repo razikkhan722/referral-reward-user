@@ -67,13 +67,20 @@ const AppRoutes = () => {
 
   // Load user context once at app mount
   useEffect(() => {
-    HandleAPI(); // This fetches and sets context data if session exists
+    if (AuthLocal) {
+      HandleAPI(); // This fetches and sets context data if session exists
+    }
   }, []);
 
   const HandleLog = async () => {
-    const getValue = JSON.parse(localStorage.getItem('Auth') ?? 'null');
-    const decrypt = await DecryptFunction(getValue);
-    setAuthLocal(decrypt?.part3 ?? null);
+    const getValue = JSON.parse(localStorage.getItem('Auth') ?? '{}');
+    if (getValue?.age) {
+      const decrypt = await DecryptFunction(getValue);
+      setAuthLocal(decrypt?.part3 ?? null);
+    }
+    else{
+      setAuthLocal(null);
+    }
     setLoading(false);
   };
 
