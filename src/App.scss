@@ -781,6 +781,13 @@ li {
   opacity: 1;
 }
 
+.planet-locked {
+  filter: grayscale(100%) brightness(0.7);
+  opacity: 0.6;
+  pointer-events: none; /* to prevent clicks */
+  // cursor: not-allowed;
+}
+
 // ============= MAIN ANIMATION CSS END =====================
 
 html,
@@ -4704,4 +4711,26 @@ left: 214%;
 //   scroll-snap-align: start;
 //   box-sizing: border-box;
 //   will-change: transform, opacity;
+// }
+
+
+/* Custom Bootstrap Tooltip Styling */
+// .tooltip {
+//   // z-index: 9999;
+// }
+
+// .tooltip .tooltip-inner {
+//   background-color: #1e1e2f !important;
+//   color: #ffffff !important;
+//   font-size: 18px !important;
+//   font-family: 'Montserrat', sans-serif !important;
+//   padding: 12px 20px !important;
+//   border-radius: 10px !important;
+//   // max-width: unset !important; /* allow full width */
+//   text-align: center;
+//   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+// }
+
+// .tooltip.bs-tooltip-top .tooltip-arrow::before {
+//   border-top-color: #1e1e2f !important;
 // }

@@ -23,6 +23,11 @@ import centerPlanet1 from '../../assets/icons/planets/purple.svg';
 import centerPlanet2 from '../../assets/icons/planets/yellow.svg';
 import centerPlanet3 from '../../assets/icons/planets/green.svg';
 import centerPlanet4 from '../../assets/icons/planets/blue.svg';
+import LockPlanetA from "../../assets/icons/planets/PlanetA.png";
+import LockPlanetB from "../../assets/icons/planets/PlanetB.png";
+import LockPlanetC from "../../assets/icons/planets/PlanetC.png";
+import LockPlanetD from "../../assets/icons/planets/PlanetD.png";
+import GrayPlanet from  "../../assets/icons/planets/gray-planet.png";
 import planetRing from '../../assets/icons/planets/rings.svg';
 
 // API Service
@@ -37,6 +42,7 @@ import PlanetProgress from './progressBar';
 
 // Array of planet images for rotation display
 const images = [centerPlanet1, centerPlanet2, centerPlanet3, centerPlanet4];
+const LockImages = [LockPlanetA, LockPlanetB, LockPlanetC, LockPlanetD];
 
 const Index = ({ isExiting, isActive }) => {
   // UseState
@@ -54,7 +60,8 @@ const Index = ({ isExiting, isActive }) => {
     MeterUpdateData,
     setMeterUpdateData,
   } = useContext(UserContext);
-
+  
+  console.log('MeterUpdateData: ', MeterUpdateData);
   // Planet carousel states
   const [currentIndex, setCurrentIndex] = useState(
     ContextHomeDataAPI?.part4?.length - 1 || 0,
@@ -961,7 +968,7 @@ const Index = ({ isExiting, isActive }) => {
                     <img
                       className={`navitag-left cursor-pointer planet-shadow-${prevIndex === 0 ? 'purple' : prevIndex === 1 ? 'yellow' : prevIndex === 2 ? 'green' : 'blue'} ${isVisible ? 'plnt-animt-up' : 'plnt-animt-down'}`}
                       onClick={() => rotate('left')}
-                      src={images[prevIndex]}
+                      src={MeterUpdateData?.galaxies?.[0]?.milestones?.[prevIndex]?.milestone_status === "unlocked" ? images[prevIndex] : LockImages[prevIndex]}
                       alt="left-planet"
                     />
                     <span
@@ -974,13 +981,15 @@ const Index = ({ isExiting, isActive }) => {
                   <div className="col-6">
                     <div
                       className={`image-container d-flex justify-content-center align-items-center ${direction} ${isVisible ? 'big-plnt-btm' : 'big-plnt-top'}`}
-                      style={{
-                        transform: `rotate(${rotation}deg)`,
-                        transition: 'transform 0.2s linear',
-                      }}
+                      // style={{
+                      //   transform: `rotate(${rotation}deg)`,
+                      //   transition: 'transform 0.2s linear',
+                      // }}
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Click to view planet details"
                     >
                       <img
-                        src={images[currentIndex]}
+                        // src={images[currentIndex]}
+                      src={MeterUpdateData?.galaxies?.[0]?.milestones?.[currentIndex]?.milestone_status === "unlocked" ? images[currentIndex] : LockImages[currentIndex]}
                         alt="center-planet"
                         onClick={
                           currentIndex <= ContextHomeDataAPI?.part4?.length - 1
@@ -998,7 +1007,9 @@ const Index = ({ isExiting, isActive }) => {
                     <img
                       className={`navitag-right cursor-pointer planet-shadow-${nextIndex === 0 ? 'purple' : nextIndex === 1 ? 'yellow' : nextIndex === 2 ? 'green' : 'blue'} ${isVisible ? 'plnt-animt-up' : 'plnt-animt-down'}`}
                       onClick={() => rotate('right')}
-                      src={images[nextIndex]}
+                      // src={images[nextIndex]}
+                      src={MeterUpdateData?.galaxies?.[0]?.milestones?.[nextIndex]?.milestone_status === "unlocked" ? images[nextIndex] : LockImages[nextIndex]}
+
                       alt="right-planet"
                     />
                     <span

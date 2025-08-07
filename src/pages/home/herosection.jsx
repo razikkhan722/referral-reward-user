@@ -4,7 +4,9 @@ import { UserContext } from '../../UseContext/useContext';
 const Herosection = ({ currentPlnt, HomeDataAPI }) => {
   const { ContextFaqsDataAPI,ContextHomeDataAPI,MeterUpdateData } = useContext(UserContext);
   const CurntPlntStatus = MeterUpdateData?.galaxies[0]?.milestones?.find(item => item?.milestone_name === currentPlnt)
+  console.log('CurntPlntStatus: ', CurntPlntStatus);
   const RequTounlock = ContextFaqsDataAPI?.galaxy_data?.milestones?.find(item => item?.milestone_name === currentPlnt)
+  
 
   // let LtrToNum = currentPlnt?.charCodeAt(0) - 64;
 
